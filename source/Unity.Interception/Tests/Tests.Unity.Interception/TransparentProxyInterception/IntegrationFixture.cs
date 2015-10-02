@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxyInterception
 {
-    [TestClass]
+     
     public class IntegrationFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodWithHandlerAttributeThroughInterface()
         {
             var container = new UnityContainer();
@@ -20,7 +20,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
 
             var result = instance.DoSomething<int>();
 
-            Assert.AreEqual(0, result);
+            Assert.Equal(0, result);
         }
     }
 }

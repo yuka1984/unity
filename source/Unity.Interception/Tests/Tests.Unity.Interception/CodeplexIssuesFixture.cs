@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     /// <summary>
     /// Summary description for CodeplexIssuesFixture
     /// </summary>
-    [TestClass]
+     
     public class CodeplexIssuesFixture
     {
         public interface IRepository { }
@@ -19,7 +19,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void DependenciesAndInterceptionMixProperly()
         {
             var container = new UnityContainer()
@@ -31,9 +31,9 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             var svc1 = container.Resolve<TestService>();
             var svc2 = container.Resolve<TestService>();
 
-            Assert.AreNotSame(svc1, svc2);
-            Assert.IsNotNull(svc1 as IInterceptingProxy);
-            Assert.IsNotNull(svc2 as IInterceptingProxy);
+            Assert.NotSame(svc1, svc2);
+            Assert.NotNull(svc1 as IInterceptingProxy);
+            Assert.NotNull(svc2 as IInterceptingProxy);
         }
     }
 }

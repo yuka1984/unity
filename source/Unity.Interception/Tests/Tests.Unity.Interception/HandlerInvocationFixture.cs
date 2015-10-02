@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     /// <summary>
     /// Tests for various kinds of things handlers can do.
     /// </summary>
-    [TestClass]
+     
     public class HandlerInvocationFixture
     {
         private IUnityContainer container;
 
-        [TestInitialize]
-        public void SetUp()
+        public HandlerInvocationFixture()
         {
             container = new UnityContainer()
                 .AddNewExtension<Interception>()
@@ -37,16 +36,16 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             container.RegisterInstance<ICallHandler>("Handler2", new TripleOutputHandler());
         }
 
-        [TestMethod]
+        [Fact]
         public void HandlersCanChangeInputsBeforeTargetIsCalled()
         {
             var intercepted = container.Resolve<ICanChangeParametersTarget>();
-            Assert.AreEqual(0, intercepted.MostRecentInput);
+            Assert.Equal(0, intercepted.MostRecentInput);
             intercepted.DoSomething(2);
-            Assert.AreEqual(4, intercepted.MostRecentInput);
+            Assert.Equal(4, intercepted.MostRecentInput);
         }
 
-        [TestMethod]
+        [Fact]
         public void HandlersCanChangeOutputsAfterTargetReturns()
         {
             var intercepted = container.Resolve<ICanChangeParametersTarget>();
@@ -54,10 +53,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             intercepted.DoSomethingElse(2, out output);
 
-            Assert.AreEqual((2 + 5) * 3, output);
+            Assert.Equal((2 + 5) * 3, output);
         }
 
-        [TestMethod]
+        [Fact]
         public void HandlersCanChangeRefsAfterTargetReturns()
         {
             var intercepted = container.Resolve<ICanChangeParametersTarget>();
@@ -65,7 +64,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             intercepted.DoSomethingElseWithRef(2, ref output);
 
-            Assert.AreEqual((2 + 3 + 5) * 3, output);
+            Assert.Equal((2 + 3 + 5) * 3, output);
         }
     }
 

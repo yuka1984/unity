@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.InterfaceInterception
 {
-    [TestClass]
+     
     public class ContainerInterfaceInterceptionFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanInterceptInstancesViaTheContainer()
         {
             IUnityContainer container = new UnityContainer()
@@ -28,17 +28,17 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.InterfaceInterce
 
             IDal dal = container.Resolve<IDal>();
 
-            Assert.IsTrue(dal is IInterceptingProxy);
+            Assert.True(dal is IInterceptingProxy);
 
             dal.Deposit(50.0);
             dal.Deposit(65.0);
             dal.Withdraw(15.0);
 
             CallCountHandler handler = (CallCountHandler)(container.Resolve<ICallHandler>("callCount"));
-            Assert.AreEqual(3, handler.CallCount);
+            Assert.Equal(3, handler.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptOpenGenericInterfaces()
         {
             IUnityContainer container = new UnityContainer()
@@ -55,15 +55,15 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.InterfaceInterce
             InterfaceInterceptorFixture.IGenericOne<decimal> target = container.Resolve<InterfaceInterceptorFixture.IGenericOne<decimal>>();
 
             decimal result = target.DoSomething(52m);
-            Assert.AreEqual(52m, result);
+            Assert.Equal(52m, result);
             target.DoSomething(17m);
             target.DoSomething(84.2m);
 
             CallCountHandler handler = (CallCountHandler)(container.Resolve<ICallHandler>("callCount"));
-            Assert.AreEqual(3, handler.CallCount);
+            Assert.Equal(3, handler.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericInterfaceWithConstraints()
         {
             var container = new UnityContainer()
@@ -74,7 +74,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.InterfaceInterce
 
             var result = container.Resolve<IGenericInterfaceWithConstraints<MockDal>>();
 
-            Assert.IsNotNull(result as IInterceptingProxy);
+            Assert.NotNull(result as IInterceptingProxy);
         }
 
         public interface IGenericInterfaceWithConstraints<T>

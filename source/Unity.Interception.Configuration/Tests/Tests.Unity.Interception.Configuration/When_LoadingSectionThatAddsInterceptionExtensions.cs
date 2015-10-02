@@ -3,29 +3,29 @@
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
-    [TestClass]
+     
     public class When_LoadingSectionThatAddsInterceptionExtensions : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingSectionThatAddsInterceptionExtensions()
             : base("SectionExtensionBasics")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionExtensionIsPresent()
         {
-            Assert.IsInstanceOfType(section.SectionExtensions[0].ExtensionObject,
-                typeof(InterceptionConfigurationExtension));
+            Assert.IsType<InterceptionConfigurationExtension>(section.SectionExtensions[0].ExtensionObject);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_InterceptionElementHasBeenAdded()
         {
-            Assert.IsNotNull(ExtensionElementMap.GetContainerConfiguringElementType("interception"));
+            Assert.NotNull(ExtensionElementMap.GetContainerConfiguringElementType("interception"));
         }
     }
 }

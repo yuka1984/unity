@@ -3,7 +3,7 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using Microsoft.Practices.Unity.InterceptionExtension;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.TestSupport
 {

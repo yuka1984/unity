@@ -4,19 +4,20 @@ using System.Linq;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigurationWithConstructors
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigurationWithConstructors : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigurationWithConstructors()
             : base("RegistrationWithConstructors")
         {
+            MainSetup();
         }
 
         private ContainerElement container;
@@ -33,19 +34,19 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             this.thirdRegistration = this.container.Registrations[2];
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_FirstRegistrationHasOneInjectionMember()
         {
-            Assert.AreEqual(1, this.firstRegistration.InjectionMembers.Count);
+            Assert.Equal(1, this.firstRegistration.InjectionMembers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_FirstRegistrationHasConstructorMember()
         {
-            Assert.IsInstanceOfType(this.firstRegistration.InjectionMembers[0], typeof(ConstructorElement));
+            Assert.IsType<ConstructorElement>(this.firstRegistration.InjectionMembers[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_FirstRegistrationConstructorHasExpectedParameters()
         {
             var constructorElement = (ConstructorElement)this.firstRegistration.InjectionMembers[0];
@@ -53,16 +54,16 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             constructorElement.Parameters.Select(p => p.Name).AssertContainsExactly("one", "two", "three");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SecondRegistrationHasNoInjectionMembers()
         {
-            Assert.AreEqual(0, this.secondRegistration.InjectionMembers.Count);
+            Assert.Equal(0, this.secondRegistration.InjectionMembers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ThirdRegistrationHasZeroArgConstructor()
         {
-            Assert.AreEqual(0,
+            Assert.Equal(0,
                 ((ConstructorElement)this.thirdRegistration.InjectionMembers[0]).Parameters.Count);
         }
     }

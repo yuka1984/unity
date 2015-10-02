@@ -1,45 +1,45 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     /// <summary>
     /// Tests for the MatchingRuleSet class
     /// </summary>
-    [TestClass]
+     
     public class MatchingRuleSetFixture
     {
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchWithNoContainedRules()
         {
             MatchingRuleSet ruleSet = new MatchingRuleSet();
 
             MethodBase member = GetType().GetMethod("ShouldNotMatchWithNoContainedRules");
-            Assert.IsFalse(ruleSet.Matches(member));
+            Assert.False(ruleSet.Matches(member));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithMatchingTypeRule()
         {
             MatchingRuleSet ruleSet = new MatchingRuleSet();
             ruleSet.Add(new TypeMatchingRule(typeof(MatchingRuleSetFixture)));
             MethodBase member = GetType().GetMethod("ShouldMatchWithMatchingTypeRule");
-            Assert.IsTrue(ruleSet.Matches(member));
+            Assert.True(ruleSet.Matches(member));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchWhenOneRuleDoesntMatch()
         {
             MethodBase member = GetType().GetMethod("ShouldNotMatchWhenOneRuleDoesntMatch");
             MatchingRuleSet ruleSet = new MatchingRuleSet();
 
             ruleSet.Add(new TypeMatchingRule(typeof(MatchingRuleSetFixture)));
-            Assert.IsTrue(ruleSet.Matches(member));
+            Assert.True(ruleSet.Matches(member));
 
             ruleSet.Add(new MemberNameMatchingRule("ThisMethodDoesntExist"));
-            Assert.IsFalse(ruleSet.Matches(member));
+            Assert.False(ruleSet.Matches(member));
         }
     }
 }

@@ -7,17 +7,17 @@ using System.Text;
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_SerializingPolicies
     /// </summary>
-    [TestClass]
+     
     public class When_SerializingPolicies : SerializationFixture
     {
-        [TestMethod]
+        [Fact]
         public void Then_EmptyPoliciesAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("EmptyPolicies.config", c =>
@@ -26,11 +26,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             });
 
             var policies = loadedConfig.Containers.Default.ConfiguringElements[0] as InterceptionElement;
-            Assert.IsNotNull(policies);
-            Assert.AreEqual(0, policies.Policies.Count);
+            Assert.NotNull(policies);
+            Assert.Equal(0, policies.Policies.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_PoliciesWithNoContentsAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("EmptyPolicies.config", c =>
@@ -53,7 +53,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly("Policy1", "Policy2");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MatchingRuleNamesAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("MatchingRules.config", CreateConfigWithMatchingRules);
@@ -63,7 +63,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly("NameOnly", "NameAndType", "RuleWithLifetime", "RuleWithElements");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MatchingRuleTypeNamesAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("MatchingRules.config", CreateConfigWithMatchingRules);
@@ -72,7 +72,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly(String.Empty, "AlwaysMatchingRule", "AlwaysMatchingRule", "AlwaysMatchingRule");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MatchingRuleLifetimesAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("MatchingRules.config", CreateConfigWithMatchingRules);
@@ -83,10 +83,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .Select(mr => mr.Lifetime)
                 .First();
 
-            Assert.AreEqual("singleton", lifetime.TypeName);
+            Assert.Equal("singleton", lifetime.TypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MatchingRuleInjectionMembersAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("MatchingRules.config", CreateConfigWithMatchingRules);
@@ -99,10 +99,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             injectionMembers.Select(m => m.GetType())
                 .AssertContainsExactly(typeof(ConstructorElement), typeof(PropertyElement));
 
-            Assert.AreEqual("MyProp", injectionMembers.OfType<PropertyElement>().First().Name);
+            Assert.Equal("MyProp", injectionMembers.OfType<PropertyElement>().First().Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CallHandlerNamesAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("CallHandlers.config", CreateConfigWithCallHandlers);
@@ -112,7 +112,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly("NamedRule", "NameAndType", "HandlerWithLifetime", "HandlerWithElements");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CallHandlerTypeNamesAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("CallHandlers.config", CreateConfigWithCallHandlers);
@@ -122,7 +122,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly(String.Empty, "DoMoreRule", "DoSomethingRule", "CallCountHandler");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CallHandlerLifetimesAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("CallHandlers.config", CreateConfigWithCallHandlers);
@@ -133,10 +133,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .Select(ch => ch.Lifetime)
                 .First();
 
-            Assert.AreEqual("singleton", lifetime.TypeName);
+            Assert.Equal("singleton", lifetime.TypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CallHandlerInjectionMembersAreSerialized()
         {
             var loadedConfig = SerializeAndLoadConfig("CallHandlers.config", CreateConfigWithCallHandlers);
@@ -149,7 +149,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             injectionMembers.Select(m => m.GetType())
                 .AssertContainsExactly(typeof(ConstructorElement), typeof(PropertyElement));
 
-            Assert.AreEqual("MyProp", injectionMembers.OfType<PropertyElement>().First().Name);
+            Assert.Equal("MyProp", injectionMembers.OfType<PropertyElement>().First().Name);
         }
 
         private static void CreateConfigWithMatchingRules(ContainerElement c)

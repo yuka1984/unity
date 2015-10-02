@@ -12,15 +12,15 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 using TestInitializeAttribute = NUnit.Framework.TestFixtureSetUpAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.Tests
 {
-    [TestClass]
+     
     public class RegistrationByConventionHelpersFixture
     {
-        [TestMethod]
+        [Fact]
         public void GetsNoTypes()
         {
             WithMappings.None(typeof(TypeWithoutInterfaces)).AssertHasNoItems();
@@ -29,7 +29,7 @@ namespace Microsoft.Practices.Unity.Tests
             WithMappings.None(typeof(AnotherTestObject)).AssertHasNoItems();
         }
 
-        [TestMethod]
+        [Fact]
         public void GetsAllInterfaces()
         {
             WithMappings.FromAllInterfaces(typeof(TypeWithoutInterfaces)).AssertHasNoItems();
@@ -44,7 +44,7 @@ namespace Microsoft.Practices.Unity.Tests
             WithMappings.FromAllInterfaces(typeof(GenericTestObject)).AssertContainsInAnyOrder(typeof(IGenericTestObject<string, int>), typeof(IComparable<int>), typeof(IEnumerable<IList<string>>), typeof(IEnumerable));
         }
 
-        [TestMethod]
+        [Fact]
         public void GetsMatchingInterface()
         {
             WithMappings.FromMatchingInterface(typeof(TypeWithoutInterfaces)).AssertHasNoItems();
@@ -59,7 +59,7 @@ namespace Microsoft.Practices.Unity.Tests
             WithMappings.FromMatchingInterface(typeof(GenericTestObject)).AssertHasNoItems();
         }
 
-        [TestMethod]
+        [Fact]
         public void GetsAllInterfacesInSameAssembly()
         {
             WithMappings.FromAllInterfacesInSameAssembly(typeof(TypeWithoutInterfaces)).AssertHasNoItems();
@@ -74,28 +74,28 @@ namespace Microsoft.Practices.Unity.Tests
             WithMappings.FromAllInterfacesInSameAssembly(typeof(GenericTestObject)).AssertContainsExactly(typeof(IGenericTestObject<string, int>));
         }
 
-        [TestMethod]
+        [Fact]
         public void GetsNames()
         {
-            Assert.AreEqual("MockLogger", WithName.TypeName(typeof(MockLogger)));
-            Assert.AreEqual("List`1", WithName.TypeName(typeof(List<>)));
-            Assert.IsNull(WithName.Default(typeof(MockLogger)));
-            Assert.IsNull(WithName.Default(typeof(List<>)));
+            Assert.Equal("MockLogger", WithName.TypeName(typeof(MockLogger)));
+            Assert.Equal("List`1", WithName.TypeName(typeof(List<>)));
+            Assert.Null(WithName.Default(typeof(MockLogger)));
+            Assert.Null(WithName.Default(typeof(List<>)));
         }
 
-        [TestMethod]
+        [Fact]
         public void GetsLifetimeManagers()
         {
-            Assert.IsInstanceOfType(WithLifetime.ContainerControlled(typeof(MockLogger)), typeof(ContainerControlledLifetimeManager));
-            Assert.IsInstanceOfType(WithLifetime.ExternallyControlled(typeof(MockLogger)), typeof(ExternallyControlledLifetimeManager));
-            Assert.IsInstanceOfType(WithLifetime.Hierarchical(typeof(MockLogger)), typeof(HierarchicalLifetimeManager));
-            Assert.IsNull(WithLifetime.None(typeof(MockLogger)));
-            Assert.IsInstanceOfType(WithLifetime.PerResolve(typeof(MockLogger)), typeof(PerResolveLifetimeManager));
-            Assert.IsInstanceOfType(WithLifetime.Transient(typeof(MockLogger)), typeof(TransientLifetimeManager));
-            Assert.IsInstanceOfType(WithLifetime.Custom<CustomLifetimeManager>(typeof(MockLogger)), typeof(CustomLifetimeManager));
+            Assert.IsType< ContainerControlledLifetimeManager>(WithLifetime.ContainerControlled(typeof(MockLogger)));
+            Assert.IsType< ExternallyControlledLifetimeManager>(WithLifetime.ExternallyControlled(typeof(MockLogger)));
+            Assert.IsType< HierarchicalLifetimeManager>(WithLifetime.Hierarchical(typeof(MockLogger)));
+            Assert.Null(WithLifetime.None(typeof(MockLogger)));
+            Assert.IsType<PerResolveLifetimeManager>(WithLifetime.PerResolve(typeof(MockLogger)));
+            Assert.IsType<TransientLifetimeManager>(WithLifetime.Transient(typeof(MockLogger)));
+            Assert.IsType<CustomLifetimeManager>(WithLifetime.Custom<CustomLifetimeManager>(typeof(MockLogger)));
 
 #if !NETFX_CORE
-            Assert.IsInstanceOfType(WithLifetime.PerThread(typeof(MockLogger)), typeof(PerThreadLifetimeManager));
+            Assert.IsType< PerThreadLifetimeManager>(WithLifetime.PerThread(typeof(MockLogger)));
 #endif
         }
 

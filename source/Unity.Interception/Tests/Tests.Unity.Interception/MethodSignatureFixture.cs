@@ -3,47 +3,46 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
-    [TestClass]
+     
     public class MethodSignatureFixture
     {
         private IUnityContainer container;
 
-        [TestInitialize]
-        public void SetUp()
+        public MethodSignatureFixture()
         {
             container = new UnityContainer();
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldPassWithNoParameters()
         {
             ISignatureTestTarget target = GetTarget();
             target.MethodWithNoParameters();
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldPassWithSimpleInputs()
         {
             ISignatureTestTarget target = GetTarget();
             target.MethodWithSimpleInputs(1, "two");
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldPassWithOutParams()
         {
             ISignatureTestTarget target = GetTarget();
             int first;
             string second;
             target.MethodWithOutParams(out first, out second);
-            Assert.AreEqual(1, first);
-            Assert.AreEqual("two", second);
+            Assert.Equal(1, first);
+            Assert.Equal("two", second);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldPassWithInOutRef()
         {
             ISignatureTestTarget target = GetTarget();
@@ -51,11 +50,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             float three = 1.0f;
 
             target.MethodWithInOutByrefParams(1, out two, ref three, 5.0M);
-            Assert.AreEqual("owt", two);
-            Assert.AreEqual(3.0f, three);
+            Assert.Equal("owt", two);
+            Assert.Equal(3.0f, three);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldPassWithVarArgs()
         {
             ISignatureTestTarget target = GetTarget();
@@ -235,16 +234,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
         public IMethodReturn Invoke(IMethodInvocation input,
                                     GetNextHandlerDelegate getNext)
         {
-            Assert.IsNotNull(expectedSignature);
+            Assert.NotNull(expectedSignature);
 
             Type[] messageSignature = input.MethodBase.GetParameters().Select(info => info.ParameterType).ToArray();
 
-            Assert.AreEqual(expectedSignature.Length, messageSignature.Length);
+            Assert.Equal(expectedSignature.Length, messageSignature.Length);
             for (int i = 0; i < messageSignature.Length; ++i)
             {
-                Assert.AreSame(expectedSignature[i], messageSignature[i],
-                               "Signature for method {0} failed to match for parameter {1}",
-                               input.MethodBase.Name, i);
+                Assert.Same(expectedSignature[i], messageSignature[i]);
             }
 
             return getNext()(input, getNext);

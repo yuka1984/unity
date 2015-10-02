@@ -1,41 +1,36 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 {
     /// <summary>
     /// Summary description for PolicyInjectionWithGenericMethodsFixture
     /// </summary>
-    [TestClass]
-    public partial class PolicyInjectionWithGenericMethodsFixture
+     
+    public partial class PolicyInjectionWithGenericMethodsFixture: IDisposable
     {
-        [TestCleanup]
-        public void Teardown()
-        {
-            GlobalCountCallHandler.Calls.Clear();
-        }
-
-        [TestMethod]
+        [Fact]
         public void InterfaceInterceptorCanInterceptNonGenericMethod()
         {
             CanInterceptNonGenericMethod<InterfaceInterceptor>();
         }
 
-        [TestMethod]
+        [Fact]
         public void InterfaceInterceptorCanInterceptGenericMethod()
         {
             CanInterceptGenericMethod<InterfaceInterceptor>();
         }
 
-        [TestMethod]
+        [Fact]
         public void VirtualMethodCanInterceptNonGenericMethod()
         {
             CanInterceptNonGenericMethod<VirtualMethodInterceptor>();
         }
 
-        [TestMethod]
+        [Fact]
         public void VirtualMethodCanInterceptGenericMethod()
         {
             CanInterceptGenericMethod<VirtualMethodInterceptor>();
@@ -60,7 +55,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 
             instance.DoSomethingElse("boo");
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["NonGeneric"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["NonGeneric"]);
         }
 
         private static void CanInterceptGenericMethod<TInterceptor>()
@@ -73,7 +68,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
             instance.DoSomething<string>();
             instance.DoSomething<int>();
 
-            Assert.AreEqual(2, GlobalCountCallHandler.Calls["Generic"]);
+            Assert.Equal(2, GlobalCountCallHandler.Calls["Generic"]);
+        }
+
+        public void Dispose()
+        {
+            GlobalCountCallHandler.Calls.Clear();
         }
     }
 

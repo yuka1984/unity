@@ -4,13 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 {
     public partial class VirtualMethodOverrideFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanInterceptDoSomethingMethodWithTransparentProxy()
         {
             var container = CreateContainer();
@@ -25,8 +25,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
             AssertOneHandlerCreated(log);
             var handlerId = GetHandlerId(log);
 
-            Assert.IsTrue(log.ContainsKey(handlerId));
-            Assert.AreEqual(1, log[handlerId].Count);
+            Assert.True(log.ContainsKey(handlerId));
+            Assert.Equal(1, log[handlerId].Count);
         }
 
         public partial class RootClass : MarshalByRefObject

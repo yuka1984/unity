@@ -3,14 +3,14 @@
 using System.Linq;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
-    [TestClass]
+     
     public class ParameterCollectionFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanAccessNonFilteredParameters()
         {
             var collection =
@@ -19,7 +19,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                     StaticReflection.GetMethodInfo(() => TestMethod(null, null, null, null, null)).GetParameters(),
                     pi => true);
 
-            Assert.AreEqual(5, collection.Count);
+            Assert.Equal(5, collection.Count);
             CollectionAssertExtensions.AreEqual(
                 new[] { 10, 20, 30, 40, 50 },
                 collection);
@@ -37,7 +37,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 Enumerable.Range(0, 5).Select(i => collection.GetParameterInfo(i).Name).ToArray());
         }
 
-        [TestMethod]
+        [Fact]
         public void CanAccessFilteredParameters()
         {
             var param = 1;
@@ -47,7 +47,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                     StaticReflection.GetMethodInfo(() => TestMethod(null, null, null, null, null)).GetParameters(),
                     pi => param++ % 2 == 1);
 
-            Assert.AreEqual(3, collection.Count);
+            Assert.Equal(3, collection.Count);
             CollectionAssertExtensions.AreEqual(
                 new[] { 10, 30, 50 },
                 collection);
@@ -65,7 +65,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 Enumerable.Range(0, 3).Select(i => collection.GetParameterInfo(i).Name).ToArray());
         }
 
-        [TestMethod]
+        [Fact]
         public void FilteredCollectionReturnsRightParameterByName()
         {
             object dummy;
@@ -75,13 +75,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                     StaticReflection.GetMethodInfo(() => MethodWithOuts(out dummy, null, out dummy2, null)).GetParameters(),
                     pi => !pi.IsOut);
 
-            Assert.AreEqual(2, inputsCollection.Count);
+            Assert.Equal(2, inputsCollection.Count);
             CollectionAssertExtensions.AreEqual(new object[] { "two", "four" }, inputsCollection);
-            Assert.AreEqual("two", inputsCollection["param2"]);
-            Assert.AreEqual("four", inputsCollection["param4"]);
+            Assert.Equal("two", inputsCollection["param2"]);
+            Assert.Equal("four", inputsCollection["param4"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void WhenParameterValueIsNull()
         {
             var collection =
@@ -92,10 +92,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             var result = collection.Contains(null);
 
-            Assert.IsTrue(result);
+            Assert.True(result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ContainsParameterWorksAsExpected()
         {
             var collection =
@@ -104,8 +104,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                     StaticReflection.GetMethodInfo(() => TestMethod(null, null, null, null, null)).GetParameters(),
                     p => true);
 
-            Assert.IsTrue(new[] { "param1", "param2", "param3", "param4", "param5" }.All(collection.ContainsParameter));
-            Assert.IsTrue(new[] { "someOtherParam", "notThisOneEither" }.All(p => !collection.ContainsParameter(p)));
+            Assert.True(new[] { "param1", "param2", "param3", "param4", "param5" }.All(collection.ContainsParameter));
+            Assert.True(new[] { "someOtherParam", "notThisOneEither" }.All(p => !collection.ContainsParameter(p)));
         }
 
         public static void TestMethod(object param1, object param2, object param3, object param4, object param5)

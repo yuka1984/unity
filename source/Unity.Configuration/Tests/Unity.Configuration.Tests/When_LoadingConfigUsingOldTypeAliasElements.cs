@@ -5,28 +5,29 @@ using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigUsingOldTypeAliasElements
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigUsingOldTypeAliasElements : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigUsingOldTypeAliasElements()
             : base("OldAliasesSyntax")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ExpectedNumberOfAliasesArePresent()
         {
-            Assert.AreEqual(8, section.TypeAliases.Count);
+            Assert.Equal(8, section.TypeAliases.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_AliasesAreAvailableInExpectedOrder()
         {
             CollectionAssertExtensions.AreEqual(

@@ -4,14 +4,13 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.WebIntegation.Tests
 {
-    [TestClass]
     public class MvcUnityFilterAttributeFilterProviderFixture
     {
-        [TestMethod]
+        [Fact]
         public void When_getting_action_attributes_then_builds_up_instance()
         {
             using (var container = new UnityContainer())
@@ -32,14 +31,14 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
 
                 // Assert
                 TestFilterAttribute attrib = filter.Instance as TestFilterAttribute;
-                Assert.IsNotNull(attrib);
-                Assert.AreEqual(FilterScope.Action, filter.Scope);
-                Assert.AreEqual(1234, filter.Order);
-                Assert.AreSame(someInstance, attrib.Some);
+                Assert.NotNull(attrib);
+                Assert.Equal(FilterScope.Action, filter.Scope);
+                Assert.Equal(1234, filter.Order);
+                Assert.Same(someInstance, attrib.Some);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void When_getting_controller_attributes_then_builds_up_instance()
         {
             using (var container = new UnityContainer())
@@ -60,10 +59,10 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
 
                 // Assert
                 TestFilterAttribute attrib = filter.Instance as TestFilterAttribute;
-                Assert.IsNotNull(attrib);
-                Assert.AreEqual(FilterScope.Controller, filter.Scope);
-                Assert.AreEqual(1234, filter.Order);
-                Assert.AreSame(someInstance, attrib.Some);
+                Assert.NotNull(attrib);
+                Assert.Equal(FilterScope.Controller, filter.Scope);
+                Assert.Equal(1234, filter.Order);
+                Assert.Same(someInstance, attrib.Some);
             }
         }
 

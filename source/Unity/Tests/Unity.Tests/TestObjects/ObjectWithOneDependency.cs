@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #elif __IOS__
 using NUnit.Framework;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.Tests.TestObjects
@@ -26,7 +26,7 @@ namespace Microsoft.Practices.Unity.Tests.TestObjects
 
         public void Validate()
         {
-            Assert.IsNotNull(inner);
+            Assert.NotNull(inner);
         }
     }
 }

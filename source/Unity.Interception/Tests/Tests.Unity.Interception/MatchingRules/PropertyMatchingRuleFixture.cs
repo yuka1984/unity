@@ -2,11 +2,11 @@
 
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
-    [TestClass]
+     
     public class PropertyMatchingRuleFixture
     {
         private MethodInfo getMyProperty;
@@ -16,8 +16,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
         private MethodInfo getACompletelyDifferentProperty;
         private MethodInfo setACompletelyDifferentProperty;
 
-        [TestInitialize]
-        public void Setup()
+        public PropertyMatchingRuleFixture()
         {
             Type propTarget = typeof(PropertyTarget);
             getMyProperty = propTarget.GetProperty("MyProperty").GetGetMethod();
@@ -30,51 +29,51 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                 propTarget.GetProperty("ACompletelyDifferentProperty").GetSetMethod();
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchPropertyName()
         {
             IMatchingRule rule =
                 new PropertyMatchingRule("MyProperty");
-            Assert.IsTrue(rule.Matches(getMyProperty));
-            Assert.IsTrue(rule.Matches(setMyProperty));
+            Assert.True(rule.Matches(getMyProperty));
+            Assert.True(rule.Matches(setMyProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchSetWithGetOption()
         {
             IMatchingRule rule =
                 new PropertyMatchingRule("MyProperty", PropertyMatchingOption.Get);
-            Assert.IsTrue(rule.Matches(getMyProperty));
-            Assert.IsFalse(rule.Matches(setMyProperty));
+            Assert.True(rule.Matches(getMyProperty));
+            Assert.False(rule.Matches(setMyProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchGetWithSetOption()
         {
             IMatchingRule rule =
                 new PropertyMatchingRule("MyProperty", PropertyMatchingOption.Set);
-            Assert.IsFalse(rule.Matches(getMyProperty));
-            Assert.IsTrue(rule.Matches(setMyProperty));
+            Assert.False(rule.Matches(getMyProperty));
+            Assert.True(rule.Matches(setMyProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithWildcard()
         {
             IMatchingRule rule =
                 new PropertyMatchingRule("My*");
-            Assert.IsTrue(rule.Matches(getMyProperty));
-            Assert.IsTrue(rule.Matches(setMyProperty));
-            Assert.IsTrue(rule.Matches(getMyOtherProperty));
+            Assert.True(rule.Matches(getMyProperty));
+            Assert.True(rule.Matches(setMyProperty));
+            Assert.True(rule.Matches(getMyOtherProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchPathologiciallyNamedMethod()
         {
             IMatchingRule rule = new PropertyMatchingRule("NotAProperty");
-            Assert.IsFalse(rule.Matches(setNotAProperty));
+            Assert.False(rule.Matches(setNotAProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithMultipleMatchTargets()
         {
             IMatchingRule rule = new PropertyMatchingRule(new PropertyMatchingInfo[]
@@ -82,11 +81,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                                                                   new PropertyMatchingInfo("MyProperty"),
                                                                   new PropertyMatchingInfo("ACompletelyDifferentProperty", PropertyMatchingOption.Set)
                                                               });
-            Assert.IsTrue(rule.Matches(getMyProperty));
-            Assert.IsTrue(rule.Matches(setMyProperty));
-            Assert.IsFalse(rule.Matches(getMyOtherProperty));
-            Assert.IsFalse(rule.Matches(getACompletelyDifferentProperty));
-            Assert.IsTrue(rule.Matches(setACompletelyDifferentProperty));
+            Assert.True(rule.Matches(getMyProperty));
+            Assert.True(rule.Matches(setMyProperty));
+            Assert.False(rule.Matches(getMyOtherProperty));
+            Assert.False(rule.Matches(getACompletelyDifferentProperty));
+            Assert.True(rule.Matches(setACompletelyDifferentProperty));
         }
     }
 

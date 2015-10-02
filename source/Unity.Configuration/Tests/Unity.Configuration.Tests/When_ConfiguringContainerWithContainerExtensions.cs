@@ -3,19 +3,20 @@
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerWithContainerExtensions
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerWithContainerExtensions : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerWithContainerExtensions()
             : base("ContainerExtensions")
         {
+            MainSetup();
         }
 
         private IUnityContainer container;
@@ -32,10 +33,10 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             this.section.Configure(this.container);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ContainerHasExtensionAdded()
         {
-            Assert.IsNotNull(this.container.Configure<MockContainerExtension>());
+            Assert.NotNull(this.container.Configure<MockContainerExtension>());
         }
     }
 }

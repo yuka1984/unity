@@ -6,13 +6,13 @@ using System.Linq;
 using System.Security;
 using System.Security.Permissions;
 using System.Text;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInterception
 {
     public partial class InterceptingClassGenerationFixture
     {
-        [TestMethod]
+        [Fact]
         public void GeneratedTypeForAdditionalInterfaceWithMethodsHavingSignaturesMatchingMethodsInTheBaseClassIsVerifiable()
         {
             PermissionSet grantSet = new PermissionSet(PermissionState.None);

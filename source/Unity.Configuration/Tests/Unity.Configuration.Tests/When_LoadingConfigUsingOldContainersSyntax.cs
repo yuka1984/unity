@@ -5,25 +5,26 @@ using System.Linq;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigUsingOldContainersSyntax
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigUsingOldContainersSyntax : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigUsingOldContainersSyntax()
             : base("OldContainersSyntax")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionContainsExpectedNumberOfContainers()
         {
-            Assert.AreEqual(2, section.Containers.Count);
+            Assert.Equal(2, section.Containers.Count);
         }
 
         public void Then_ContainersArePresentInFileOrder()

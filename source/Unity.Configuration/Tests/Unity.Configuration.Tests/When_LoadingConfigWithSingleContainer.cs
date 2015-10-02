@@ -2,37 +2,38 @@
 
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for SingleSectionSingleContainerFixture
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigWithSingleContainer : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigWithSingleContainer()
             : base("SingleSectionSingleContainer")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionIsNotNull()
         {
-            Assert.IsNotNull(this.section);
+            Assert.NotNull(this.section);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ContainersPropertyIsSet()
         {
-            Assert.IsNotNull(section.Containers);
+            Assert.NotNull(section.Containers);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ThereIsOneContainerInSection()
         {
-            Assert.AreEqual(1, section.Containers.Count);
+            Assert.Equal(1, section.Containers.Count);
         }
     }
 }

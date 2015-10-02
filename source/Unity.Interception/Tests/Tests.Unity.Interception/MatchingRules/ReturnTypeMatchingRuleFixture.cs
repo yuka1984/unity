@@ -2,58 +2,57 @@
 
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
-    [TestClass]
+     
     public class ReturnTypeMatchingRuleFixture
     {
         private MethodBase objectToStringMethod;
         private MethodBase objectCtor;
         private MethodBase stringCopyToMethod;
 
-        [TestInitialize]
-        public void TestInitialize()
+        public ReturnTypeMatchingRuleFixture()
         {
             objectToStringMethod = typeof(object).GetMethod("ToString");
             objectCtor = typeof(object).GetConstructor(new Type[0]);
             stringCopyToMethod = typeof(string).GetMethod("CopyTo");
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchIsDeniedWhenReturnTypeNameDiffers()
         {
             IMatchingRule matchingRule = new ReturnTypeMatchingRule("System.wichReturnType?");
-            Assert.IsFalse(matchingRule.Matches(objectToStringMethod));
+            Assert.False(matchingRule.Matches(objectToStringMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchIsAcceptedWhenReturnTypeNameIsExactMatch()
         {
             IMatchingRule matchingRule = new ReturnTypeMatchingRule("System.String");
-            Assert.IsTrue(matchingRule.Matches(objectToStringMethod));
+            Assert.True(matchingRule.Matches(objectToStringMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchIsDeniedWhenReturnTypeIsSpecifiedButNoReturnTypeExistsOnMethodBase()
         {
             IMatchingRule matchingRule = new ReturnTypeMatchingRule("void");
-            Assert.IsFalse(matchingRule.Matches(objectCtor));
+            Assert.False(matchingRule.Matches(objectCtor));
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchIsAcceptedWhenReturnTypeIsVoidAndMethodReturnsVoid()
         {
             IMatchingRule matchingRule = new ReturnTypeMatchingRule("System.Void");
-            Assert.IsTrue(matchingRule.Matches(stringCopyToMethod));
+            Assert.True(matchingRule.Matches(stringCopyToMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchIsAcceptedForTypeNameWithoutNamespace()
         {
             IMatchingRule matchingRule = new ReturnTypeMatchingRule("string", true);
-            Assert.IsTrue(matchingRule.Matches(objectToStringMethod));
+            Assert.True(matchingRule.Matches(objectToStringMethod));
         }
     }
 }

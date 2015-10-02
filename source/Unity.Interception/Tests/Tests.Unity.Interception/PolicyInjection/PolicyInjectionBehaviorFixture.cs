@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 {
     public class ContainerConfiguredForPolicyInjectionContext
     {
-        [TestInitialize]
+        Change with Constructor method
         public void Setup()
         {
             Arrange();
@@ -49,7 +49,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
         public IUnityContainer Container { get; set; }
     }
 
-    [TestClass]
+     
     public class GivenInterceptedInstanceOfDerivedTypeWithNoOverride : ContainerConfiguredForPolicyInjectionContext
     {
         public BaseClass Instance { get; set; }
@@ -61,26 +61,26 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
             Instance = Container.Resolve<BaseClass>("derived-nooverride");
         }
 
-        [TestMethod]
+        [Fact]
         [Ignore] // not supported yet
         public void WhenInvokingMethodFromReferenceToTheBaseClass_ThenInterceptorsForTheBaseAndDerivedClassAreApplied()
         {
             var result = ((BaseClass)Instance).InterceptedMethod();
 
-            Assert.AreEqual("base-derivednooverridehandler-basehandler", result);
+            Assert.Equal("base-derivednooverridehandler-basehandler", result);
         }
 
-        [TestMethod]
+        [Fact]
         [Ignore] // not supported yet
         public void WhenInvokingMethodFromReferenceToTheDerivedClass_ThenInterceptorsForTheBaseAndDerivedClassAreApplied()
         {
             var result = ((DerivedWithNoOverrideClass)Instance).InterceptedMethod();
 
-            Assert.AreEqual("base-derivednooverridehandler-basehandler", result);
+            Assert.Equal("base-derivednooverridehandler-basehandler", result);
         }
     }
 
-    [TestClass]
+     
     public class GivenInterceptedInstanceOfDerivedTypeWithOverride : ContainerConfiguredForPolicyInjectionContext
     {
         public BaseClass Instance { get; set; }
@@ -92,22 +92,22 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
             Instance = Container.Resolve<BaseClass>("derived");
         }
 
-        [TestMethod]
+        [Fact]
         [Ignore] // not supported yet
         public void WhenInvokingMethodFromReferenceToTheBaseClass_ThenInterceptorsForTheBaseAndDerivedClassAreApplied()
         {
             var result = ((BaseClass)Instance).InterceptedMethod();
 
-            Assert.AreEqual("base-derivedhandler-basehandler", result);
+            Assert.Equal("base-derivedhandler-basehandler", result);
         }
 
-        [TestMethod]
+        [Fact]
         [Ignore] // not supported yet
         public void WhenInvokingMethodFromReferenceToTheDerivedClass_ThenInterceptorsForTheBaseAndDerivedClassAreApplied()
         {
             var result = ((DerivedClass)Instance).InterceptedMethod();
 
-            Assert.AreEqual("base-derivedhandler-basehandler", result);
+            Assert.Equal("base-derivedhandler-basehandler", result);
         }
     }
 

@@ -6,14 +6,14 @@ using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.Configuration.Tests.TestObjects;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerForArrayInjection
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerForArrayInjection : ContainerConfiguringFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerForArrayInjection()
@@ -21,7 +21,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
         {
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_DefaultResolutionReturnsAllRegisteredLoggers()
         {
             var result = Container.Resolve<ArrayDependencyObject>("defaultInjection");
@@ -30,7 +30,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 typeof(SpecialLogger), typeof(MockLogger), typeof(MockLogger));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SpecificElementsAreInjected()
         {
             var result = Container.Resolve<ArrayDependencyObject>("specificElements");
@@ -39,7 +39,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 typeof(SpecialLogger), typeof(MockLogger));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanMixResolutionAndValuesInAnArray()
         {
             var result = Container.Resolve<ArrayDependencyObject>("mixingResolvesAndValues");
@@ -47,16 +47,16 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             result.Strings.AssertContainsExactly("first", "Not the second", "third");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureZeroLengthArrayForInjection()
         {
             var result = Container.Resolve<ArrayDependencyObject>("zeroLengthArray");
 
-            Assert.IsNotNull(result.Strings);
-            Assert.AreEqual(0, result.Strings.Length);
+            Assert.NotNull(result.Strings);
+            Assert.Equal(0, result.Strings.Length);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_GenericArrayPropertiesAreInjected()
         {
             var result = Container.Resolve<GenericArrayPropertyDependency<string>>("defaultResolution");
@@ -64,12 +64,12 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             result.Stuff.AssertContainsInAnyOrder("first", "second", "third");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureZeroLengthGenericArrayToBeInjected()
         {
             var result = Container.Resolve<GenericArrayPropertyDependency<string>>("explicitZeroLengthArray");
 
-            Assert.AreEqual(0, result.Stuff.Count());
+            Assert.Equal(0, result.Stuff.Count());
         }
     }
 }

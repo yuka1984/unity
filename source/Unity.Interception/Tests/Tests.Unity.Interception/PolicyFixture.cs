@@ -6,26 +6,26 @@ using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     /// <summary>
     /// Tests for the Policy class
     /// </summary>
-    [TestClass]
+     
     public class PolicyFixture
     {
-        //[TestMethod]
+        //[Fact]
         //public void ShouldInitializeToEmpty()
         //{
         //    RuleDrivenPolicy p = new RuleDrivenPolicy("Empty");
-        //    Assert.AreEqual("Empty", p.Name);
-        //    Assert.AreEqual(0, p.RuleSet.Count);
-        //    Assert.AreEqual(0, p.Handlers.Count);
+        //    Assert.Equal("Empty", p.Name);
+        //    Assert.Equal(0, p.RuleSet.Count);
+        //    Assert.Equal(0, p.Handlers.Count);
         //}
 
-        //[TestMethod]
+        //[Fact]
         //public void ShouldPreserveHandlerOrder()
         //{
         //    RuleDrivenPolicy p = new RuleDrivenPolicy("OrderedHandlers");
@@ -38,13 +38,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
         //    p.Handlers.Add(h1);
         //    p.Handlers.Add(h3);
 
-        //    Assert.AreEqual(3, p.Handlers.Count);
-        //    Assert.AreSame(h2, p.Handlers[0]);
-        //    Assert.AreSame(h1, p.Handlers[1]);
-        //    Assert.AreSame(h3, p.Handlers[2]);
+        //    Assert.Equal(3, p.Handlers.Count);
+        //    Assert.Same(h2, p.Handlers[0]);
+        //    Assert.Same(h1, p.Handlers[1]);
+        //    Assert.Same(h3, p.Handlers[2]);
         //}
 
-        [TestMethod]
+        [Fact]
         public void ShouldHaveNoHandlersWhenPolicyDoesntMatch()
         {
             IMatchingRule[] rules = { };
@@ -55,10 +55,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             MethodImplementationInfo thisMember = GetMethodImplInfo<PolicyFixture>("ShouldHaveNoHandlersWhenPolicyDoesntMatch");
             List<ICallHandler> memberHandlers
                 = new List<ICallHandler>(p.GetHandlersFor(thisMember, container));
-            Assert.AreEqual(0, memberHandlers.Count);
+            Assert.Equal(0, memberHandlers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldGetHandlersInOrderWithGetHandlersFor()
         {
             IMatchingRule[] rules = { new MemberNameMatchingRule("ShouldGetHandlersInOrderWithGetHandlersFor") };
@@ -77,7 +77,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 new TypeComparer());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeAbleToMatchPropertyGet()
         {
             IMatchingRule[] rules = { new MemberNameMatchingRule("get_Balance") };

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
@@ -15,13 +15,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
     /// Intercepting event add/remove methods does not work with VirtualMethodInterceptor
     /// or InterfaceInterceptor 
     /// </summary>
-    [TestClass]
+     
     public class EventInterceptionFixture
     {
         private IUnityContainer container;
 
-        [TestInitialize]
-        public void Setup()
+        public EventInterceptionFixture()
         {
             container = new UnityContainer();
             container.RegisterType<ICallHandler, MyCallHandler>("MyHandler", new ContainerControlledLifetimeManager());
@@ -33,7 +32,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                     .AddCallHandler("MyHandler");
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptEventWithVirtualMethodInterceptor()
         {
             container.RegisterType<MyClass>(
@@ -45,10 +44,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             o.E1 += (sender, args) => { };
 
             var handler = (MyCallHandler)container.Resolve<ICallHandler>("MyHandler");
-            Assert.IsTrue(handler.WasCalled);
+            Assert.True(handler.WasCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptEventWithInterfaceInterceptor()
         {
             container.RegisterType<IMyInterface, MyClass>(
@@ -60,7 +59,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             o.E1 += (sender, args) => { };
 
             var handler = (MyCallHandler)container.Resolve<ICallHandler>("MyHandler");
-            Assert.IsTrue(handler.WasCalled);
+            Assert.True(handler.WasCalled);
         }
 
         public class MyCallHandler : ICallHandler

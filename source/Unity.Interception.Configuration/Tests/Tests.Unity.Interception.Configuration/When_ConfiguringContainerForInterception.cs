@@ -9,19 +9,20 @@ using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.Config
 using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.TestObjects;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerForInterception
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerForInterception : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerForInterception()
             : base("InterceptionInjectionMembers")
         {
+            MainSetup();
         }
 
         protected override void Arrange()
@@ -41,7 +42,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             return new UnityContainer().LoadConfiguration(this.section, containerName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureInterceptorThroughConfigurationFile()
         {
             var container = this.ConfiguredContainer("configuringInterceptorThroughConfigurationFile");
@@ -52,10 +53,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var instance = container.Resolve<Interceptable>();
             instance.DoSomething();
 
-            Assert.AreEqual(1, callCount.CallCount);
+            Assert.Equal(1, callCount.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureAdditionalInterfaceThroughConfigurationFile()
         {
             IUnityContainer container = this.ConfiguredContainer("configuringAdditionalInterfaceThroughConfigurationFile");
@@ -68,11 +69,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var instance = container.Resolve<Interceptable>();
             instance.DoSomething();
 
-            Assert.AreEqual(1, callCount.CallCount);
-            Assert.IsTrue(instance is IServiceProvider);
+            Assert.Equal(1, callCount.CallCount);
+            Assert.True(instance is IServiceProvider);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureResolvedInterceptionBehavior()
         {
             IUnityContainer container =
@@ -83,10 +84,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var instance = container.Resolve<Interceptable>();
             instance.DoSomething();
 
-            Assert.AreEqual(1, GlobalCountInterceptionBehavior.Calls.Values.First());
+            Assert.Equal(1, GlobalCountInterceptionBehavior.Calls.Values.First());
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureNamedResolvedBehavior()
         {
             IUnityContainer container = this.ConfiguredContainer("canConfigureNamedBehavior")
@@ -95,10 +96,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var instance = container.Resolve<Interceptable>();
             instance.DoSomething();
 
-            Assert.AreEqual(1, GlobalCountInterceptionBehavior.Calls["fixed"]);
+            Assert.Equal(1, GlobalCountInterceptionBehavior.Calls["fixed"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureBehaviorWithNameOnly()
         {
             var callCount = new CallCountInterceptionBehavior();
@@ -110,10 +111,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var instance = container.Resolve<Interceptable>();
             instance.DoSomething();
 
-            Assert.AreEqual(1, callCount.CallCount);
+            Assert.Equal(1, callCount.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureDefaultInterceptor()
         {
             IUnityContainer container = this.ConfiguredContainer("configuringDefaultInterceptor")
@@ -126,29 +127,29 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var instance1 = container.Resolve<Wrappable>();
             var instance2 = container.Resolve<Wrappable>("two");
 
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(instance1));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(instance2));
+            Assert.True(RemotingServices.IsTransparentProxy(instance1));
+            Assert.True(RemotingServices.IsTransparentProxy(instance2));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanAddInterfaceThroughConfiguredBehavior()
         {
             IUnityContainer container = this.ConfiguredContainer("addingInterfacesImplicitlyThroughBehavior");
 
             var instance = container.Resolve<Interceptable>();
-            Assert.IsNotNull(instance as IAdditionalInterface);
+            Assert.NotNull(instance as IAdditionalInterface);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanAddInterfaceThroughExplicitConfiguration()
         {
             IUnityContainer container = this.ConfiguredContainer("addingInterfacesExplicitlyWithBehavior");
 
             var instance = container.Resolve<Interceptable>();
-            Assert.IsNotNull(instance as IAdditionalInterface);
+            Assert.NotNull(instance as IAdditionalInterface);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MultipleBehaviorsCanBeConfigured()
         {
             var container = this.ConfiguredContainer("multipleBehaviorsOnOneRegistration");
@@ -158,9 +159,9 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 
             var countHandler = (CallCountInterceptionBehavior)container.Resolve<IInterceptionBehavior>("fixed");
 
-            Assert.AreEqual(1, countHandler.CallCount);
+            Assert.Equal(1, countHandler.CallCount);
 
-            Assert.IsNotNull(instance as IAdditionalInterface);
+            Assert.NotNull(instance as IAdditionalInterface);
         }
     }
 }

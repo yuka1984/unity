@@ -1,57 +1,57 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using Microsoft.Practices.Unity.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 {
-    [TestClass]
+     
     public class HandlerPipelineKeyFixture
     {
-        [TestMethod]
+        [Fact]
         public void KeysForSameMethodAreEqual()
         {
             var key1 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<Base>(b => b.Method1()));
             var key2 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<Base>(b => b.Method1()));
 
-            Assert.AreEqual(key1, key2);
+            Assert.Equal(key1, key2);
         }
 
-        [TestMethod]
+        [Fact]
         public void KeysForSameMethodReflectedFromDifferentTypesAreEqual()
         {
             var key1 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<Base>(b => b.Method2()));
             var key2 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<Derived>(b => b.Method2()));
 
-            Assert.AreEqual(key1, key2);
+            Assert.Equal(key1, key2);
         }
 
-        [TestMethod]
+        [Fact]
         public void KeysForSameMethodReflectedFromDifferentTypesOnDifferentModulesAreEqual()
         {
             var key1 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<object>(o => o.ToString()));
             var key2 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<Derived>(b => b.ToString()));
 
-            Assert.AreEqual(key1, key2);
+            Assert.Equal(key1, key2);
         }
 
-        [TestMethod]
+        [Fact]
         public void KeysForDifferentMethodsAreNotEqual()
         {
             var key1 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<Base>(b => b.Method1()));
             var key2 = HandlerPipelineKey.ForMethod(StaticReflection.GetMethodInfo<Base>(b => b.Method2()));
 
-            Assert.AreNotEqual(key1, key2);
+            Assert.NotEqual(key1, key2);
         }
 
-        [TestMethod]
+        [Fact]
         public void KeysForOverridenMethodReflectedFromDifferentTypesAreNotEqual()
         {
             // using plain reflection - lambdas get optimized so we cannot get the override through them
             var key1 = HandlerPipelineKey.ForMethod(typeof(Base).GetMethod("Method1"));
             var key2 = HandlerPipelineKey.ForMethod(typeof(Derived).GetMethod("Method1"));
 
-            Assert.AreNotEqual(key1, key2);
+            Assert.NotEqual(key1, key2);
         }
 
         public class Base

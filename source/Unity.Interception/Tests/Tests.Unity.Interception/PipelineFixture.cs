@@ -3,26 +3,26 @@
 using System.Reflection;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     /// <summary>
     /// Tests for the HandlerPipeline class
     /// </summary>
-    [TestClass]
+     
     public class PipelineFixture
     {
         private CallCountHandler callCountHandler;
         private StringReturnRewriteHandler returnHandler;
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeCreatable()
         {
             HandlerPipeline pipeline = new HandlerPipeline();
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeCreateableWithHandlers()
         {
             IUnityContainer container = GetContainer();
@@ -31,7 +31,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 = new HandlerPipeline(policies.GetHandlersFor(GetTargetMemberInfo(), container));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeInvokable()
         {
             IUnityContainer container = GetContainer();
@@ -46,9 +46,9 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 {
                     return MakeReturnMessage(message);
                 });
-            Assert.IsNotNull(result);
-            Assert.AreEqual(1, callCountHandler.CallCount);
-            Assert.AreEqual(returnHandler.ValueToRewriteTo, (string)result.ReturnValue);
+            Assert.NotNull(result);
+            Assert.Equal(1, callCountHandler.CallCount);
+            Assert.Equal(returnHandler.ValueToRewriteTo, (string)result.ReturnValue);
         }
 
         public virtual string MyTargetMethod(int i)

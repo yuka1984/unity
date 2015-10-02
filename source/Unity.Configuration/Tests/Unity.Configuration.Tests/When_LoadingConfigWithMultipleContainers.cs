@@ -5,40 +5,41 @@ using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigWithMultipleContainers
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigWithMultipleContainers : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigWithMultipleContainers()
             : base("SingleSectionMultipleNamedContainers")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ExpectedNumberOfContainersArePresent()
         {
-            Assert.AreEqual(2, section.Containers.Count);
+            Assert.Equal(2, section.Containers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_FirstContainerNameIsCorrect()
         {
-            Assert.AreEqual("one", section.Containers[0].Name);
+            Assert.Equal("one", section.Containers[0].Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SecondContainerNameIsCorrect()
         {
-            Assert.AreEqual("two", section.Containers[1].Name);
+            Assert.Equal("two", section.Containers[1].Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_EnumeratingContainersHappensInOrderOfConfigFile()
         {
             CollectionAssertExtensions.AreEqual(new[] { "one", "two" },

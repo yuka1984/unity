@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.TestSupport
 {
@@ -17,7 +17,7 @@ namespace Microsoft.Practices.Unity.TestSupport
 
         public void HasLifetime<TLifetime>() where TLifetime : LifetimeManager
         {
-            Assert.IsTrue(Registrations.All(r => r.LifetimeManagerType == typeof(TLifetime)));
+            Assert.True(Registrations.All(r => r.LifetimeManagerType == typeof(TLifetime)));
         }
     }
 }

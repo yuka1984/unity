@@ -3,14 +3,14 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
-    [TestClass]
+     
     public class InterceptFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanInterceptTargetWithInstanceInterceptor()
         {
             bool invoked = false;
@@ -27,11 +27,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             int value = proxy.DoSomething();
 
-            Assert.AreEqual(100, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(100, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void GeneratedProxyImplementsUserProvidedAdditionalInterfaces()
         {
             bool invoked = false;
@@ -48,11 +48,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             int value = ((ISomeInterface)proxy).DoSomethingElse();
 
-            Assert.AreEqual(100, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(100, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void GeneratedProxyImplementsInterceptionBehaviorProvidedAdditionalInterfaces()
         {
             bool invoked = false;
@@ -71,11 +71,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             int value = ((ISomeInterface)proxy).DoSomethingElse();
 
-            Assert.AreEqual(100, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(100, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptTargetWithInstanceInterceptorUsingGenericVersion()
         {
             bool invoked = false;
@@ -91,95 +91,88 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             int value = proxy.DoSomething();
 
-            Assert.AreEqual(100, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(100, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingANullTypeThrows()
         {
-            Intercept.ThroughProxyWithAdditionalInterfaces(
-                null,
-                new BaseClass(),
-                new InterfaceInterceptor(),
-                new IInterceptionBehavior[0],
-                Type.EmptyTypes);
+            Assert.Throws<ArgumentNullException>(() => Intercept.ThroughProxyWithAdditionalInterfaces(
+               null,
+               new BaseClass(),
+               new InterfaceInterceptor(),
+               new IInterceptionBehavior[0],
+               Type.EmptyTypes));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingANullTargetThrows()
         {
-            Intercept.ThroughProxyWithAdditionalInterfaces(
+            Assert.Throws<ArgumentNullException>(() => Intercept.ThroughProxyWithAdditionalInterfaces(
                 typeof(IInterface),
                 null,
                 new InterfaceInterceptor(),
                 new IInterceptionBehavior[0],
-                Type.EmptyTypes);
+                Type.EmptyTypes));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingWithANullInterceptorThrows()
         {
-            Intercept.ThroughProxyWithAdditionalInterfaces(
+            Assert.Throws<ArgumentNullException>(() => Intercept.ThroughProxyWithAdditionalInterfaces(
                 typeof(IInterface),
                 new BaseClass(),
                 null,
                 new IInterceptionBehavior[0],
-                Type.EmptyTypes);
+                Type.EmptyTypes));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingTypesNotCompatibleWithTheInterceptorThrows()
         {
-            Intercept.ThroughProxyWithAdditionalInterfaces(
+            Assert.Throws<ArgumentException>(() => Intercept.ThroughProxyWithAdditionalInterfaces(
                 typeof(IInterface),
                 new BaseClass(),
                 new RejectingInterceptor(),
                 new IInterceptionBehavior[0],
-                Type.EmptyTypes);
+                Type.EmptyTypes));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingWithANullSetOfInterceptionBehaviorsThrows()
         {
-            Intercept.ThroughProxyWithAdditionalInterfaces(
+            Assert.Throws<ArgumentNullException>(() => Intercept.ThroughProxyWithAdditionalInterfaces(
                 typeof(IInterface),
                 new BaseClass(),
                 new InterfaceInterceptor(),
                 null,
-                Type.EmptyTypes);
+                Type.EmptyTypes));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingWithANullSetOfAdditionalInterfacesThrows()
         {
-            Intercept.ThroughProxyWithAdditionalInterfaces(
+            Assert.Throws<ArgumentNullException>(() => Intercept.ThroughProxyWithAdditionalInterfaces(
                 typeof(IInterface),
                 new BaseClass(),
                 new InterfaceInterceptor(),
                 new IInterceptionBehavior[0],
-                null);
+                null));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingWithASetOfAdditionalInterfacesIncludingNonInterfaceTypeThrows()
         {
-            Intercept.ThroughProxyWithAdditionalInterfaces(
+            Assert.Throws<ArgumentException>(() => Intercept.ThroughProxyWithAdditionalInterfaces(
                 typeof(IInterface),
                 new BaseClass(),
                 new InterfaceInterceptor(),
                 new IInterceptionBehavior[0],
-                new[] { typeof(object) });
+                new[] { typeof(object) }));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptNewInstanceWithTypeInterceptor()
         {
             bool invoked = false;
@@ -196,11 +189,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             int value = instance.DoSomething();
 
-            Assert.AreEqual(100, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(100, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptNewInstanceWithTypeInterceptorUsingGenericVersion()
         {
             bool invoked = false;
@@ -216,157 +209,144 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             int value = instance.DoSomething();
 
-            Assert.AreEqual(100, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(100, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingNewInstanceOfANullTypeThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentNullException>(() => Intercept.NewInstance(
                 null,
                 new VirtualMethodInterceptor(),
-                new IInterceptionBehavior[0]);
+                new IInterceptionBehavior[0]));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingNewInstanceWithANullInterceptorThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentNullException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 null,
-                new IInterceptionBehavior[0]);
+                new IInterceptionBehavior[0]));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceOfTypeNotCompatibleWithTheInterceptorThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 new RejectingInterceptor(),
-                new IInterceptionBehavior[0]);
+                new IInterceptionBehavior[0]));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingNewInstanceWithANullSetOfInterceptionBehaviorsThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentNullException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
-                null);
+                null));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void InterceptingNewInstanceWithANullSetOfAdditionalInterfacesThrows()
         {
-            Intercept.NewInstanceWithAdditionalInterfaces(
+            Assert.Throws<ArgumentNullException>(() => Intercept.NewInstanceWithAdditionalInterfaces(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[0],
-                null);
+                null));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfAdditionalInterfacesWithNullElementsThrows()
         {
-            Intercept.NewInstanceWithAdditionalInterfaces(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstanceWithAdditionalInterfaces(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[0],
-                new Type[] { null });
+                new Type[] { null }));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfAdditionalInterfacesWithNonInterfaceElementsThrows()
         {
-            Intercept.NewInstanceWithAdditionalInterfaces(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstanceWithAdditionalInterfaces(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[0],
-                new Type[] { typeof(object) });
+                new Type[] { typeof(object) }));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfAdditionalInterfacesWithGenericInterfaceElementsThrows()
         {
-            Intercept.NewInstanceWithAdditionalInterfaces(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstanceWithAdditionalInterfaces(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[0],
-                new Type[] { typeof(IComparable<>) });
+                new Type[] { typeof(IComparable<>) }));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfBehaviorsWithNullElementsThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
-                new IInterceptionBehavior[] { null });
+                new IInterceptionBehavior[] { null }));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfBehaviorsWithElementReturningNullRequiredInterfacesThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[] 
                 {
                     new DelegateInterceptionBehavior(null, () => null)
-                });
+                }));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfBehaviorsWithElementReturningRequiredInterfacesWithNullElementThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[] 
                 {
                     new DelegateInterceptionBehavior(null, () => new Type[] { null })
-                });
+                }));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfBehaviorsWithElementReturningRequiredInterfacesWithNonInterfaceElementThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[] 
                 {
                     new DelegateInterceptionBehavior(null, () => new Type[] { typeof(object) })
-                });
+                }));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void InterceptingNewInstanceWithASetOfBehaviorsWithElementReturningRequiredInterfacesWithGenericInterfaceElementThrows()
         {
-            Intercept.NewInstance(
+            Assert.Throws<ArgumentException>(() => Intercept.NewInstance(
                 typeof(BaseClass),
                 new VirtualMethodInterceptor(),
                 new IInterceptionBehavior[] 
                 {
                     new DelegateInterceptionBehavior(null, () => new Type[] { typeof(IEnumerable<>) })
-                });
+                }));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptAbstractClassWithVirtualMethodInterceptor()
         {
             bool invoked = false;
@@ -380,8 +360,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             int value = instance.DoSomething();
 
-            Assert.AreEqual(100, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(100, value);
+            Assert.True(invoked);
         }
 
         public class BaseClass : IInterface

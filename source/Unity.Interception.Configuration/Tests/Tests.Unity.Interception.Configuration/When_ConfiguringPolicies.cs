@@ -5,19 +5,20 @@ using System.Linq;
 using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringPolicies
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringPolicies : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_ConfiguringPolicies()
             : base("Policies")
         {
+            MainSetup();
         }
 
         private IUnityContainer GetConfiguredContainer(string containerName)
@@ -27,20 +28,20 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             return container;
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureAnEmptyPolicy()
         {
             IUnityContainer container = this.GetConfiguredContainer("oneEmptyPolicy");
 
             var policies = new List<InjectionPolicy>(container.ResolveAll<InjectionPolicy>());
 
-            Assert.AreEqual(2, policies.Count);
-            Assert.IsInstanceOfType(policies[0], typeof(AttributeDrivenPolicy));
-            Assert.IsInstanceOfType(policies[1], typeof(RuleDrivenPolicy));
-            Assert.AreEqual("policyOne", policies[1].Name);
+            Assert.Equal(2, policies.Count);
+            Assert.IsType<AttributeDrivenPolicy>(policies[0]);
+            Assert.IsType<RuleDrivenPolicy>(policies[1]);
+            Assert.Equal("policyOne", policies[1].Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MatchingRuleInPolicyIsConfigured()
         {
             IUnityContainer container = this.GetConfiguredContainer("policyWithGivenRulesAndHandlersTypes");
@@ -54,10 +55,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["default"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["default"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RulesAndHandlersCanBeConfiguredExternalToPolicy()
         {
             IUnityContainer container
@@ -72,11 +73,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler1"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler2"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler1"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler2"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RulesAndHandlersCanHaveInjectionConfiguredInPolicyElement()
         {
             IUnityContainer container
@@ -92,11 +93,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler1"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler2"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler1"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler2"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithLifetimeManagedInjectedRulesAndHandlers()
         {
             IUnityContainer container
@@ -112,30 +113,30 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             Wrappable wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler1"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler2"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler1"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler2"]);
 
             var matchingRuleRegistrations = container.Registrations.Where(r => r.RegisteredType == typeof(IMatchingRule));
             var callHandlerRegistrations = container.Registrations.Where(r => r.RegisteredType == typeof(ICallHandler));
 
-            Assert.AreEqual(2, matchingRuleRegistrations.Count());
-            Assert.AreEqual(
+            Assert.Equal(2, matchingRuleRegistrations.Count());
+            Assert.Equal(
                 1,
                 matchingRuleRegistrations.Where(r => r.LifetimeManagerType == typeof(ContainerControlledLifetimeManager)).Count());
-            Assert.AreEqual(
+            Assert.Equal(
                 1,
                 matchingRuleRegistrations.Where(r => r.LifetimeManagerType == typeof(TransientLifetimeManager)).Count());
 
-            Assert.AreEqual(2, callHandlerRegistrations.Count());
-            Assert.AreEqual(
+            Assert.Equal(2, callHandlerRegistrations.Count());
+            Assert.Equal(
                 1,
                 callHandlerRegistrations.Where(r => r.LifetimeManagerType == typeof(ContainerControlledLifetimeManager)).Count());
-            Assert.AreEqual(
+            Assert.Equal(
                 1,
                 callHandlerRegistrations.Where(r => r.LifetimeManagerType == typeof(TransientLifetimeManager)).Count());
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RulesAndHandlersInDifferentPoliciesCanHaveTheSameName()
         {
             IUnityContainer container
@@ -152,8 +153,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             wrappable1.Method2();
             wrappable1.Method3();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["Method3Handler"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["Method2Handler"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["Method3Handler"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["Method2Handler"]);
         }
     }
 }

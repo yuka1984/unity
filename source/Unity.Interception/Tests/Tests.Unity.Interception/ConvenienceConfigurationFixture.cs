@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
-    [TestClass]
+     
     public class ConvenienceConfigurationFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanSetUpAnEmptyRule()
         {
             // there is no visible effect for this, but it should still be resolved.
@@ -27,13 +27,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<InjectionPolicy> policies
                 = new List<InjectionPolicy>(container.ResolveAll<InjectionPolicy>());
 
-            Assert.AreEqual(2, policies.Count);
-            Assert.IsInstanceOfType(policies[0], typeof(AttributeDrivenPolicy));
-            Assert.IsInstanceOfType(policies[1], typeof(RuleDrivenPolicy));
-            Assert.AreEqual("policy1", policies[1].Name);
+            Assert.Equal(2, policies.Count);
+            Assert.IsType<AttributeDrivenPolicy>(policies[0]);
+            Assert.IsType<RuleDrivenPolicy>(policies[1]);
+            Assert.Equal("policy1", policies[1].Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void SettingUpRuleWithNullNameThrows()
         {
             IUnityContainer container = new UnityContainer();
@@ -42,14 +42,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             try
             {
                 container.Configure<Interception>().AddPolicy(null);
-                Assert.Fail("should have thrown");
+                Assert.True(false, string.Format("should have thrown"));
             }
             catch (ArgumentException)
             {
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void SettingUpRuleWithEmptyNameThrows()
         {
             IUnityContainer container = new UnityContainer();
@@ -58,14 +58,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             try
             {
                 container.Configure<Interception>().AddPolicy(string.Empty);
-                Assert.Fail("should have thrown");
+                Assert.True(false, string.Format("should have thrown"));
             }
             catch (ArgumentException)
             {
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpSeveralEmptyRules()
         {
             // there is no visible effect for this, but it should still be resolved.
@@ -81,15 +81,15 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<InjectionPolicy> policies
                 = new List<InjectionPolicy>(container.ResolveAll<InjectionPolicy>());
 
-            Assert.AreEqual(3, policies.Count);
-            Assert.IsInstanceOfType(policies[0], typeof(AttributeDrivenPolicy));
-            Assert.IsInstanceOfType(policies[1], typeof(RuleDrivenPolicy));
-            Assert.AreEqual("policy1", policies[1].Name);
-            Assert.IsInstanceOfType(policies[2], typeof(RuleDrivenPolicy));
-            Assert.AreEqual("policy2", policies[2].Name);
+            Assert.Equal(3, policies.Count);
+            Assert.IsType<AttributeDrivenPolicy>(policies[0]);
+            Assert.IsType<RuleDrivenPolicy>(policies[1]);
+            Assert.Equal("policy1", policies[1].Name);
+            Assert.IsType<RuleDrivenPolicy>(policies[2]);
+            Assert.Equal("policy2", policies[2].Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithGivenRulesAndHandlers()
         {
             IUnityContainer container = new UnityContainer();
@@ -111,10 +111,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, ((CallCountHandler)handler1).CallCount);
+            Assert.Equal(1, ((CallCountHandler)handler1).CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithGivenRulesAndHandlersTypes()
         {
             IUnityContainer container = new UnityContainer();
@@ -135,10 +135,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["default"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["default"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithGivenRulesAndHandlersTypesWithGenerics()
         {
             IUnityContainer container = new UnityContainer();
@@ -159,10 +159,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["default"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["default"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithInjectedRulesAndHandlers()
         {
             IUnityContainer container = new UnityContainer();
@@ -187,11 +187,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler1"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler2"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler1"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler2"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithNonGenericInjectedRulesAndHandlers()
         {
             IUnityContainer container = new UnityContainer();
@@ -218,11 +218,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler1"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler2"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler1"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler2"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithExternallyConfiguredRulesAndHandlers()
         {
             IUnityContainer container = new UnityContainer();
@@ -252,11 +252,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable1 = container.Resolve<Wrappable>("wrappable");
             wrappable1.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler1"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler2"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler1"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler2"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithNamedInjectedRulesAndHandlers()
         {
             IUnityContainer container = new UnityContainer();
@@ -286,13 +286,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             GlobalCountCallHandler handler1 = (GlobalCountCallHandler)container.Resolve<ICallHandler>("handler1");
             GlobalCountCallHandler handler2 = (GlobalCountCallHandler)container.Resolve<ICallHandler>("handler2");
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler1"]);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["handler2"]);
-            Assert.AreEqual(0, handler1.Order);
-            Assert.AreEqual(10, handler2.Order);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler1"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["handler2"]);
+            Assert.Equal(0, handler1.Order);
+            Assert.Equal(10, handler2.Order);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAPolicyWithLifetimeManagedNamedInjectedRulesAndHandlers()
         {
             IUnityContainer container = new UnityContainer();
@@ -324,11 +324,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             CallCountHandler handler1 = (CallCountHandler)container.Resolve<ICallHandler>("handler1");
             CallCountHandler handler2 = (CallCountHandler)container.Resolve<ICallHandler>("handler2");
 
-            Assert.AreEqual(0, handler1.CallCount);     // not lifetime maanaged
-            Assert.AreEqual(1, handler2.CallCount);     // lifetime managed
+            Assert.Equal(0, handler1.CallCount);     // not lifetime maanaged
+            Assert.Equal(1, handler2.CallCount);     // lifetime managed
         }
 
-        [TestMethod]
+        [Fact]
         public void SettingUpAPolicyWithANullRuleElementThrows()
         {
             IUnityContainer container = new UnityContainer();
@@ -342,7 +342,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                             .AddMatchingRule(typeof(AlwaysMatchingRule))
                             .AddMatchingRule((string)null)
                             .AddCallHandler(new CallCountHandler());
-                Assert.Fail("Should have thrown");
+                Assert.True(false, string.Format("Should have thrown"));
             }
             catch (ArgumentException)
             {

@@ -1,14 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInterception
 {
-    [TestClass]
+     
     public class InterceptingInterfaceMethodsFixture
     {
-        [TestMethod]
+        [Fact]
         public void ImplicitlyImplementedMethodsAreInterceptedIfVirtual()
         {
             CallCountHandler handler = new CallCountHandler();
@@ -16,8 +16,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.DoSomethingInteresting();
 
-            Assert.IsTrue(instance.SomethingWasCalled);
-            Assert.AreEqual(1, handler.CallCount);
+            Assert.True(instance.SomethingWasCalled);
+            Assert.Equal(1, handler.CallCount);
         }
     }
 

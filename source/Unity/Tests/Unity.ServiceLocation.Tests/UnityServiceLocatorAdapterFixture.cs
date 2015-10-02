@@ -14,7 +14,7 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Unity.ServiceLocation.Tests
@@ -22,9 +22,14 @@ namespace Unity.ServiceLocation.Tests
     /// <summary>
     /// Summary description for UnityServiceLocatorAdapterFixture
     /// </summary>
-    [TestClass]
+     
     public class UnityServiceLocatorAdapterFixture : ServiceLocatorFixture
     {
+        public UnityServiceLocatorAdapterFixture()
+        {
+            this.locator = this.CreateServiceLocator();
+        }
+
         protected override Microsoft.Practices.ServiceLocation.IServiceLocator CreateServiceLocator()
         {
             IUnityContainer container = new UnityContainer()
@@ -35,82 +40,76 @@ namespace Unity.ServiceLocation.Tests
             return new UnityServiceLocator(container);
         }
 
-        [TestInitialize]
-        public void Setup()
-        {
-            this.locator = this.CreateServiceLocator();
-        }
-
-        [TestMethod]
+        [Fact]
         public new void GetInstance()
         {
             base.GetInstance();
         }
 
-        [TestMethod]
+        [Fact]
         public new void AskingForInvalidComponentShouldRaiseActivationException()
         {
             base.AskingForInvalidComponentShouldRaiseActivationException();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GetNamedInstance()
         {
             base.GetNamedInstance();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GetNamedInstance2()
         {
             base.GetNamedInstance2();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GetUnknownInstance2()
         {
             base.GetUnknownInstance2();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GetAllInstances()
         {
             base.GetAllInstances();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GetAllInstance_ForUnknownType_ReturnEmptyEnumerable()
         {
             base.GetAllInstance_ForUnknownType_ReturnEmptyEnumerable();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GenericOverload_GetInstance()
         {
             base.GenericOverload_GetInstance();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GenericOverload_GetInstance_WithName()
         {
             base.GenericOverload_GetInstance_WithName();
         }
 
-        [TestMethod]
+        [Fact]
         public new void Overload_GetInstance_NoName_And_NullName()
         {
             base.Overload_GetInstance_NoName_And_NullName();
         }
 
-        [TestMethod]
+        [Fact]
         public new void GenericOverload_GetAllInstances()
         {
             base.GenericOverload_GetAllInstances();
         }
 
-        [TestMethod]
+        [Fact]
         public void Get_WithZeroLenName_ReturnsDefaultInstance()
         {
-            Assert.AreSame(
+            Assert.Same(
                 locator.GetInstance<ILogger>().GetType(),
                 locator.GetInstance<ILogger>(String.Empty).GetType());
         }

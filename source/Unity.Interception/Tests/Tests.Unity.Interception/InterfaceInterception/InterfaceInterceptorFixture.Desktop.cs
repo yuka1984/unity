@@ -7,13 +7,13 @@ using System.Runtime.Remoting.Messaging;
 using System.Runtime.Remoting.Proxies;
 using System.Text;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.InterfaceInterception
 {
     public partial class InterfaceInterceptorFixture
     {
-        [TestMethod]
+        [Fact]
         public void InterceptorCanInterceptProxyInstances()
         {
             CallCountInterceptionBehavior callCounter = new CallCountInterceptionBehavior();
@@ -28,11 +28,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.InterfaceInterce
 
             IProxiedInterface inter = (IProxiedInterface)proxy;
 
-            Assert.AreEqual("hello world", inter.DoSomething());
-            Assert.AreEqual(1, callCounter.CallCount);
+            Assert.Equal("hello world", inter.DoSomething());
+            Assert.Equal(1, callCounter.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanGetInterceptableMethodsForProxy()
         {
             ProxiedInterfaceImpl impl = new ProxiedInterfaceImpl();

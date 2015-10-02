@@ -12,7 +12,7 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.Tests
@@ -20,10 +20,10 @@ namespace Microsoft.Practices.Unity.Tests
     /// <summary>
     /// Tests for the hierarchical features of the UnityContainer.
     /// </summary>
-    [TestClass]
+     
     public class UnityHierarchyFixture
     {
-        [TestMethod]
+        [Fact]
         public void ChildBuildsUsingParentsConfiguration()
         {
             UnityContainer parent = new UnityContainer();
@@ -32,11 +32,11 @@ namespace Microsoft.Practices.Unity.Tests
             IUnityContainer child = parent.CreateChildContainer();
             ILogger logger = child.Resolve<ILogger>();
 
-            Assert.IsNotNull(logger);
+            Assert.NotNull(logger);
             AssertExtensions.IsInstanceOfType(logger, typeof(MockLogger));
         }
 
-        [TestMethod]
+        [Fact]
         public void NamesRegisteredInParentAppearInChild()
         {
             UnityContainer parent = new UnityContainer();
@@ -49,7 +49,7 @@ namespace Microsoft.Practices.Unity.Tests
             AssertExtensions.IsInstanceOfType(l, typeof(SpecialLogger));
         }
 
-        [TestMethod]
+        [Fact]
         public void NamesRegisteredInParentAppearInChildGetAll()
         {
             string[] databases = { "northwind", "adventureworks", "fabrikam" };
@@ -64,7 +64,7 @@ namespace Microsoft.Practices.Unity.Tests
             CollectionAssertExtensions.AreEquivalent(databases, dbs);
         }
 
-        [TestMethod]
+        [Fact]
         public void ChildConfigurationOverridesParentConfiguration()
         {
             UnityContainer parent = new UnityContainer();
@@ -79,7 +79,7 @@ namespace Microsoft.Practices.Unity.Tests
             AssertExtensions.IsInstanceOfType(childLogger, typeof(SpecialLogger));
         }
 
-        [TestMethod]
+        [Fact]
         public void ChangeInParentConfigurationIsReflectedInChild()
         {
             UnityContainer parent = new UnityContainer();
@@ -94,7 +94,7 @@ namespace Microsoft.Practices.Unity.Tests
             AssertExtensions.IsInstanceOfType(second, typeof(SpecialLogger));
         }
 
-        [TestMethod]
+        [Fact]
         public void ChildExtensionDoesntAffectParent()
         {
             bool factoryWasCalled = false;
@@ -108,13 +108,13 @@ namespace Microsoft.Practices.Unity.Tests
                 }));
 
             parent.Resolve<object>();
-            Assert.IsFalse(factoryWasCalled);
+            Assert.False(factoryWasCalled);
 
             child.Resolve<object>();
-            Assert.IsTrue(factoryWasCalled);
+            Assert.True(factoryWasCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void DisposingParentDisposesChild()
         {
             UnityContainer parent = new UnityContainer();
@@ -124,10 +124,10 @@ namespace Microsoft.Practices.Unity.Tests
             child.RegisterInstance<DisposableObject>(spy);
 
             parent.Dispose();
-            Assert.IsTrue(spy.WasDisposed);
+            Assert.True(spy.WasDisposed);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanDisposeChildWithoutDisposingParent()
         {
             DisposableObject parentSpy = new DisposableObject();
@@ -140,14 +140,14 @@ namespace Microsoft.Practices.Unity.Tests
                 .RegisterInstance(childSpy);
 
             child.Dispose();
-            Assert.IsFalse(parentSpy.WasDisposed);
-            Assert.IsTrue(childSpy.WasDisposed);
+            Assert.False(parentSpy.WasDisposed);
+            Assert.True(childSpy.WasDisposed);
 
             childSpy.WasDisposed = false;
 
             parent.Dispose();
-            Assert.IsTrue(parentSpy.WasDisposed);
-            Assert.IsFalse(childSpy.WasDisposed);
+            Assert.True(parentSpy.WasDisposed);
+            Assert.False(childSpy.WasDisposed);
         }
     }
 }

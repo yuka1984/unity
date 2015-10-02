@@ -5,56 +5,57 @@ using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingSectionWithAliases
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingSectionWithAliases : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingSectionWithAliases()
             : base("TwoContainersAndAliases")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_AliasesAreAvailableInTheSection()
         {
-            Assert.IsNotNull(section.TypeAliases);
+            Assert.NotNull(section.TypeAliases);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ExpectedNumberOfAliasesArePresent()
         {
-            Assert.AreEqual(2, section.TypeAliases.Count);
+            Assert.Equal(2, section.TypeAliases.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_IntIsMappedToSystemInt32()
         {
-            Assert.AreEqual("System.Int32, mscorlib", section.TypeAliases["int"]);
+            Assert.Equal("System.Int32, mscorlib", section.TypeAliases["int"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_StringIsMappedToSystemString()
         {
-            Assert.AreEqual("System.String, mscorlib", section.TypeAliases["string"]);
+            Assert.Equal("System.String, mscorlib", section.TypeAliases["string"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_EnumerationReturnsAliasesInOrderAsGivenInFile()
         {
             CollectionAssertExtensions.AreEqual(new[] { "int", "string" },
                 section.TypeAliases.Select(alias => alias.Alias).ToList());
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ContainersInTheFileAreAlsoLoaded()
         {
-            Assert.AreEqual(2, section.Containers.Count);
+            Assert.Equal(2, section.Containers.Count);
         }
     }
 }

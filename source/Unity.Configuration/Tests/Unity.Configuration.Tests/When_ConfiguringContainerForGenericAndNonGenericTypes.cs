@@ -4,14 +4,14 @@ using System;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.Configuration.Tests.TestObjects.MyGenericTypes;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerForGenericAndNonGenericTypes
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerForGenericAndNonGenericTypes : ContainerConfiguringFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerForGenericAndNonGenericTypes()
@@ -19,23 +19,23 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
         {
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanResolveConfiguredGenericType()
         {
             var result = Container.Resolve<ItemsCollection<IItem>>();
 
-            Assert.AreEqual(8, result.Items.Length);
-            Assert.IsInstanceOfType(result.Printer, typeof(MyPrintService<IItem>));
+            Assert.Equal(8, result.Items.Length);
+            Assert.IsType<MyPrintService<IItem>>(result.Printer);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanResolveConfiguredGenericTypeWithSpecificElements()
         {
             var result = Container.Resolve<ItemsCollection<IItem>>("OnlyThree");
-            Assert.AreEqual(3, result.Items.Length);
+            Assert.Equal(3, result.Items.Length);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureGenericArrayInjectionViaAPI()
         {
             Container.RegisterType(typeof(ItemsCollection<>), "More",
@@ -47,56 +47,56 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                         new GenericParameter("T", "Tractor"))));
 
             var result = Container.Resolve<ItemsCollection<IItem>>("More");
-            Assert.AreEqual(3, result.Items.Length);
+            Assert.Equal(3, result.Items.Length);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanResolveConfiguredResolvableOptionalGenericType()
         {
             var result = Container.Resolve<ItemsCollection<IItem>>("optional resolvable");
 
-            Assert.AreEqual(1, result.Items.Length);
-            Assert.IsNotNull(result.Items[0]);
-            Assert.AreEqual("Charlie Miniature", result.Items[0].ItemName);
+            Assert.Equal(1, result.Items.Length);
+            Assert.NotNull(result.Items[0]);
+            Assert.Equal("Charlie Miniature", result.Items[0].ItemName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanResolveConfiguredNonResolvableOptionalGenericType()
         {
             var result = Container.Resolve<ItemsCollection<IItem>>("optional non resolvable");
 
-            Assert.AreEqual(1, result.Items.Length);
-            Assert.IsNull(result.Items[0]);
+            Assert.Equal(1, result.Items.Length);
+            Assert.Null(result.Items[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanResolveConfiguredGenericTypeWithArrayInjectedInConstructor()
         {
             var result = Container.Resolve<ItemsCollection<IItem>>("ThroughConstructor");
 
-            Assert.AreEqual(8, result.Items.Length);
-            Assert.IsInstanceOfType(result.Printer, typeof(MyPrintService<IItem>));
+            Assert.Equal(8, result.Items.Length);
+            Assert.IsType<MyPrintService<IItem>>(result.Printer);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanResolveConfiguredGenericTypeWithArrayInjectedInConstructorWithSpecificElements()
         {
             var result = Container.Resolve<ItemsCollection<IItem>>("ThroughConstructorWithSpecificElements");
 
-            Assert.AreEqual(3, result.Items.Length);
+            Assert.Equal(3, result.Items.Length);
         }
 
-        // [TestMethod]
+        // [Fact]
         // nested arrays with generics not supported by container
         public void Then_CanResolveConfiguredGenericTypeWithArrayOfArraysInjectedInConstructorWithSpecificElements()
         {
             var result = Container.Resolve<ItemsCollection<IItem>>("ArrayOfArraysThroughConstructorWithSpecificElements");
 
-            Assert.AreEqual(3, result.Items.Length);
+            Assert.Equal(3, result.Items.Length);
         }
     }
 
-    [TestClass]
+     
     public class When_ConfiguringContainerWithDependencyElementForGenericPropertyArrayWithTypeSet : ContainerConfiguringFixture<ConfigFileLocator>
     {
         private InvalidOperationException exception;
@@ -117,14 +117,14 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ThenContainerSetupThrows()
         {
-            Assert.IsNotNull(this.exception);
+            Assert.NotNull(this.exception);
         }
     }
 
-    [TestClass]
+     
     public class When_ConfiguringContainerWithParameterWithValueElement : ContainerConfiguringFixture<ConfigFileLocator>
     {
         private InvalidOperationException exception;
@@ -145,14 +145,14 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ThenContainerSetupThrows()
         {
-            Assert.IsNotNull(this.exception);
+            Assert.NotNull(this.exception);
         }
     }
 
-    [TestClass]
+     
     public class When_ConfiguringContainerWithGenericArrayPropertyWithValueElement : ContainerConfiguringFixture<ConfigFileLocator>
     {
         private InvalidOperationException exception;
@@ -173,14 +173,14 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ThenContainerSetupThrows()
         {
-            Assert.IsNotNull(this.exception);
+            Assert.NotNull(this.exception);
         }
     }
 
-    [TestClass]
+     
     public class When_ConfiguringContainerWithChainedGenericParameterWithValueElement : ContainerConfiguringFixture<ConfigFileLocator>
     {
         private InvalidOperationException exception;
@@ -201,14 +201,14 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ThenContainerSetupThrows()
         {
-            Assert.IsNotNull(this.exception);
+            Assert.NotNull(this.exception);
         }
     }
 
-    [TestClass]
+     
     public class When_ConfiguringContainerWithDependencyElementForArrayWithTypeSet : ContainerConfiguringFixture<ConfigFileLocator>
     {
         private InvalidOperationException exception;
@@ -229,14 +229,14 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ThenContainerSetupThrows()
         {
-            Assert.IsNotNull(this.exception);
+            Assert.NotNull(this.exception);
         }
     }
 
-    [TestClass]
+     
     public class When_ConfiguringContainerWithArrayElementForChainedGenericParameter : ContainerConfiguringFixture<ConfigFileLocator>
     {
         private InvalidOperationException exception;
@@ -257,10 +257,10 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ThenContainerSetupThrows()
         {
-            Assert.IsNotNull(this.exception);
+            Assert.NotNull(this.exception);
         }
     }
 }

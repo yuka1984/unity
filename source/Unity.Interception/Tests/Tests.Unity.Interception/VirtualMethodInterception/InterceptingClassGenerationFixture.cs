@@ -11,59 +11,59 @@ using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInterception
 {
-    [TestClass]
+     
     public partial class InterceptingClassGenerationFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanCreateInterceptingClassOverClassWithDefaultConstructor()
         {
             ClassWithDefaultCtor instance = WireupHelper.GetInterceptingInstance<ClassWithDefaultCtor>();
-            Assert.AreNotSame(typeof(ClassWithDefaultCtor), instance.GetType());
+            Assert.NotSame(typeof(ClassWithDefaultCtor), instance.GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void InterceptingClassCallsBaseClassConstructor()
         {
             ClassWithDefaultCtor instance = WireupHelper.GetInterceptingInstance<ClassWithDefaultCtor>();
-            Assert.IsTrue(instance.CtorWasCalled);
+            Assert.True(instance.CtorWasCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateInterceptingClassOverClassWithoutDefaultConstructor()
         {
             ClassWithOneParamCtor instance = WireupHelper.GetInterceptingInstance<ClassWithOneParamCtor>(37);
-            Assert.AreEqual(37, instance.CtorValue);
+            Assert.Equal(37, instance.CtorValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptClassThatHasMultipleConstructors()
         {
             ClassWithMultipleCtors defaultInstance = WireupHelper.GetInterceptingInstance<ClassWithMultipleCtors>();
-            Assert.IsTrue(defaultInstance.DefaultCalled);
+            Assert.True(defaultInstance.DefaultCalled);
 
             ClassWithMultipleCtors intInstance = WireupHelper.GetInterceptingInstance<ClassWithMultipleCtors>(42);
-            Assert.AreEqual(42, intInstance.IntValue);
-            Assert.IsFalse(intInstance.DefaultCalled);
+            Assert.Equal(42, intInstance.IntValue);
+            Assert.False(intInstance.DefaultCalled);
 
             ClassWithMultipleCtors bothInstance = WireupHelper.GetInterceptingInstance<ClassWithMultipleCtors>(51, "Hello");
-            Assert.AreEqual(51, bothInstance.IntValue);
-            Assert.AreEqual("Hello", bothInstance.StringValue);
-            Assert.IsFalse(bothInstance.DefaultCalled);
+            Assert.Equal(51, bothInstance.IntValue);
+            Assert.Equal("Hello", bothInstance.StringValue);
+            Assert.False(bothInstance.DefaultCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptVoidNoArgMethods()
         {
             ClassWithDefaultCtor instance = WireupHelper.GetInterceptingInstance<ClassWithDefaultCtor>();
             instance.MethodOne();
-            Assert.IsTrue(instance.OneWasCalled);
+            Assert.True(instance.OneWasCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void InterceptingClassOverridesBaseClassVirtualMethods()
         {
             Type baseType = typeof(ClassWithDefaultCtor);
@@ -74,18 +74,18 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             MethodInfo methodOne = generatedType.GetMethod("MethodOne");
             MethodInfo calculateAnswer = generatedType.GetMethod("CalculateAnswer");
 
-            Assert.AreSame(generatedType, methodOne.DeclaringType);
-            Assert.AreSame(generatedType, calculateAnswer.DeclaringType);
+            Assert.Same(generatedType, methodOne.DeclaringType);
+            Assert.Same(generatedType, calculateAnswer.DeclaringType);
         }
 
-        [TestMethod]
+        [Fact]
         public void InterceptingClassImplementsIInterceptingProxy()
         {
             ClassWithDefaultCtor instance = WireupHelper.GetInterceptingInstance<ClassWithDefaultCtor>();
-            Assert.IsTrue(instance is IInterceptingProxy);
+            Assert.True(instance is IInterceptingProxy);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanAddInterceptionBehaviorsToPipeline()
         {
             ClassWithDefaultCtor instance = WireupHelper.GetInterceptingInstance<ClassWithDefaultCtor>();
@@ -96,7 +96,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             pm.AddInterceptionBehavior(interceptor);
         }
 
-        [TestMethod]
+        [Fact]
         public void CallingMethodInvokesHandlers()
         {
             MethodInfo methodOne = typeof(ClassWithDefaultCtor).GetMethod("MethodOne");
@@ -112,11 +112,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.MethodOne();
 
-            Assert.AreEqual(1, handler.CallCount);
-            Assert.AreEqual(1, postHandler.CallsCompleted);
+            Assert.Equal(1, handler.CallCount);
+            Assert.Equal(1, postHandler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void ThrowingFromInterceptedMethodStillRunsAllHandlers()
         {
             MethodInfo thrower = typeof(ClassWithDefaultCtor).GetMethod("NotImplemented");
@@ -133,18 +133,18 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             try
             {
                 instance.NotImplemented();
-                Assert.Fail("Should have thrown before getting here");
+                Assert.True(false, string.Format("Should have thrown before getting here"));
             }
             catch (NotImplementedException)
             {
                 // We're expecting this one
             }
 
-            Assert.AreEqual(1, handler.CallCount);
-            Assert.AreEqual(1, postHandler.CallsCompleted);
+            Assert.Equal(1, handler.CallCount);
+            Assert.Equal(1, postHandler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodsThatHaveReturnValues()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -152,11 +152,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             int result = instance.CalculateAnswer();
 
-            Assert.AreEqual(42, result);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal(42, result);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodsThatReturnReferenceTypes()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -164,11 +164,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             string result = instance.GimmeName();
 
-            Assert.AreEqual("name", result);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal("name", result);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodsWithParameters()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -176,11 +176,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             string result = instance.AddUp(5, 12);
 
-            Assert.AreEqual("17", result);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal("17", result);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodsWithRefParameters()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -189,12 +189,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             string s = "abc";
             int result = instance.MethodWithRefParameters(5, ref s, 10);
 
-            Assert.AreEqual(15, result);
-            Assert.AreEqual("abc hooray!", s);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal(15, result);
+            Assert.Equal("abc hooray!", s);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodsWithOutParameters()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -205,12 +205,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.OutParams(5, out plusOne, out timesTwo);
 
-            Assert.AreEqual(5 + 1, plusOne);
-            Assert.AreEqual(5 * 2, timesTwo);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal(5 + 1, plusOne);
+            Assert.Equal(5 * 2, timesTwo);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptNestedClass()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -218,11 +218,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             int result = instance.MakeAValue(12);
 
-            Assert.AreEqual((12 * 37) + (12 / 2), result);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal((12 * 37) + (12 / 2), result);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptEventsMethods()
         {
             CallCountInterceptionBehavior interceptor = new CallCountInterceptionBehavior();
@@ -231,10 +231,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.SomeEvent += (sender, args) => { };
 
-            Assert.AreEqual(1, interceptor.CallCount);
+            Assert.Equal(1, interceptor.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void FiringAnEventIsNotIntercepted()
         {
             CallCountInterceptionBehavior interceptor = new CallCountInterceptionBehavior();
@@ -244,20 +244,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             instance.SomeEvent += (sender, args) => { };
             instance.TriggerIt();
 
-            Assert.AreEqual(1, interceptor.CallCount);
+            Assert.Equal(1, interceptor.CallCount);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(InvalidOperationException))]
+        [Fact]
         public void AttemptingToInterceptInvalidClassThrows()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
 
-            interceptor.CreateProxyType(typeof(CantTouchThis));
+            Assert.Throws<InvalidOperationException>(() => interceptor.CreateProxyType(typeof(CantTouchThis)));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptClosedGenericType()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -268,11 +267,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             string result = instance.Decorate(now);
 
-            Assert.AreEqual("**" + now + "**", result);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal("**" + now + "**", result);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodOnClosedGenericType()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -281,11 +280,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             string result = instance.Reverse(137);
 
-            Assert.AreEqual("731", result);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal("731", result);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void GenericWrapperWorks()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
@@ -299,19 +298,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             string result = instance.Reverse(137);
 
-            Assert.AreEqual("731", result);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal("731", result);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodWithGenericReturnTypeForValueTypeGenericParameter()
         {
             PostCallCountHandler handler = new PostCallCountHandler();
             ClassWithDefaultCtor instance
                 = WireupHelper.GetInterceptedInstance<ClassWithDefaultCtor>("MethodWithGenericReturnType", handler);
             int value = instance.MethodWithGenericReturnType(5);
-            Assert.AreEqual(5, value);
-            Assert.AreEqual(1, handler.CallsCompleted);
+            Assert.Equal(5, value);
+            Assert.Equal(1, handler.CallsCompleted);
         }
 
         public class NestedClass
@@ -329,7 +328,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanImplementAdditionalInterfaces()
         {
             // arrange
@@ -341,11 +340,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             object instance = Activator.CreateInstance(generatedType);
 
             // assert
-            Assert.IsTrue(instance is MainType);
-            Assert.IsTrue(instance is IAdditionalInterface);
+            Assert.True(instance is MainType);
+            Assert.True(instance is IAdditionalInterface);
         }
 
-        [TestMethod]
+        [Fact]
         public void InvokingMethodOnAdditionalInterfaceThrowsIfNotHandledByInterceptor()
         {
             // arrange
@@ -358,7 +357,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             try
             {
                 ((IAdditionalInterface)instance).DoSomethingElse();
-                Assert.Fail("should have thrown");
+                Assert.True(false, string.Format("should have thrown"));
             }
             catch (NotImplementedException e)
             {
@@ -366,10 +365,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             }
 
             // assert
-            Assert.IsNotNull(exception);
+            Assert.NotNull(exception);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSuccessfullyInvokeAnAdditionalInterfaceMethodIfAnInterceptorDoesNotForwardTheCall()
         {
             // arrange
@@ -385,11 +384,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             int result = ((IAdditionalInterface)instance).DoSomethingElse();
 
             // assert
-            Assert.IsTrue(invoked);
-            Assert.AreEqual(100, result);
+            Assert.True(invoked);
+            Assert.Equal(100, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanImplementINotifyPropertyChanged()
         {
             InterceptingClassGenerator generator = new InterceptingClassGenerator(typeof(MainType), typeof(INotifyPropertyChanged));
@@ -403,19 +402,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             ((MainType)instance).IntProperty = 100;
 
-            Assert.AreEqual(100, ((MainType)instance).IntProperty);
-            Assert.AreEqual("IntProperty", changeProperty);
+            Assert.Equal(100, ((MainType)instance).IntProperty);
+            Assert.Equal("IntProperty", changeProperty);
 
             changeProperty = null;
             ((INotifyPropertyChanged)instance).PropertyChanged -= handler;
 
             ((MainType)instance).IntProperty = 200;
 
-            Assert.AreEqual(200, ((MainType)instance).IntProperty);
-            Assert.AreEqual(null, changeProperty);
+            Assert.Equal(200, ((MainType)instance).IntProperty);
+            Assert.Equal(null, changeProperty);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanImplementAdditionalInterfaceWithMethodsHavingSignaturesMatchingMethodsInTheBaseClass()
         {
             // arrange
@@ -427,11 +426,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             object instance = Activator.CreateInstance(generatedType);
 
             // assert
-            Assert.IsTrue(instance is MainType);
-            Assert.IsTrue(instance is IDoSomething);
+            Assert.True(instance is MainType);
+            Assert.True(instance is IDoSomething);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInvokeMethodsFromDifferentTypesWithMatchingSignatures()
         {
             InterceptingClassGenerator generator =
@@ -452,12 +451,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             ((IDoSomething)instance).DoSomething();
             ((IDoSomethingToo)instance).DoSomething();
 
-            Assert.AreSame(StaticReflection.GetMethodInfo<MainType>(i => i.DoSomething()), invokedMethods[0]);
-            Assert.AreSame(StaticReflection.GetMethodInfo<IDoSomething>(i => i.DoSomething()), invokedMethods[1]);
-            Assert.AreSame(StaticReflection.GetMethodInfo<IDoSomethingToo>(i => i.DoSomething()), invokedMethods[2]);
+            Assert.Same(StaticReflection.GetMethodInfo<MainType>(i => i.DoSomething()), invokedMethods[0]);
+            Assert.Same(StaticReflection.GetMethodInfo<IDoSomething>(i => i.DoSomething()), invokedMethods[1]);
+            Assert.Same(StaticReflection.GetMethodInfo<IDoSomethingToo>(i => i.DoSomething()), invokedMethods[2]);
         }
 
-        [TestMethod]
+        [Fact]
         public void DoesNotReImplementAdditionalInterfaceAlreadyImplementedByInterceptedClass()
         {
             InterceptingClassGenerator generator =
@@ -482,23 +481,23 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             ((IDeriveFromIDoSomething)instance).DoSomething(String.Empty);
             ((IDeriveFromIDoSomething)instance).DoSomethingElse();
 
-            Assert.AreEqual(4, interceptedMethods.Count);
+            Assert.Equal(4, interceptedMethods.Count);
             // only the virtual implicit method implementation is invoked for IDoSomething
-            Assert.AreSame(
+            Assert.Same(
                 StaticReflection.GetMethodInfo<InterfaceImplementingMainType>(i => i.DoSomething(null)),
                 interceptedMethods[0]);
-            Assert.AreSame(
+            Assert.Same(
                 StaticReflection.GetMethodInfo<InterfaceImplementingMainType>(i => i.DoSomething(null)),
                 interceptedMethods[1]);
-            Assert.AreSame(
+            Assert.Same(
                 StaticReflection.GetMethodInfo<InterfaceImplementingMainType>(i => i.DoSomething(null)),
                 interceptedMethods[2]);
-            Assert.AreSame(
+            Assert.Same(
                 StaticReflection.GetMethodInfo<IDeriveFromIDoSomething>(i => i.DoSomethingElse()),
                 interceptedMethods[3]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptProtectedVirtualProperties()
         {
             InterceptingClassGenerator generator = new InterceptingClassGenerator(typeof(ClassWithProtectedProperty));
@@ -517,11 +516,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             instance.SetProperty(10);
             int value = instance.GetProperty();
 
-            Assert.AreEqual(10, value);
-            Assert.AreEqual(2, intercepts);
+            Assert.Equal(10, value);
+            Assert.Equal(2, intercepts);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptProtectedInternalVirtualProperties()
         {
             InterceptingClassGenerator generator =
@@ -542,11 +541,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             instance.SetProperty(10);
             int value = instance.GetProperty();
 
-            Assert.AreEqual(10, value);
-            Assert.AreEqual(2, intercepts);
+            Assert.Equal(10, value);
+            Assert.Equal(2, intercepts);
         }
 
-        [TestMethod]
+        [Fact]
         public void DoesNotInterceptInternalVirtualProperties()
         {
             InterceptingClassGenerator generator = new InterceptingClassGenerator(typeof(ClassWithInternalProperty));
@@ -565,11 +564,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             instance.SetProperty(10);
             int value = instance.GetProperty();
 
-            Assert.AreEqual(10, value);
-            Assert.AreEqual(0, intercepts);
+            Assert.Equal(10, value);
+            Assert.Equal(0, intercepts);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptProtectedAccesorOnMixedPrivateProtectedVirtualProperties()
         {
             InterceptingClassGenerator generator =
@@ -590,11 +589,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             instance.SetProperty(10);
             int value = instance.GetProperty();
 
-            Assert.AreEqual(10, value);
-            Assert.AreEqual(1, intercepts);
+            Assert.Equal(10, value);
+            Assert.Equal(1, intercepts);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMixedPublicProtectedVirtualProperties()
         {
             InterceptingClassGenerator generator =
@@ -615,11 +614,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             instance.SetProperty(10);
             int value = instance.GetProperty();
 
-            Assert.AreEqual(10, value);
-            Assert.AreEqual(2, intercepts);
+            Assert.Equal(10, value);
+            Assert.Equal(2, intercepts);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptClassWithReservedTypeAttributes()
         {
             InterceptingClassGenerator generator =
@@ -634,7 +633,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.Method();
 
-            Assert.AreEqual(1, intercepts);
+            Assert.Equal(1, intercepts);
         }
     }
 

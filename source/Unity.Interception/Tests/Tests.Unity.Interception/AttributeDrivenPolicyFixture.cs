@@ -4,11 +4,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Practices.Unity.Utility;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
-    [TestClass]
+     
     public class AttributeDrivenPolicyFixture
     {
         private MethodImplementationInfo nothingSpecialMethod;
@@ -28,8 +28,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
         private MethodImplementationInfo getItemStringMethod;
         private MethodImplementationInfo setItemStringMethod;
 
-        [TestInitialize]
-        public void Setup()
+        public AttributeDrivenPolicyFixture()
         {
             nothingSpecialMethod = MakeMethodImpl<AttributeTestTarget>("NothingSpecial");
             doSomethingMethod = MakeMethodImpl<AttributeTestTarget>("DoSomething");
@@ -56,193 +55,193 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             return new MethodImplementationInfo(null, typeof(T).GetMethod(name));
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchingRuleMatchesForAllMethodsInAttributeTestTarget()
         {
             IMatchingRule rule = new AttributeDrivenPolicyMatchingRule();
-            Assert.IsTrue(rule.Matches(nothingSpecialMethod.ImplementationMethodInfo));
-            Assert.IsTrue(rule.Matches(doSomethingMethod.ImplementationMethodInfo));
-            Assert.IsTrue(rule.Matches(getCriticalInfoMethod.ImplementationMethodInfo));
-            Assert.IsTrue(rule.Matches(mustBeFastMethod.ImplementationMethodInfo));
+            Assert.True(rule.Matches(nothingSpecialMethod.ImplementationMethodInfo));
+            Assert.True(rule.Matches(doSomethingMethod.ImplementationMethodInfo));
+            Assert.True(rule.Matches(getCriticalInfoMethod.ImplementationMethodInfo));
+            Assert.True(rule.Matches(mustBeFastMethod.ImplementationMethodInfo));
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchingRuleOnlyMatchesOnMethodsWithAttributes()
         {
             IMatchingRule rule = new AttributeDrivenPolicyMatchingRule();
 
-            Assert.IsTrue(rule.Matches(hasAttributeMethod.ImplementationMethodInfo));
-            Assert.IsFalse(rule.Matches(doesntHaveAttributeMethod.ImplementationMethodInfo));
+            Assert.True(rule.Matches(hasAttributeMethod.ImplementationMethodInfo));
+            Assert.False(rule.Matches(doesntHaveAttributeMethod.ImplementationMethodInfo));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchInheritedHandlerAttributes()
         {
             IMatchingRule rule = new AttributeDrivenPolicyMatchingRule();
-            Assert.IsTrue(rule.Matches(newMethod.ImplementationMethodInfo));
+            Assert.True(rule.Matches(newMethod.ImplementationMethodInfo));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldHaveAttributesCauseMatchesOnMethods()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
 
-            Assert.IsTrue(policy.Matches(nothingSpecialMethod));
-            Assert.IsFalse(policy.Matches(mustBeFastMethod));
+            Assert.True(policy.Matches(nothingSpecialMethod));
+            Assert.False(policy.Matches(mustBeFastMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldGetCorrectHandlersForMethods()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(nothingSpecialMethod, new UnityContainer()));
 
-            Assert.AreEqual(1, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Equal(1, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldGetHandlersFromClassAndMethodAttributes()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(doSomethingMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler3), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler3), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldGetNoHandlersIfApplyNoPoliciesIsPresent()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(mustBeFastMethod, new UnityContainer()));
-            Assert.AreEqual(0, handlers.Count);
+            Assert.Equal(0, handlers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldHaveLoggingHandlerForNothingSpecial()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers
                 = new List<ICallHandler>(policy.GetHandlersFor(nothingSpecialMethod, new UnityContainer()));
-            Assert.AreEqual(1, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Equal(1, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldHaveLoggingAndValidationForDoSomething()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers
                 = new List<ICallHandler>(policy.GetHandlersFor(doSomethingMethod, new UnityContainer()));
 
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler3), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler3), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersIfAttributesAreOnProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(getNameMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler3), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler3), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersIfAttributesAreOnNewProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(getNewNameMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler1), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler1), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersToGetterIfAttributesAreOnItemProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(getItemMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler3), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler3), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersToSetterIfAttributesAreOnItemProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(setItemMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler3), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler3), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersToGetterIfAttributesAreOnIndexedItemProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(getItemIntMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler1), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler1), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersToSetterIfAttributesAreOnIndexedItemProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(setItemIntMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler1), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler1), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersToGetterIfAttributesAreOnSecondIndexedItemProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(getItemStringMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler3), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler3), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldApplyHandlersToSetterIfAttributesAreOnSecondIndexedItemProperty()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policy.GetHandlersFor(setItemStringMethod, new UnityContainer()));
-            Assert.AreEqual(2, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
-            Assert.AreSame(typeof(CallHandler3), handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Same(typeof(CallHandler3), handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldInheritHandlersFromBaseClass()
         {
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers
                 = new List<ICallHandler>(policy.GetHandlersFor(newMethod, new UnityContainer()));
-            Assert.AreEqual(1, handlers.Count);
-            Assert.AreSame(typeof(CallHandler2), handlers[0].GetType());
+            Assert.Equal(1, handlers.Count);
+            Assert.Same(typeof(CallHandler2), handlers[0].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldInheritHandlersFromInterface()
         {
             MethodImplementationInfo getNewsMethod = new MethodImplementationInfo(
@@ -251,8 +250,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             AttributeDrivenPolicy policy = new AttributeDrivenPolicy();
             List<ICallHandler> handlers
                 = new List<ICallHandler>(policy.GetHandlersFor(getNewsMethod, new UnityContainer()));
-            Assert.AreEqual(1, handlers.Count);
-            Assert.AreSame(typeof(CallHandler1), handlers[0].GetType());
+            Assert.Equal(1, handlers.Count);
+            Assert.Same(typeof(CallHandler1), handlers[0].GetType());
         }
     }
 

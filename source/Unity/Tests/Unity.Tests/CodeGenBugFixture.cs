@@ -9,7 +9,7 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.Tests
@@ -18,10 +18,10 @@ namespace Microsoft.Practices.Unity.Tests
     /// Test for dynamic method creation and the CLR bug. This test will only
     /// fail if run in a release build!
     /// </summary>
-    [TestClass]
+     
     public class CodeGenBugFixture
     {
-        [TestMethod]
+        [Fact]
         public void ResolvedTypeHasStaticConstructorCalled()
         {
             IUnityContainer container = new UnityContainer();

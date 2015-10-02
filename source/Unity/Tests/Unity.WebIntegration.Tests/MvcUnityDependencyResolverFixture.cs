@@ -4,14 +4,13 @@ using System;
 using System.Linq;
 using System.Web.Mvc;
 using Microsoft.Practices.Unity.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.WebIntegation.Tests
 {
-    [TestClass]
     public class MvcUnityDependencyResolverFixture
     {
-        [TestMethod]
+        [Fact]
         public void When_resolving_then_returns_registered_instance()
         {
             using (var container = new UnityContainer())
@@ -20,11 +19,11 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
                 var resolver = new UnityDependencyResolver(container);
 
                 var actual = (IFoo)resolver.GetService(typeof(IFoo));
-                Assert.AreEqual("value", actual.TestProperty);
+                Assert.Equal("value", actual.TestProperty);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void When_resolving_multiple_then_returns_all_registered_instances()
         {
             using (var container = new UnityContainer())
@@ -34,23 +33,23 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
                 var resolver = new UnityDependencyResolver(container);
 
                 var actual = resolver.GetServices(typeof(IFoo)).Cast<IFoo>().ToList();
-                Assert.IsTrue(actual.Any(x => x.TestProperty == "value1"));
-                Assert.IsTrue(actual.Any(x => x.TestProperty == "value2"));
+                Assert.True(actual.Any(x => x.TestProperty == "value1"));
+                Assert.True(actual.Any(x => x.TestProperty == "value2"));
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void When_resolving_unregistered_type_then_returns_null()
         {
             using (var container = new UnityContainer())
             {
                 var resolver = new UnityDependencyResolver(container);
 
-                Assert.IsNull(resolver.GetService(typeof(IFoo)));
+                Assert.Null(resolver.GetService(typeof(IFoo)));
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void When_resolving_concrete_controller_then_returns_injected_instance()
         {
             using (var container = new UnityContainer())
@@ -59,11 +58,11 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
                 var resolver = new UnityDependencyResolver(container);
 
                 var actual = (TestController)resolver.GetService(typeof(TestController));
-                Assert.AreEqual("value", actual.Foo.TestProperty);
+                Assert.Equal("value", actual.Foo.TestProperty);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void When_resolving_controller_with_unregistered_dependencies_then_throws()
         {
             using (var container = new UnityContainer())
@@ -74,7 +73,7 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void When_resolving_type_with_container_controlled_lifetime_then_returns_same_instance_every_time()
         {
             using (var container = new UnityContainer())
@@ -84,8 +83,8 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
                 IFoo resolve1 = (IFoo)resolver.GetService(typeof(IFoo));
                 IFoo resolve2 = (IFoo)resolver.GetService(typeof(IFoo));
 
-                Assert.IsNotNull(resolve1);
-                Assert.AreSame(resolve1, resolve2);
+                Assert.NotNull(resolve1);
+                Assert.Same(resolve1, resolve2);
             }
         }
 
@@ -127,11 +126,11 @@ namespace Microsoft.Practices.Unity.WebIntegation.Tests
             }
             catch (Exception ex)
             {
-                Assert.Fail("Expected exception {0}, but instead exception {1} was thrown",
+                Assert.True(false, string.Format("Expected exception {0}, but instead exception {1} was thrown",
                     typeof(TException).Name,
-                    ex.GetType().Name);
+                    ex.GetType().Name));
             }
-            Assert.Fail("Expected exception {0}, no exception thrown", typeof(TException).Name);
+            Assert.True(false, string.Format("Expected exception {0}, no exception thrown", typeof(TException).Name));
         }
     }
 }

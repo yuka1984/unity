@@ -4,14 +4,14 @@ using System.Configuration;
 using System.IO;
 using System.Xml;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
-    [TestClass]
+     
     public class When_DeserializingParameterElement
     {
-        [TestMethod]
+        [Fact]
         public void Then_CanDeserializeSingleInjectionValueChild()
         {
             var elementXml = @"
@@ -25,11 +25,11 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
 
             element.Deserialize(reader);
 
-            Assert.AreSame(typeof(ValueElement), element.Value.GetType());
-            Assert.AreEqual("northwind", ((ValueElement)element.Value).Value);
+            Assert.Same(typeof(ValueElement), element.Value.GetType());
+            Assert.Equal("northwind", ((ValueElement)element.Value).Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_DeserializingMultipleInjectionValueChildrenThrows()
         {
             var elementXml = @"
@@ -48,7 +48,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 });
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_DeserializingWithParametersAndValueChildrenThrows()
         {
             var elementXml = @"
@@ -66,10 +66,10 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
         }
     }
 
-    [TestClass]
+     
     public class When_DeserializingPropertyElement
     {
-        [TestMethod]
+        [Fact]
         public void Then_CanDeserializeSingleInjectionValueChild()
         {
             var elementXml = @"
@@ -83,11 +83,11 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
 
             element.Deserialize(reader);
 
-            Assert.AreSame(typeof(ValueElement), element.Value.GetType());
-            Assert.AreEqual("northwind", ((ValueElement)element.Value).Value);
+            Assert.Same(typeof(ValueElement), element.Value.GetType());
+            Assert.Equal("northwind", ((ValueElement)element.Value).Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_DeserializingMultipleInjectionValueChildrenThrows()
         {
             var elementXml = @"
@@ -105,7 +105,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 });
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_DeserializingWithParametersAndValueChildrenThrows()
         {
             var elementXml = @"

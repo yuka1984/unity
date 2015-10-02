@@ -6,13 +6,13 @@ using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     public partial class InterceptionFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanConfigureRemotingInterceptionOnMBRO()
         {
             IUnityContainer container = new UnityContainer();
@@ -21,7 +21,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             container.Configure<Interception>().SetInterceptorFor<Wrappable>(new TransparentProxyInterceptor());
         }
 
-        [TestMethod]
+        [Fact]
         public void CanConfigureRemotingInterceptionOnInterface()
         {
             IUnityContainer container = new UnityContainer();
@@ -30,7 +30,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             container.Configure<Interception>().SetInterceptorFor<Interface>(new TransparentProxyInterceptor());
         }
 
-        [TestMethod]
+        [Fact]
         public void ConfiguringRemotingInterceptionOnNonMBROTypeThrows()
         {
             IUnityContainer container = new UnityContainer();
@@ -40,7 +40,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             {
                 container.Configure<Interception>()
                     .SetInterceptorFor<WrappableThroughInterface>(new TransparentProxyInterceptor());
-                Assert.Fail("Call to SetInjectorFor<T>() should have thrown");
+                Assert.True(false, string.Format("Call to SetInjectorFor<T>() should have thrown"));
             }
             catch (ArgumentException)
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanConfigureDefaultRemotingInterceptionOnMBRO()
         {
             IUnityContainer container = new UnityContainer();
@@ -58,7 +58,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 .SetDefaultInterceptorFor<Wrappable>(new TransparentProxyInterceptor());
         }
 
-        [TestMethod]
+        [Fact]
         public void CanConfigureDefaultRemotingInterceptionOnInterface()
         {
             IUnityContainer container = new UnityContainer();
@@ -68,7 +68,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 .SetDefaultInterceptorFor<Interface>(new TransparentProxyInterceptor());
         }
 
-        [TestMethod]
+        [Fact]
         public void ConfiguringDefaultRemotingInterceptionOnNonMBROTypeThrows()
         {
             IUnityContainer container = new UnityContainer();
@@ -78,7 +78,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             {
                 container.Configure<Interception>()
                     .SetDefaultInterceptorFor<WrappableThroughInterface>(new TransparentProxyInterceptor());
-                Assert.Fail("Call to SetInjectorFor<T>() should have thrown");
+                Assert.True(false, string.Format("Call to SetInjectorFor<T>() should have thrown"));
             }
             catch (ArgumentException)
             {
@@ -86,7 +86,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateWrappedObjectIfInterceptionPolicyIsSet()
         {
             IUnityContainer container = CreateContainer("CanCreateWrappedObject");
@@ -95,22 +95,22 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                     .SetInterceptorFor<Wrappable>(new TransparentProxyInterceptor());
 
             Wrappable wrappable = container.Resolve<Wrappable>();
-            Assert.IsNotNull(wrappable);
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(wrappable));
+            Assert.NotNull(wrappable);
+            Assert.True(RemotingServices.IsTransparentProxy(wrappable));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateWrappedObjectIfDefaultInterceptionPolicy()
         {
             IUnityContainer container = CreateContainer("CanCreateWrappedObject");
             container.Configure<Interception>().SetDefaultInterceptorFor<Wrappable>(new TransparentProxyInterceptor());
 
             Wrappable wrappable = container.Resolve<Wrappable>();
-            Assert.IsNotNull(wrappable);
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(wrappable));
+            Assert.NotNull(wrappable);
+            Assert.True(RemotingServices.IsTransparentProxy(wrappable));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateNamedWrappedObjectIfDefaultInterceptionPolicy()
         {
             IUnityContainer container = CreateContainer("CanCreateWrappedObject");
@@ -118,12 +118,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             Wrappable wrappable = container.Resolve<Wrappable>("someName");
             var wrappable2 = container.Resolve<Wrappable>("another");
-            Assert.IsNotNull(wrappable);
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(wrappable));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(wrappable2));
+            Assert.NotNull(wrappable);
+            Assert.True(RemotingServices.IsTransparentProxy(wrappable));
+            Assert.True(RemotingServices.IsTransparentProxy(wrappable2));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetDefaultInterceptionPolicyThroughRegisterType()
         {
             IUnityContainer container = CreateContainer("CanCreateWrappedObject");
@@ -133,21 +133,21 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             var wrappable = container.Resolve<Wrappable>("someName");
             var wrappable2 = container.Resolve<Wrappable>("another");
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(wrappable));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(wrappable2));
+            Assert.True(RemotingServices.IsTransparentProxy(wrappable));
+            Assert.True(RemotingServices.IsTransparentProxy(wrappable2));
         }
 
-        [TestMethod]
+        [Fact]
         public void WillNotCreateWrappedObjectIfNoInterceptionPolicyIsSpecified()
         {
             IUnityContainer container = CreateContainer("CanCreateWrappedObject");
 
             Wrappable wrappable = container.Resolve<Wrappable>();
-            Assert.IsNotNull(wrappable);
-            Assert.IsFalse(RemotingServices.IsTransparentProxy(wrappable));
+            Assert.NotNull(wrappable);
+            Assert.False(RemotingServices.IsTransparentProxy(wrappable));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptExistingWrappedObject()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -160,10 +160,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable = container.BuildUp<Wrappable>(new Wrappable());
             wrappable.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToDerivedOfMBRO()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -176,10 +176,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             DerivedWrappable wrappable = container.Resolve<DerivedWrappable>();
             wrappable.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptCallsToDerivedOfMBRO"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptCallsToDerivedOfMBRO"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToMBROOverInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -192,10 +192,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable = container.Resolve<Wrappable>();
             ((Interface)wrappable).Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMBROOverInterface"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMBROOverInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToMappedMBROOverInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -209,10 +209,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappable = container.Resolve<Interface>();
             wrappable.Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterface"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToMappedMBROOverInterfaceCastedToType()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -226,10 +226,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappable = container.Resolve<Interface>();
             ((Wrappable)wrappable).Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterfaceCastedToType"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterfaceCastedToType"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToLifetimeManagedMappedMBROOverInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -245,10 +245,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable2 = container.Resolve<Wrappable>();
             wrappable2.Method();
 
-            Assert.AreEqual(2, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterface"]);
+            Assert.Equal(2, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToMappedMBROOverInterfaceWithDefaultConfiguredForType()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -263,12 +263,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappable = container.Resolve<Interface>();
             wrappable.Method();
 
-            Assert.AreEqual(
+            Assert.Equal(
                 1,
                 GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterfaceWithDefaultConfiguredForType"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToMappedMBROOverInterfaceWithDefaultConfiguredForInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -283,12 +283,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappable = container.Resolve<Interface>();
             wrappable.Method();
 
-            Assert.AreEqual(
+            Assert.Equal(
                 1,
                 GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverInterfaceWithDefaultConfiguredForInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallsToMappedMBROOverDifferentInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -302,10 +302,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappable = container.Resolve<Interface>();
             ((InterfaceA)wrappable).MethodA();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverDifferentInterface"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptCallsToMappedMBROOverDifferentInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanConfigureInterceptionOnInterfaceToWrapMBRO()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -319,10 +319,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrapped = container.Resolve<Interface>();
             wrapped.Method3();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanConfigureInterceptionOnInterfaceToWrapMBRO"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanConfigureInterceptionOnInterfaceToWrapMBRO"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanConfigureInterceptionOnInterfaceToWrapNonMBRO()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -336,10 +336,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrapped = container.Resolve<Interface>();
             wrapped.Method3();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanConfigureInterceptionOnInterfaceToWrapNonMBRO"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanConfigureInterceptionOnInterfaceToWrapNonMBRO"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallToMapppedNonMBROThroughDifferentInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -353,10 +353,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrapped = container.Resolve<Interface>();
             ((InterfaceA)wrapped).MethodA();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanConfigureInterceptionOnInterfaceToWrapNonMBRO"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanConfigureInterceptionOnInterfaceToWrapNonMBRO"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMBROWithDependencyOnOtherMBRO()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -396,11 +396,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             WrappableWithProperty instance = container.Resolve<WrappableWithProperty>();
 
             instance.Method();
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["parent"]); // method
+            Assert.Equal(1, GlobalCountCallHandler.Calls["parent"]); // method
 
             instance.Wrappable.Method();
-            Assert.AreEqual(2, GlobalCountCallHandler.Calls["parent"]); // method and getter
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["child"]);
+            Assert.Equal(2, GlobalCountCallHandler.Calls["parent"]); // method and getter
+            Assert.Equal(1, GlobalCountCallHandler.Calls["child"]);
         }
 
         public partial class BaseInterceptable : MarshalByRefObject

@@ -4,19 +4,20 @@ using System.Linq;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerWithLifetimes
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerWithLifetimes : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerWithLifetimes()
             : base("Lifetimes")
         {
+            MainSetup();
         }
 
         private IUnityContainer container;
@@ -34,43 +35,43 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             this.section.Configure(this.container);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_BaseILoggerHasSingletonLifetime()
         {
             AssertRegistration<ILogger>(null).HasLifetime<ContainerControlledLifetimeManager>();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MockLoggerHasExternalLifetime()
         {
             AssertRegistration<ILogger>("mock").HasLifetime<ExternallyControlledLifetimeManager>();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SessionLoggerHasSessionLifetime()
         {
             AssertRegistration<ILogger>("session").HasLifetime<SessionLifetimeManager>();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ReverseSessionLoggerHasSessionLifetime()
         {
             AssertRegistration<ILogger>("reverseSession").HasLifetime<SessionLifetimeManager>();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ReverseSessionLoggerLifetimeWasInitializedUsingTypeConverter()
         {
             AssertRegistration<ILogger>("reverseSession").LifetimeHasSessionKey("sdrawkcab");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RegistrationWithoutExplicitLifetimeIsTransient()
         {
             AssertRegistration<ILogger>("transient").HasLifetime<TransientLifetimeManager>();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RegistrationWithEmptyLifetimeTypeIsTransient()
         {
             AssertRegistration<ILogger>("explicitTransient").HasLifetime<TransientLifetimeManager>();
@@ -88,7 +89,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
     {
         public static void LifetimeHasSessionKey(this RegistrationsToAssertOn r, string sessionKey)
         {
-            Assert.IsTrue(
+            Assert.True(
                 r.Registrations.All(reg => ((SessionLifetimeManager)reg.LifetimeManager).SessionKey == sessionKey));
         }
     }

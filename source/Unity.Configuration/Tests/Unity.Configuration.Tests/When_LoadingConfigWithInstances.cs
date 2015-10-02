@@ -4,28 +4,29 @@ using System;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigWithInstances
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigWithInstances : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigWithInstances()
             : base("RegisteringInstances")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ContainerHasExpectedInstancesElements()
         {
-            Assert.AreEqual(4, section.Containers.Default.Instances.Count);
+            Assert.Equal(4, section.Containers.Default.Instances.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_InstancesHaveExpectedContents()
         {
             var expected = new[]

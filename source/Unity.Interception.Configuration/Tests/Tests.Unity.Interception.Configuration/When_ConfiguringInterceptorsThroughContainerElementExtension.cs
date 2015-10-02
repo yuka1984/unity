@@ -6,19 +6,20 @@ using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.Config
 using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.TestObjects;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringInterceptorsThroughContainerElementExtension
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringInterceptorsThroughContainerElementExtension : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_ConfiguringInterceptorsThroughContainerElementExtension()
             : base("InterceptorsThroughContainerElementExtension")
         {
+            MainSetup();
         }
 
         private IUnityContainer GetContainer(string containerName)
@@ -32,7 +33,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .Container;
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureDefaultInterceptorForType()
         {
             IUnityContainer container = this.GetContainer("configuringDefaultInterceptorForType");
@@ -40,11 +41,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var anonymous = container.Resolve<Wrappable>();
             var named = container.Resolve<Wrappable>("name");
 
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(anonymous));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(named));
+            Assert.True(RemotingServices.IsTransparentProxy(anonymous));
+            Assert.True(RemotingServices.IsTransparentProxy(named));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureVirtualMethodInterceptor()
         {
             IUnityContainer container = this.GetContainer("configuringDefaultInterceptorForTypeWithVirtualMethodInterceptor");
@@ -52,11 +53,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var anonymous = container.Resolve<WrappableWithVirtualMethods>();
             var named = container.Resolve<WrappableWithVirtualMethods>("name");
 
-            Assert.AreSame(typeof(WrappableWithVirtualMethods), anonymous.GetType().BaseType);
-            Assert.AreSame(typeof(WrappableWithVirtualMethods), named.GetType().BaseType);
+            Assert.Same(typeof(WrappableWithVirtualMethods), anonymous.GetType().BaseType);
+            Assert.Same(typeof(WrappableWithVirtualMethods), named.GetType().BaseType);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureInterceptorForType()
         {
             IUnityContainer container = this.GetContainer("configuringInterceptorForType");
@@ -64,11 +65,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var anonymous = container.Resolve<Wrappable>();
             var named = container.Resolve<Wrappable>("name");
 
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(anonymous));
-            Assert.IsFalse(RemotingServices.IsTransparentProxy(named));
+            Assert.True(RemotingServices.IsTransparentProxy(anonymous));
+            Assert.False(RemotingServices.IsTransparentProxy(named));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureInterceptorForTypeAndName()
         {
             IUnityContainer container = this.GetContainer("configuringInterceptorForTypeAndName");
@@ -76,11 +77,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var anonymous = container.Resolve<Wrappable>();
             var named = container.Resolve<Wrappable>("name");
 
-            Assert.IsFalse(RemotingServices.IsTransparentProxy(anonymous));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(named));
+            Assert.False(RemotingServices.IsTransparentProxy(anonymous));
+            Assert.True(RemotingServices.IsTransparentProxy(named));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanConfigureSeveralInterceptors()
         {
             IUnityContainer container = this.GetContainer("configuringSeveralInterceptors");
@@ -88,11 +89,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var anonymous = container.Resolve<Wrappable>();
             var named = container.Resolve<Wrappable>("name");
 
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(anonymous));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(named));
+            Assert.True(RemotingServices.IsTransparentProxy(anonymous));
+            Assert.True(RemotingServices.IsTransparentProxy(named));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanMixDefaultAndNonDefaultInterceptors()
         {
             IUnityContainer container = this.GetContainer("mixingDefaultAndNonDefaultInterceptors");
@@ -104,13 +105,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var namedWrappableWithProperty
                 = container.Resolve<WrappableWithProperty>("name");
 
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(anonymousWrappable));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(namedWrappable));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(anonymousWrappableWithProperty));
-            Assert.IsFalse(RemotingServices.IsTransparentProxy(namedWrappableWithProperty));
+            Assert.True(RemotingServices.IsTransparentProxy(anonymousWrappable));
+            Assert.True(RemotingServices.IsTransparentProxy(namedWrappable));
+            Assert.True(RemotingServices.IsTransparentProxy(anonymousWrappableWithProperty));
+            Assert.False(RemotingServices.IsTransparentProxy(namedWrappableWithProperty));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanMixTransparentProxyAndVirtualMethodInterceptors()
         {
             IUnityContainer container = this.GetContainer("mixingTransparentProxyAndVirtualMethodInterceptors");
@@ -122,22 +123,22 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             var namedWrappableWrappableWithVirtualMethods
                 = container.Resolve<WrappableWithVirtualMethods>("name");
 
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(anonymousWrappable));
-            Assert.IsTrue(RemotingServices.IsTransparentProxy(namedWrappable));
-            Assert.AreSame(
+            Assert.True(RemotingServices.IsTransparentProxy(anonymousWrappable));
+            Assert.True(RemotingServices.IsTransparentProxy(namedWrappable));
+            Assert.Same(
                 typeof(WrappableWithVirtualMethods),
                 anonymousWrappableWrappableWithVirtualMethods.GetType());
-            Assert.AreSame(
+            Assert.Same(
                 typeof(WrappableWithVirtualMethods),
                 namedWrappableWrappableWithVirtualMethods.GetType().BaseType);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanSpecifyInterceptorUsingTypeConverter()
         {
             this.GetContainer("specifyingInterceptorWithTypeConverter");
 
-            Assert.AreEqual("source value", MyTransparentProxyInterceptorTypeConverter.SourceValue);
+            Assert.Equal("source value", MyTransparentProxyInterceptorTypeConverter.SourceValue);
         }
     }
 }

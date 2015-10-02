@@ -4,19 +4,20 @@ using System;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerForSpecificConstructors
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerForSpecificConstructors : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerForSpecificConstructors()
             : base("VariousConstructors")
         {
+            MainSetup();
         }
 
         private IUnityContainer container;
@@ -27,15 +28,15 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             this.container = new UnityContainer();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanResolveMockDatabaseAndItCallsDefaultConstructor()
         {
             section.Configure(this.container, "defaultConstructor");
             var result = this.container.Resolve<MockDatabase>();
-            Assert.IsTrue(result.DefaultConstructorCalled);
+            Assert.True(result.DefaultConstructorCalled);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ConstructorsThatDoNotMatchThrowAnException()
         {
             AssertExtensions.AssertException<InvalidOperationException>(() =>
@@ -46,12 +47,12 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
 
         // Disable obsolete warning for this one test
 #pragma warning disable 618
-        [TestMethod]
+        [Fact]
         public void Then_OldConfigureAPIStillWorks()
         {
             this.section.Containers["defaultConstructor"].Configure(this.container);
             var result = this.container.Resolve<MockDatabase>();
-            Assert.IsTrue(result.DefaultConstructorCalled);
+            Assert.True(result.DefaultConstructorCalled);
         }
 #pragma warning restore 618
     }

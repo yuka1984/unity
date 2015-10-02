@@ -7,14 +7,14 @@ using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.Configuration.Tests.TestObjects;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerToResolveGenerics
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerToResolveGenerics : ContainerConfiguringFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerToResolveGenerics()
@@ -22,7 +22,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
         {
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_GenericParameterAsStringIsProperlySubstituted()
         {
             Container.RegisterType(typeof(GenericObjectWithConstructorDependency<>), "manual",
@@ -30,14 +30,14 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             var manualResult = Container.Resolve<GenericObjectWithConstructorDependency<string>>("manual");
 
             var resultForString = Container.Resolve<GenericObjectWithConstructorDependency<string>>("basic");
-            Assert.AreEqual(Container.Resolve<string>(), resultForString.Value);
+            Assert.Equal(Container.Resolve<string>(), resultForString.Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_GenericParameterAsIntIsProperlySubstituted()
         {
             var resultForInt = Container.Resolve<GenericObjectWithConstructorDependency<int>>("basic");
-            Assert.AreEqual(Container.Resolve<int>(), resultForInt.Value);
+            Assert.Equal(Container.Resolve<int>(), resultForInt.Value);
         }
     }
 }

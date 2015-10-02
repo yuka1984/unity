@@ -2,11 +2,11 @@
 
 using System;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
-    [TestClass]
+     
     public class ParameterTypeMatchingRuleFixture
     {
         private MethodInfo targetMethodString;
@@ -16,8 +16,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
         private MethodInfo targetMethodStringInt;
         private MethodInfo targetWithOutParams;
 
-        [TestInitialize]
-        public void Setup()
+        public ParameterTypeMatchingRuleFixture()
         {
             Type targetType = typeof(ParameterTypeMatchingRuleTarget);
             targetMethodString = targetType.GetMethod("TargetMethodString");
@@ -28,7 +27,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
             targetWithOutParams = targetType.GetMethod("TargetWithOutParams");
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchOnSingleInputParameter()
         {
             ParameterTypeMatchingRule rule = new ParameterTypeMatchingRule(
@@ -37,11 +36,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                         new ParameterTypeMatchingInfo("System.String", false, ParameterKind.Input)
                     });
 
-            Assert.IsTrue(rule.Matches(targetMethodString));
-            Assert.IsFalse(rule.Matches(targetMethodInt));
+            Assert.True(rule.Matches(targetMethodString));
+            Assert.False(rule.Matches(targetMethodInt));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchOnReturnType()
         {
             ParameterTypeMatchingRule rule = new ParameterTypeMatchingRule(
@@ -49,11 +48,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                     {
                         new ParameterTypeMatchingInfo("System.String", false, ParameterKind.ReturnValue)
                     });
-            Assert.IsFalse(rule.Matches(targetMethodString));
-            Assert.IsTrue(rule.Matches(returnsAString));
+            Assert.False(rule.Matches(targetMethodString));
+            Assert.True(rule.Matches(returnsAString));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchOnOneOfManyParameters()
         {
             ParameterTypeMatchingRule rule = new ParameterTypeMatchingRule(
@@ -62,13 +61,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                         new ParameterTypeMatchingInfo("System.Int32", false, ParameterKind.Input)
                     });
 
-            Assert.IsTrue(rule.Matches(targetMethodInt));
-            Assert.IsTrue(rule.Matches(targetMethodIntString));
-            Assert.IsTrue(rule.Matches(targetMethodStringInt));
-            Assert.IsFalse(rule.Matches(returnsAString));
+            Assert.True(rule.Matches(targetMethodInt));
+            Assert.True(rule.Matches(targetMethodIntString));
+            Assert.True(rule.Matches(targetMethodStringInt));
+            Assert.False(rule.Matches(returnsAString));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchOnOutParams()
         {
             ParameterTypeMatchingRule rule = new ParameterTypeMatchingRule(
@@ -76,11 +75,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                     {
                         new ParameterTypeMatchingInfo("System.Int32", false, ParameterKind.Output)
                     });
-            Assert.IsTrue(rule.Matches(targetWithOutParams));
-            Assert.IsFalse(rule.Matches(targetMethodInt));
+            Assert.True(rule.Matches(targetWithOutParams));
+            Assert.False(rule.Matches(targetMethodInt));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchInOrOut()
         {
             ParameterTypeMatchingRule rule = new ParameterTypeMatchingRule(
@@ -88,11 +87,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                     {
                         new ParameterTypeMatchingInfo("System.Int32", false, ParameterKind.InputOrOutput)
                     });
-            Assert.IsTrue(rule.Matches(targetWithOutParams));
-            Assert.IsTrue(rule.Matches(targetMethodInt));
+            Assert.True(rule.Matches(targetWithOutParams));
+            Assert.True(rule.Matches(targetMethodInt));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchOr()
         {
             ParameterTypeMatchingRule rule = new ParameterTypeMatchingRule(
@@ -102,11 +101,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                         new ParameterTypeMatchingInfo("String", false, ParameterKind.InputOrOutput),
                     });
 
-            Assert.IsTrue(rule.Matches(targetMethodString));
-            Assert.IsTrue(rule.Matches(targetMethodInt));
-            Assert.IsTrue(rule.Matches(targetMethodIntString));
-            Assert.IsTrue(rule.Matches(targetWithOutParams));
-            Assert.IsFalse(rule.Matches(returnsAString));
+            Assert.True(rule.Matches(targetMethodString));
+            Assert.True(rule.Matches(targetMethodInt));
+            Assert.True(rule.Matches(targetMethodIntString));
+            Assert.True(rule.Matches(targetWithOutParams));
+            Assert.False(rule.Matches(returnsAString));
         }
     }
 

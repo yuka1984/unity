@@ -2,40 +2,40 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 [module: SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1403:FileMayOnlyContainASingleNamespace", Justification = "Test needs multiple namespaces so keep the namespaces and test together")]
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
-    [TestClass]
+     
     public class TypeMatchingRuleFixture
     {
-        [TestMethod]
+        [Fact]
         public void ShouldMatchExactClassName()
         {
             TestMatch("MyType1", typeof(MyType1), true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchWithDifferentClassName()
         {
             TestMatch("MyType1", typeof(MyType2), false);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchInDifferentNamespaces()
         {
             TestMatch("MyType1", typeof(ANestedNamespace.MyType1), true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchCaseInsensitive()
         {
             TestMatch("mytype2", typeof(MyType2), true, true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithFullTypeName()
         {
             TestMatch(
@@ -43,13 +43,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                 typeof(MyType1), false, true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchFullNameWithDifferentNamespace()
         {
             TestMatch(typeof(MyType1).FullName, typeof(ANestedNamespace.MyType1), false);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchOneOfMultipleMatchOptions()
         {
             IMatchingRule rule = new TypeMatchingRule(new MatchingInfo[]
@@ -57,12 +57,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                                                               new MatchingInfo(typeof(MyType1).FullName),
                                                               new MatchingInfo("MYTYPE2", true)
                                                           });
-            Assert.IsTrue(rule.Matches(typeof(MyType1).GetMethod("TargetMethod")));
-            Assert.IsFalse(rule.Matches(typeof(ANestedNamespace.MyType1).GetMethod("TargetMethod")));
-            Assert.IsTrue(rule.Matches(typeof(MyType2).GetMethod("TargetMethod")));
+            Assert.True(rule.Matches(typeof(MyType1).GetMethod("TargetMethod")));
+            Assert.False(rule.Matches(typeof(ANestedNamespace.MyType1).GetMethod("TargetMethod")));
+            Assert.True(rule.Matches(typeof(MyType2).GetMethod("TargetMethod")));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchTypeIfItImplementsMatchingInterface()
         {
             TestMatch(typeof(IInterfaceOne).FullName, typeof(ANestedNamespace.MyType1), false);
@@ -76,7 +76,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
         {
             TypeMatchingRule rule = new TypeMatchingRule(typeName, ignoreCase);
             MethodInfo methodToMatch = typeToMatch.GetMethod("TargetMethod");
-            Assert.AreEqual(shouldMatch, rule.Matches(methodToMatch));
+            Assert.Equal(shouldMatch, rule.Matches(methodToMatch));
         }
 
         public void TestMatch(string typeName,

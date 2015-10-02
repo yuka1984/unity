@@ -29,28 +29,28 @@ using TestMethodAttribute = NUnit.Framework.TestAttribute;
 using System.Linq;
 using System.Threading;
 using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.Tests
 {
-    [TestClass]
+     
     public class PerThreadLifetimeManagerFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanCreateLifetimeManager()
         {
             new PerThreadLifetimeManager();
         }
 
-        [TestMethod]
+        [Fact]
         public void NewLifetimeManagerReturnsNullForObject()
         {
             LifetimeManager ltm = new PerThreadLifetimeManager();
-            Assert.IsNull(ltm.GetValue());
+            Assert.Null(ltm.GetValue());
         }
 
-        [TestMethod]
+        [Fact]
         public void LifetimeManagerReturnsValueThatWasSetOnSameThread()
         {
             LifetimeManager ltm = new PerThreadLifetimeManager();
@@ -58,10 +58,10 @@ namespace Microsoft.Practices.Unity.Tests
 
             ltm.SetValue(expected);
             object result = ltm.GetValue();
-            Assert.AreSame(expected, result);
+            Assert.Same(expected, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void DifferentLifetimeContainerInstancesHoldDifferentObjects()
         {
             LifetimeManager ltm1 = new PerThreadLifetimeManager();
@@ -74,11 +74,11 @@ namespace Microsoft.Practices.Unity.Tests
 
             object result1 = ltm1.GetValue();
             object result2 = ltm2.GetValue();
-            Assert.AreSame(expected1, result1);
-            Assert.AreSame(expected2, result2);
+            Assert.Same(expected1, result1);
+            Assert.Same(expected2, result2);
         }
 
-        [TestMethod]
+        [Fact]
         public void LifetimeManagerReturnsNullIfCalledOnADifferentThreadFromTheOneThatSetTheValue()
         {
             LifetimeManager ltm = new PerThreadLifetimeManager();
@@ -91,11 +91,11 @@ namespace Microsoft.Practices.Unity.Tests
 
             RunInParallel(() => { otherThreadResult = ltm.GetValue(); });
 
-            Assert.AreSame(expected, ltm.GetValue());
-            Assert.IsNull(otherThreadResult);
+            Assert.Same(expected, ltm.GetValue());
+            Assert.Null(otherThreadResult);
         }
 
-        [TestMethod]
+        [Fact]
         public void LifetimeManagerReturnsDifferentValuesForEachThread()
         {
             LifetimeManager ltm = new PerThreadLifetimeManager();
@@ -128,12 +128,12 @@ namespace Microsoft.Practices.Unity.Tests
                     valueTwo = ltm.GetValue();
                 });
 
-            Assert.AreSame(one, valueOne);
-            Assert.AreSame(two, valueTwo);
-            Assert.AreSame(three, valueThree);
+            Assert.Same(one, valueOne);
+            Assert.Same(two, valueTwo);
+            Assert.Same(three, valueThree);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanRegisterLifetimeManagerInContainerAndUseItOnOneThread()
         {
             IUnityContainer container = new UnityContainer()
@@ -142,10 +142,10 @@ namespace Microsoft.Practices.Unity.Tests
             object result1 = container.Resolve<object>();
             object result2 = container.Resolve<object>();
 
-            Assert.AreSame(result1, result2);
+            Assert.Same(result1, result2);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReturnsDifferentObjectsOnDifferentThreadsFromContainer()
         {
             IUnityContainer container = new UnityContainer()
@@ -158,13 +158,13 @@ namespace Microsoft.Practices.Unity.Tests
                 delegate { result1 = container.Resolve<object>(); },
                 delegate { result2 = container.Resolve<object>(); });
 
-            Assert.IsNotNull(result1);
-            Assert.IsNotNull(result2);
+            Assert.NotNull(result1);
+            Assert.NotNull(result2);
 
-            Assert.AreNotSame(result1, result2);
+            Assert.NotSame(result1, result2);
         }
 
-        [TestMethod]
+        [Fact]
         public void RegisteringAnInstanceInAThreadSetsPerThreadLifetimeManagerWhenResolvingInOtherThreads()
         {
             IUnityContainer container = new UnityContainer()
@@ -195,16 +195,16 @@ namespace Microsoft.Practices.Unity.Tests
                 });
             object result = container.Resolve<object>();
 
-            Assert.IsNotNull(result1A);
-            Assert.IsNotNull(result2A);
-            Assert.IsNotNull(result);
+            Assert.NotNull(result1A);
+            Assert.NotNull(result2A);
+            Assert.NotNull(result);
 
-            Assert.AreNotSame(result1A, result2A);
-            Assert.AreNotSame(registered, result1A);
-            Assert.AreNotSame(registered, result2A);
-            Assert.AreSame(result1A, result1B);
-            Assert.AreSame(result2A, result2B);
-            Assert.AreSame(registered, result);
+            Assert.NotSame(result1A, result2A);
+            Assert.NotSame(registered, result1A);
+            Assert.NotSame(registered, result2A);
+            Assert.Same(result1A, result1B);
+            Assert.Same(result2A, result2B);
+            Assert.Same(registered, result);
         }
 
 #if NETFX_CORE && !WINDOWS_PHONE

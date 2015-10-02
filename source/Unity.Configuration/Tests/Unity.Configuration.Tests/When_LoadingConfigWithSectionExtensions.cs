@@ -4,83 +4,84 @@ using System;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.Configuration.Tests.TestObjects;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
-    [TestClass]
+     
     public class When_LoadingConfigWithSectionExtensions : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigWithSectionExtensions()
             : base("SectionExtensions")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ExpectedNumberOfSectionExtensionArePresent()
         {
-            Assert.AreEqual(2, section.SectionExtensions.Count);
+            Assert.Equal(2, section.SectionExtensions.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_FirstSectionExtensionIsPresent()
         {
-            Assert.AreEqual("TestSectionExtension", section.SectionExtensions[0].TypeName);
-            Assert.AreEqual(String.Empty, section.SectionExtensions[0].Prefix);
+            Assert.Equal("TestSectionExtension", section.SectionExtensions[0].TypeName);
+            Assert.Equal(String.Empty, section.SectionExtensions[0].Prefix);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SecondSectionExtensionIsPresent()
         {
-            Assert.AreEqual("TestSectionExtension", section.SectionExtensions[1].TypeName);
-            Assert.AreEqual("ext2", section.SectionExtensions[1].Prefix);
+            Assert.Equal("TestSectionExtension", section.SectionExtensions[1].TypeName);
+            Assert.Equal("ext2", section.SectionExtensions[1].Prefix);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TestSectionExtensionWasInvokedOnce()
         {
-            Assert.AreEqual(1, TestSectionExtension.NumberOfCalls);
+            Assert.Equal(1, TestSectionExtension.NumberOfCalls);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ContainerConfiguringExtensionElementsWereAdded()
         {
-            Assert.AreEqual(typeof(ContainerConfigElementOne),
+            Assert.Equal(typeof(ContainerConfigElementOne),
                 ExtensionElementMap.GetContainerConfiguringElementType("configOne"));
-            Assert.AreEqual(typeof(ContainerConfigElementTwo),
+            Assert.Equal(typeof(ContainerConfigElementTwo),
                 ExtensionElementMap.GetContainerConfiguringElementType("configTwo"));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_PrefixedContainerConfiguringExtensionsWereAdded()
         {
-            Assert.AreEqual(typeof(ContainerConfigElementOne),
+            Assert.Equal(typeof(ContainerConfigElementOne),
                 ExtensionElementMap.GetContainerConfiguringElementType("ext2.configOne"));
-            Assert.AreEqual(typeof(ContainerConfigElementTwo),
+            Assert.Equal(typeof(ContainerConfigElementTwo),
                 ExtensionElementMap.GetContainerConfiguringElementType("ext2.configTwo"));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ValueElementWasAdded()
         {
-            Assert.AreEqual(typeof(SeventeenValueElement),
+            Assert.Equal(typeof(SeventeenValueElement),
                 ExtensionElementMap.GetParameterValueElementType("seventeen"));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_UnprefixedAliasWasAdded()
         {
             string typeName = section.TypeAliases["scalarObject"];
-            Assert.IsNotNull(typeName);
-            Assert.AreEqual(typeof(ObjectTakingScalars).AssemblyQualifiedName, typeName);
+            Assert.NotNull(typeName);
+            Assert.Equal(typeof(ObjectTakingScalars).AssemblyQualifiedName, typeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_PrefixedAliasWasAdded()
         {
             string typeName = section.TypeAliases["ext2.scalarObject"];
-            Assert.IsNotNull(typeName);
-            Assert.AreEqual(typeof(ObjectTakingScalars).AssemblyQualifiedName, typeName);
+            Assert.NotNull(typeName);
+            Assert.Equal(typeof(ObjectTakingScalars).AssemblyQualifiedName, typeName);
         }
     }
 }

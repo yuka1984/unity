@@ -10,7 +10,7 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.Tests
@@ -18,7 +18,7 @@ namespace Microsoft.Practices.Unity.Tests
     /// <summary>
     /// Summary description for BuildPlanAndChildContainerFixture
     /// </summary>
-    [TestClass]
+     
     public class BuildPlanAndChildContainerFixture
     {
         private IUnityContainer parentContainer;
@@ -27,8 +27,7 @@ namespace Microsoft.Practices.Unity.Tests
         private const int ValueInjectedFromParent = 3;
         private const int ValueInjectedFromChild = 5;
 
-        [TestInitialize]
-        public void Setup()
+        public BuildPlanAndChildContainerFixture()
         {
             parentContainer = new UnityContainer()
                 .RegisterType<TestObject>(new InjectionConstructor(ValueInjectedFromParent))
@@ -48,7 +47,7 @@ namespace Microsoft.Practices.Unity.Tests
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void ValuesInjectedAreCorrectWhenResolvingFromParentFirst()
         {
             // Be aware ordering is important here - resolve through parent first
@@ -56,11 +55,11 @@ namespace Microsoft.Practices.Unity.Tests
             var fromParent = parentContainer.Resolve<TestObject>();
             var fromChild = childContainer.Resolve<TestObject>();
 
-            Assert.AreEqual(ValueInjectedFromParent, fromParent.Value);
-            Assert.AreEqual(ValueInjectedFromChild, fromChild.Value);
+            Assert.Equal(ValueInjectedFromParent, fromParent.Value);
+            Assert.Equal(ValueInjectedFromChild, fromChild.Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void ChildContainersForUnconfiguredTypesPutConstructorParamResolversInParent()
         {
             childContainer.Resolve<ObjectWithOneDependency>();
@@ -69,7 +68,7 @@ namespace Microsoft.Practices.Unity.Tests
             // No exception means we're good.
         }
 
-        [TestMethod]
+        [Fact]
         public void ChildContainersForUnconfiguredTypesPutPropertyResolversInParent()
         {
             childContainer.Resolve<ObjectWithLotsOfDependencies>();

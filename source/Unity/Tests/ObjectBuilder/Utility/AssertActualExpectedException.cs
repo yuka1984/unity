@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
+using Microsoft.Practices.Unity.TestSupport;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using NUnit.Framework;
 using AssertFailedException = NUnit.Framework.AssertionException;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.ObjectBuilder2.Tests

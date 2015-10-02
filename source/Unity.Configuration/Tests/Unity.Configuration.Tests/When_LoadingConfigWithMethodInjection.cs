@@ -5,32 +5,33 @@ using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigWithMethodInjection
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigWithMethodInjection : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigWithMethodInjection()
             : base("MethodInjection")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_FirstRegistrationHasOneMethodInjection()
         {
             var registration = (from reg in section.Containers.Default.Registrations
                                 where reg.TypeName == "ObjectWithInjectionMethod" && reg.Name == "singleMethod"
                                 select reg).First();
 
-            Assert.AreEqual(1, registration.InjectionMembers.Count);
+            Assert.Equal(1, registration.InjectionMembers.Count);
             var methodRegistration = (MethodElement)registration.InjectionMembers[0];
 
-            Assert.AreEqual("Initialize", methodRegistration.Name);
+            Assert.Equal("Initialize", methodRegistration.Name);
             CollectionAssertExtensions.AreEqual(new string[] { "connectionString", "logger" },
                 methodRegistration.Parameters.Select(p => p.Name).ToList());
         }

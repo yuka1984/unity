@@ -3,34 +3,34 @@
 using System;
 using System.ComponentModel;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInterception.Tests
 {
-    [TestClass]
+     
     public class InterceptingRealProxyFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanProxyMBROMethods()
         {
             MBROWithOneMethod original = new MBROWithOneMethod();
             MBROWithOneMethod proxy = new InterceptingRealProxy(original, typeof(MBROWithOneMethod))
                 .GetTransparentProxy() as MBROWithOneMethod;
 
-            Assert.IsNotNull(proxy);
+            Assert.NotNull(proxy);
         }
 
-        [TestMethod]
+        [Fact]
         public void ProxyImplementsIInterceptingProxy()
         {
             MBROWithOneMethod original = new MBROWithOneMethod();
             MBROWithOneMethod proxy = new InterceptingRealProxy(original, typeof(MBROWithOneMethod))
                 .GetTransparentProxy() as MBROWithOneMethod;
 
-            Assert.IsNotNull(proxy as IInterceptingProxy);
+            Assert.NotNull(proxy as IInterceptingProxy);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodsThroughProxy()
         {
             CallCountInterceptionBehavior interceptor = new CallCountInterceptionBehavior();
@@ -44,11 +44,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
 
             int result = intercepted.DoSomething(5);
 
-            Assert.AreEqual(5 * 3, result);
-            Assert.AreEqual(1, interceptor.CallCount);
+            Assert.Equal(5 * 3, result);
+            Assert.Equal(1, interceptor.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void ProxyInterceptsAddingAHandlerToAnEvent()
         {
             // arrange
@@ -65,10 +65,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
             intercepted.SomeEvent += (s, a) => { };
 
             // assert
-            Assert.AreEqual(1, interceptor.CallCount);
+            Assert.Equal(1, interceptor.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void ProxySendsOriginalWhenRaisingEvent()
         {
             // arrange
@@ -86,11 +86,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
             intercepted.TriggerIt();
 
             // assert
-            Assert.AreSame(original, sender);
-            Assert.AreEqual(2, interceptor.CallCount);  // adding + calling TriggerIt
+            Assert.Same(original, sender);
+            Assert.Equal(2, interceptor.CallCount);  // adding + calling TriggerIt
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateProxyWithAdditionalInterfaces()
         {
             MBROWithOneMethod original = new MBROWithOneMethod();
@@ -98,10 +98,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
                 new InterceptingRealProxy(original, typeof(MBROWithOneMethod), typeof(InterfaceOne))
                 .GetTransparentProxy() as MBROWithOneMethod;
 
-            Assert.IsTrue(proxy is InterfaceOne);
+            Assert.True(proxy is InterfaceOne);
         }
 
-        [TestMethod]
+        [Fact]
         public void InvokingMethodOnAdditionalInterfaceThrowsIfNotHandledByInterceptor()
         {
             MBROWithOneMethod original = new MBROWithOneMethod();
@@ -112,7 +112,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
             try
             {
                 proxy.Something();
-                Assert.Fail("should have thrown");
+                Assert.True(false, string.Format("should have thrown"));
             }
             catch (InvalidOperationException)
             {
@@ -120,7 +120,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSuccessfullyInvokeAnAdditionalInterfaceMethodIfAnInterceptorDoesNotForwardTheCall()
         {
             MBROWithOneMethod original = new MBROWithOneMethod();
@@ -134,10 +134,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
 
             proxy.Something();
 
-            Assert.IsTrue(invoked);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanImplementINotifyPropertyChanged()
         {
             MBROWithOneProperty target = new MBROWithOneProperty();
@@ -154,19 +154,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
 
             proxy.TheProperty = 100;
 
-            Assert.AreEqual(100, proxy.TheProperty);
-            Assert.AreEqual("TheProperty", changeProperty);
+            Assert.Equal(100, proxy.TheProperty);
+            Assert.Equal("TheProperty", changeProperty);
 
             changeProperty = null;
             ((INotifyPropertyChanged)proxy).PropertyChanged -= handler;
 
             proxy.TheProperty = 200;
 
-            Assert.AreEqual(200, proxy.TheProperty);
-            Assert.AreEqual(null, changeProperty);
+            Assert.Equal(200, proxy.TheProperty);
+            Assert.Equal(null, changeProperty);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanImplementINotifyPropertyChangedThroughInterface()
         {
             ObjectWithOnePropertyForImplicitlyImplementedInterface target = new ObjectWithOnePropertyForImplicitlyImplementedInterface();
@@ -183,19 +183,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
 
             proxy.TheProperty = 100;
 
-            Assert.AreEqual(100, proxy.TheProperty);
-            Assert.AreEqual("TheProperty", changeProperty);
+            Assert.Equal(100, proxy.TheProperty);
+            Assert.Equal("TheProperty", changeProperty);
 
             changeProperty = null;
             ((INotifyPropertyChanged)proxy).PropertyChanged -= handler;
 
             proxy.TheProperty = 200;
 
-            Assert.AreEqual(200, proxy.TheProperty);
-            Assert.AreEqual(null, changeProperty);
+            Assert.Equal(200, proxy.TheProperty);
+            Assert.Equal(null, changeProperty);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanImplementINotifyPropertyChangedThroughExplicitInterface()
         {
             ObjectWithOnePropertyForExplicitlyImplementedInterface target = new ObjectWithOnePropertyForExplicitlyImplementedInterface();
@@ -212,19 +212,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
 
             proxy.TheProperty = 100;
 
-            Assert.AreEqual(100, proxy.TheProperty);
-            Assert.AreEqual("TheProperty", changeProperty);
+            Assert.Equal(100, proxy.TheProperty);
+            Assert.Equal("TheProperty", changeProperty);
 
             changeProperty = null;
             ((INotifyPropertyChanged)proxy).PropertyChanged -= handler;
 
             proxy.TheProperty = 200;
 
-            Assert.AreEqual(200, proxy.TheProperty);
-            Assert.AreEqual(null, changeProperty);
+            Assert.Equal(200, proxy.TheProperty);
+            Assert.Equal(null, changeProperty);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodOnInterface()
         {
             var interceptor = new CallCountInterceptionBehavior();
@@ -238,8 +238,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.TransparaentProxyInter
 
             var result = intercepted.GetTypeName(6);
 
-            Assert.AreEqual("Int32", result);
-            Assert.AreEqual(1, interceptor.CallCount);
+            Assert.Equal("Int32", result);
+            Assert.Equal(1, interceptor.CallCount);
         }
 
         internal class MBROWithOneMethod : MarshalByRefObject

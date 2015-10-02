@@ -4,48 +4,49 @@ using System.Linq;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigurationWithArrayInjection
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigurationWithArrayInjection : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigurationWithArrayInjection()
             : base("ArrayInjection")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ArrayPropertyHasArrayElementAsValue()
         {
             var prop = this.GetArrayPropertyElement("specificElements");
 
-            Assert.IsInstanceOfType(prop.Value, typeof(ArrayElement));
+            Assert.IsType<ArrayElement>(prop.Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ArrayPropertyHasTwoValuesThatWillBeInjected()
         {
             var prop = this.GetArrayPropertyElement("specificElements");
             var arrayValue = (ArrayElement)prop.Value;
 
-            Assert.AreEqual(2, arrayValue.Values.Count);
+            Assert.Equal(2, arrayValue.Values.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ArrayPropertyValuesAreAllDependencies()
         {
             var prop = this.GetArrayPropertyElement("specificElements");
             var arrayValue = (ArrayElement)prop.Value;
 
-            Assert.IsTrue(arrayValue.Values.All(v => v is DependencyElement));
+            Assert.True(arrayValue.Values.All(v => v is DependencyElement));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ArrayPropertyValuesHaveExpectedNames()
         {
             var prop = this.GetArrayPropertyElement("specificElements");

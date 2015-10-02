@@ -12,7 +12,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using NUnit.Framework;
 using AssertFailedException = NUnit.Framework.AssertionException;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.TestSupport

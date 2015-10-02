@@ -14,38 +14,38 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.ObjectBuilder2.Tests
 {
-    [TestClass]
+     
     public class PropertySelectorFixture
     {
-        [TestMethod]
+        [Fact]
         public void SelectorReturnsEmptyListWhenObjectHasNoSettableProperties()
         {
             List<PropertyInfo> properties = SelectProperties(typeof(object));
 
-            Assert.AreEqual(0, properties.Count);
+            Assert.Equal(0, properties.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void SelectorReturnsOnlySettablePropertiesMarkedWithAttribute()
         {
             List<PropertyInfo> properties = SelectProperties(typeof(ClassWithProperties));
 
-            Assert.AreEqual(1, properties.Count);
-            Assert.AreEqual("PropTwo", properties[0].Name);
+            Assert.Equal(1, properties.Count);
+            Assert.Equal("PropTwo", properties[0].Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void SelectorIgnoresIndexers()
         {
             List<PropertyInfo> properties = SelectProperties(typeof(ClassWithIndexer));
 
-            Assert.AreEqual(1, properties.Count);
-            Assert.AreEqual("Key", properties[0].Name);
+            Assert.Equal(1, properties.Count);
+            Assert.Equal("Key", properties[0].Name);
         }
 
         private List<PropertyInfo> SelectProperties(Type t)

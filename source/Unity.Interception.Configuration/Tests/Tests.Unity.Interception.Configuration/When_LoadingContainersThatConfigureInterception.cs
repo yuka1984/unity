@@ -7,19 +7,20 @@ using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingContainersThatConfigureInterception
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingContainersThatConfigureInterception : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingContainersThatConfigureInterception()
             : base("InterceptionInjectionMembers")
         {
+            MainSetup();
         }
 
         private IEnumerable<RegisterElement> GetRegistration(string containerName, Func<RegisterElement, bool> predicate)
@@ -33,7 +34,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             return element.TypeName == "Interceptable";
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_InterceptionElementIsPresentInRegistrationInjectionMembers()
         {
             var registration = this.GetRegistration("configuringInterceptorThroughConfigurationFile",
@@ -44,7 +45,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly("VirtualMethodInterceptor");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ExtraInterfacesCanBeAddedInConfig()
         {
             var registration = this.GetRegistration(
@@ -56,7 +57,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly("IServiceProvider", "IComponent");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_BehaviorsCanBeAddedInConfig()
         {
             var registration = this.GetRegistration(
@@ -68,7 +69,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly("GlobalCountInterceptionBehavior");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MultipleBehaviorsCanBeAddedInConfig()
         {
             var registration = this.GetRegistration("multipleBehaviorsOnOneRegistration",

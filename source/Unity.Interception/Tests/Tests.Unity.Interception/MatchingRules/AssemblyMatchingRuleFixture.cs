@@ -1,33 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
-    [TestClass]
+     
     public partial class AssemblyMatchingRuleFixture
     {
         private MethodBase objectToStringMethod;
-
-        [TestInitialize]
-        public void TestInitialize()
+        
+        public AssemblyMatchingRuleFixture()
         {
             objectToStringMethod = typeof(object).GetMethod("ToString");
         }
 
-        [TestMethod]
+        [Fact]
         public void CanMatchAssemblyNameByNameOnly()
         {
             AssemblyMatchingRule matchingRule = new AssemblyMatchingRule("mscorlib");
-            Assert.IsTrue(matchingRule.Matches(objectToStringMethod));
+            Assert.True(matchingRule.Matches(objectToStringMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanExplicitlyDenyMatchOnVersion()
         {
             AssemblyMatchingRule matchingRule = new AssemblyMatchingRule("mscorlib, Version=1.2.3.4, Culture=neutral, PublicKeyToken=b77a5c561934e089");
-            Assert.IsFalse(matchingRule.Matches(objectToStringMethod));
+            Assert.False(matchingRule.Matches(objectToStringMethod));
         }
     }
 }

@@ -6,19 +6,20 @@ using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigWithOldTypeMappingSyntax
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigWithOldTypeMappingSyntax : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigWithOldTypeMappingSyntax()
             : base("OldTypeMappingSyntax")
         {
+            MainSetup();
         }
 
         private ContainerElement container;
@@ -29,25 +30,25 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             this.container = this.section.Containers.Default;
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RegistrationsArePresentInContainer()
         {
-            Assert.AreEqual(2, this.container.Registrations.Count);
+            Assert.Equal(2, this.container.Registrations.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TypesAreAsGivenInFile()
         {
             this.AssertRegistrationsAreSame(r => r.TypeName, "ILogger", "ILogger");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MappedNamesAreAsGivenInFile()
         {
             this.AssertRegistrationsAreSame(r => r.Name, String.Empty, "special");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MappedToTypesAreAsGivenInFile()
         {
             this.AssertRegistrationsAreSame(r => r.MapToName, "MockLogger", "SpecialLogger");

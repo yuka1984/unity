@@ -2,7 +2,7 @@
 
 using System.Linq;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
@@ -66,26 +66,26 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             param4 = 4;
             var returnValue = ((ITypeWithAssertedParameterKinds)proxy).DoSomething(1, out param2, 3, ref param4, 5);
 
-            Assert.AreEqual(100, returnValue);
-            Assert.AreEqual(82, param2);
-            Assert.AreEqual(84, param4);
+            Assert.Equal(100, returnValue);
+            Assert.Equal(82, param2);
+            Assert.Equal(84, param4);
 
-            Assert.AreEqual(5, argumentsCount);
+            Assert.Equal(5, argumentsCount);
             CollectionAssertExtensions.AreEqual(new[] { 1, 0, 3, 4, 5 }, argumentsValuesByIndex);
             CollectionAssertExtensions.AreEqual(new[] { "param1", "param2", "param3", "param4", "param5" }, argumentsNames);
             CollectionAssertExtensions.AreEqual(new[] { 1, 0, 3, 4, 5 }, argumentsValuesByName);
 
-            Assert.AreEqual(4, inputsCount);
+            Assert.Equal(4, inputsCount);
             CollectionAssertExtensions.AreEqual(new[] { 1, 3, 4, 5 }, inputsValuesByIndex);
             CollectionAssertExtensions.AreEqual(new[] { "param1", "param3", "param4", "param5" }, inputsNames);
             CollectionAssertExtensions.AreEqual(new[] { 1, 3, 4, 5 }, inputsValuesByName);
 
-            Assert.AreEqual(2, outputsCount);
+            Assert.Equal(2, outputsCount);
             CollectionAssertExtensions.AreEqual(new[] { 25, 39 }, outputsValuesByIndex);
             CollectionAssertExtensions.AreEqual(new[] { "param2", "param4" }, outputsNames);
             CollectionAssertExtensions.AreEqual(new[] { 25, 39 }, outputsValuesByName);
 
-            Assert.AreEqual(11 + 25 + 13 + 39 + 15, originalReturnValue);
+            Assert.Equal(11 + 25 + 13 + 39 + 15, originalReturnValue);
         }
 
         public interface ITypeWithAssertedParameterKinds

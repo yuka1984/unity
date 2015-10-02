@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #elif __IOS__
 using NUnit.Framework;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.TestSupport
@@ -31,9 +31,9 @@ namespace Microsoft.Practices.Unity.TestSupport
 
         public void Validate()
         {
-            Assert.IsNotNull(obj1);
-            Assert.IsNotNull(obj2);
-            Assert.AreNotSame(obj1, obj2);
+            Assert.NotNull(obj1);
+            Assert.NotNull(obj2);
+            Assert.NotSame(obj1, obj2);
         }
     }
 }

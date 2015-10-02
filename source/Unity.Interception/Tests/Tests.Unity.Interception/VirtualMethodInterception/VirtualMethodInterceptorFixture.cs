@@ -6,40 +6,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInterceptorTests
 {
     /// <summary>
     /// Tests for the <see cref="VirtualMethodInterceptor"/> class.
     /// </summary>
-    [TestClass]
+     
     public partial class VirtualMethodInterceptorFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanInterceptBasicClass()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
-            Assert.IsTrue(interceptor.CanIntercept(typeof(ClassWithNoVirtuals)));
+            Assert.True(interceptor.CanIntercept(typeof(ClassWithNoVirtuals)));
         }
 
-        [TestMethod]
+        [Fact]
         public void CantInterceptSealedClass()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
-            Assert.IsFalse(interceptor.CanIntercept(typeof(CantOverride)));
+            Assert.False(interceptor.CanIntercept(typeof(CantOverride)));
         }
 
-        [TestMethod]
+        [Fact]
         public void InterceptableClassWithNoVirtualMethodsReturnsEmptyMethodList()
         {
             List<MethodImplementationInfo> methods =
                 new List<MethodImplementationInfo>(
                     new VirtualMethodInterceptor().GetInterceptableMethods(typeof(ClassWithNoVirtuals), typeof(ClassWithNoVirtuals)));
-            Assert.AreEqual(0, methods.Count);
+            Assert.Equal(0, methods.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethods()
         {
             CallCountHandler h1 = new CallCountHandler();
@@ -54,18 +54,18 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.DoSomething();
 
-            Assert.IsTrue(instance.DidSomething);
-            Assert.AreEqual(1, h1.CallCount);
+            Assert.True(instance.DidSomething);
+            Assert.Equal(1, h1.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptProperties()
         {
             CallCountHandler getHandler = new CallCountHandler();
             CallCountHandler setHandler = new CallCountHandler();
 
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
-            Assert.IsTrue(interceptor.CanIntercept(typeof(OverrideableProperies)));
+            Assert.True(interceptor.CanIntercept(typeof(OverrideableProperies)));
 
             Type proxyType = interceptor.CreateProxyType(typeof(OverrideableProperies));
             OverrideableProperies instance = (OverrideableProperies)Activator.CreateInstance(proxyType);
@@ -84,34 +84,34 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
                 total += instance.IntProperty;
             }
 
-            Assert.AreEqual(5 * 15, total);
+            Assert.Equal(5 * 15, total);
 
-            Assert.AreEqual(5, getHandler.CallCount);
-            Assert.AreEqual(2, setHandler.CallCount);
+            Assert.Equal(5, getHandler.CallCount);
+            Assert.Equal(2, setHandler.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReflectingOverProxyTypesGivesOnlyBaseProperties()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
-            Assert.IsTrue(interceptor.CanIntercept(typeof(OverrideableProperies)));
+            Assert.True(interceptor.CanIntercept(typeof(OverrideableProperies)));
 
             Type proxyType = interceptor.CreateProxyType(typeof(OverrideableProperies));
             PropertyInfo[] properties = proxyType.GetProperties();
 
-            Assert.AreEqual(2, properties.Length);
+            Assert.Equal(2, properties.Length);
 
-            Assert.IsTrue(properties.All(pi => pi.DeclaringType == typeof(OverrideableProperies)));
+            Assert.True(properties.All(pi => pi.DeclaringType == typeof(OverrideableProperies)));
         }
 
-        [TestMethod]
+        [Fact]
         public void EventsAreIntercepted()
         {
             CallCountHandler fireHandler = new CallCountHandler();
             CallCountHandler addHandler = new CallCountHandler();
 
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
-            Assert.IsTrue(interceptor.CanIntercept(typeof(OverrideableProperies)));
+            Assert.True(interceptor.CanIntercept(typeof(OverrideableProperies)));
 
             Type proxyType = interceptor.CreateProxyType(typeof(ClassWithEvent));
             ClassWithEvent instance = (ClassWithEvent)Activator.CreateInstance(proxyType);
@@ -126,13 +126,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             instance.FireMyEvent();
             instance.FireMyEvent();
 
-            Assert.IsTrue(raised);
+            Assert.True(raised);
 
-            Assert.AreEqual(2, fireHandler.CallCount);
-            Assert.AreEqual(1, addHandler.CallCount);
+            Assert.Equal(2, fireHandler.CallCount);
+            Assert.Equal(1, addHandler.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReflectionOverInheritedClassesReturnsProperAttributes()
         {
             Type targetType = typeof(OverriddenProperties);
@@ -140,14 +140,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             PropertyInfo[] baseProperties = typeof(OverrideableProperies).GetProperties();
             PropertyInfo[] properties = targetType.GetProperties();
 
-            Assert.AreEqual(baseProperties.Length, properties.Length);
+            Assert.Equal(baseProperties.Length, properties.Length);
 
             PropertyInfo stringProperty = targetType.GetProperty("StringProperty");
             Attribute[] attrs = Attribute.GetCustomAttributes(stringProperty, typeof(MultiAttribute));
-            Assert.AreEqual(2, attrs.Length);
+            Assert.Equal(2, attrs.Length);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptTypeWithNonDefaultCtor()
         {
             CallCountHandler h1 = new CallCountHandler();
@@ -161,21 +161,21 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             ((IInterceptingProxy)instance).AddInterceptionBehavior(new PolicyInjectionBehavior(manager));
             SetPipeline(manager, instance, "GetArg", h1);
 
-            Assert.AreEqual("arg-value", instance.GetArg());
+            Assert.Equal("arg-value", instance.GetArg());
 
-            Assert.AreEqual(1, h1.CallCount);
+            Assert.Equal(1, h1.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanGenerateDerivedTypeForAbstractType()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
             Type proxyType = interceptor.CreateProxyType(typeof(AbstractClassWithPublicConstructor));
 
-            Assert.AreSame(typeof(AbstractClassWithPublicConstructor), proxyType.BaseType);
+            Assert.Same(typeof(AbstractClassWithPublicConstructor), proxyType.BaseType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateInstanceForGeneratedTypeForAbstractType()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
@@ -184,7 +184,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             Activator.CreateInstance(proxyType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInvokeVirtualMethodOnInterceptedAbstractTypeInstance()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
@@ -198,11 +198,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             int value = instance.VirtualMethod();
 
-            Assert.AreEqual(10, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(10, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void InvokingAbstractMethodFromInterceptedAbstracTypeInstanceThrows()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
@@ -214,14 +214,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             try
             {
                 instance.AbstractMethod();
-                Assert.Fail("should have thrown");
+                Assert.True(false, string.Format("should have thrown"));
             }
             catch (NotImplementedException)
             {
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateInstanceForGeneratedTypeForAbstractTypeWithProtectedConstructor()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
@@ -230,7 +230,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             Activator.CreateInstance(proxyType, 100);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInvokeVirtualMethodOnInterceptedAbstractTypeWithProtectedConstructorInstance()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
@@ -244,11 +244,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             int value = instance.VirtualMethod();
 
-            Assert.AreEqual(200, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(200, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInvokeOverridenAbstractMethodMethodOnInterceptedDerivedFromAbstractTypeInstance()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
@@ -262,11 +262,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             int value = instance.AbstractMethod();
 
-            Assert.AreEqual(200, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(200, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInvokeOverridenAbstractMethodMethodOnInterceptedAbstractDerivedFromAbstractTypeInstance()
         {
             VirtualMethodInterceptor interceptor = new VirtualMethodInterceptor();
@@ -280,11 +280,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             int value = instance.AbstractMethod();
 
-            Assert.AreEqual(200, value);
-            Assert.IsTrue(invoked);
+            Assert.Equal(200, value);
+            Assert.True(invoked);
         }
 
-        [TestMethod]
+        [Fact]
         public void AssortedParameterKindsAreProperlyHandled()
         {
             var interceptor = new VirtualMethodInterceptor();
@@ -304,7 +304,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             manager.SetPipeline(targetMethod, pipeline);
         }
 
-        //[TestMethod]
+        //[Fact]
         //public void CanInterceptGenericInterfaceWithInterfaceConstraint()
         //{
         //    var target = new ConstrainedImpl();
@@ -323,11 +323,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
         //
         //    proxy.SomeMethod();
         //
-        //    Assert.IsTrue(behaviorWasCalled);
+        //    Assert.True(behaviorWasCalled);
         //
         //}
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptNonGenericMethodOnNonGenericInterface()
         {
             IMethodInvocation invocation = null;
@@ -345,14 +345,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.NonGenericMethod(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodOnNonGenericInterface()
         {
             IMethodInvocation invocation = null;
@@ -370,14 +370,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethod<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodWithConstraintOnNonGenericInterface()
         {
             IMethodInvocation invocation = null;
@@ -395,14 +395,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethodWithConstraints<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptNonGenericMethodOnGenericInterface()
         {
             IMethodInvocation invocation = null;
@@ -420,14 +420,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.NonGenericMethod(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodOnGenericInterface()
         {
             IMethodInvocation invocation = null;
@@ -445,14 +445,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethod<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodWithConstraintOnGenericInterface()
         {
             IMethodInvocation invocation = null;
@@ -470,14 +470,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethodWithConstraints<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodWithConstraintRelatedToInterfaceOnGenericInterface()
         {
             IMethodInvocation invocation = null;
@@ -495,14 +495,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethodWithConstraintsOnTheInterfaceParameter<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptNonGenericMethodOnGenericInterfaceWithConstraint()
         {
             IMethodInvocation invocation = null;
@@ -520,14 +520,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.NonGenericMethod(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodOnGenericInterfaceWithConstraint()
         {
             IMethodInvocation invocation = null;
@@ -545,14 +545,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethod<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodWithConstraintOnGenericInterfaceWithConstraint()
         {
             IMethodInvocation invocation = null;
@@ -570,14 +570,14 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethodWithConstraints<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericMethodWithConstraintRelatedToInterfaceOnGenericInterfaceWithConstraint()
         {
             IMethodInvocation invocation = null;
@@ -595,11 +595,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.GenericMethodWithConstraintsOnTheInterfaceParameter<string>(null, null);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(string), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(IEnumerable), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(string), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
         }
 
         public class NonGenericClass
@@ -669,7 +669,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptConstrainedInheritedInterfaceMethod()
         {
             IMethodInvocation invocation = null;
@@ -687,9 +687,9 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.Test<List<string>>();
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(List<string>), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(0, invocation.MethodBase.GetParameters().Count());
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(List<string>), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(0, invocation.MethodBase.GetParameters().Count());
         }
 
         public class BaseGenericClass<TBaseType>
@@ -704,7 +704,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
         {
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptConstrainedInheritedInterfaceMethod2()
         {
             IMethodInvocation invocation = null;
@@ -726,13 +726,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
                 Enumerable.Empty<DerivedType>(),
                 new List<string>[0]);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(List<string>), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(4, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(BaseType), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(IEnumerable<BaseType>), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
-            Assert.AreSame(typeof(IEnumerable<DerivedType>), invocation.MethodBase.GetParameters().ElementAt(2).ParameterType);
-            Assert.AreSame(typeof(List<string>[]), invocation.MethodBase.GetParameters().ElementAt(3).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(List<string>), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(4, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(BaseType), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(IEnumerable<BaseType>), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.Same(typeof(IEnumerable<DerivedType>), invocation.MethodBase.GetParameters().ElementAt(2).ParameterType);
+            Assert.Same(typeof(List<string>[]), invocation.MethodBase.GetParameters().ElementAt(3).ParameterType);
         }
 
         public class Class1<T1, U1, V1>
@@ -757,7 +757,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
         public class DerivedType : BaseType { }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptConstrainedInheritedInterfaceMethod3()
         {
             IMethodInvocation invocation;
@@ -777,29 +777,29 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.Test<HashSet<BaseType>, List<Guid>>(new ISet<BaseType>[0], new List<Guid>());
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(KeyValuePair<HashSet<BaseType>, IEnumerable<ISet<BaseType>>[]>), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(2, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(ISet<BaseType>[]), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
-            Assert.AreSame(typeof(List<Guid>), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(KeyValuePair<HashSet<BaseType>, IEnumerable<ISet<BaseType>>[]>), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(2, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(ISet<BaseType>[]), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.Same(typeof(List<Guid>), invocation.MethodBase.GetParameters().ElementAt(1).ParameterType);
 
             invocation = null;
 
             instance.CompareTo((object)this);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(int), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(1, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(object), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(int), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(1, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(object), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
 
             invocation = null;
 
             ((IComparable<Guid>)instance).CompareTo(Guid.Empty);
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(int), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(1, invocation.MethodBase.GetParameters().Count());
-            Assert.AreSame(typeof(Guid), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(int), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(1, invocation.MethodBase.GetParameters().Count());
+            Assert.Same(typeof(Guid), invocation.MethodBase.GetParameters().ElementAt(0).ParameterType);
         }
 
         public class ClassA1<TA1, TB1> : IComparable<TB1>
@@ -826,7 +826,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptVirtualMethodsOnGenericNestedClassInGenericClass()
         {
             IMethodInvocation invocation;
@@ -846,9 +846,9 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.Test<List<DerivedType>>();
 
-            Assert.IsNotNull(invocation);
-            Assert.AreSame(typeof(List<DerivedType>[]), ((MethodInfo)invocation.MethodBase).ReturnType);
-            Assert.AreEqual(0, invocation.MethodBase.GetParameters().Count());
+            Assert.NotNull(invocation);
+            Assert.Same(typeof(List<DerivedType>[]), ((MethodInfo)invocation.MethodBase).ReturnType);
+            Assert.Equal(0, invocation.MethodBase.GetParameters().Count());
         }
 
         public class GenericClassWithNestedGenericClass<T>

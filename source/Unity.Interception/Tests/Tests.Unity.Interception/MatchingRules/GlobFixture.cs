@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
@@ -9,94 +9,94 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
     /// file system style patterns for simple pattern matches rather than
     /// full-bore regexes.
     /// </summary>
-    [TestClass]
+     
     public class GlobFixture
     {
-        [TestMethod]
+        [Fact]
         public void ShouldMatchExactlyWhenNoWildcards()
         {
             Glob glob = new Glob("MyClass");
-            Assert.IsTrue(glob.IsMatch("MyClass"));
-            Assert.IsFalse(glob.IsMatch("MyClass2"));
-            Assert.IsFalse(glob.IsMatch("ReallyMyClass"));
+            Assert.True(glob.IsMatch("MyClass"));
+            Assert.False(glob.IsMatch("MyClass2"));
+            Assert.False(glob.IsMatch("ReallyMyClass"));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithTrailingWildcard()
         {
             Glob glob = new Glob("MyClass*");
-            Assert.IsTrue(glob.IsMatch("MyClass"));
-            Assert.IsTrue(glob.IsMatch("MyClassAndMore2"));
-            Assert.IsFalse(glob.IsMatch("ReallyMyClass"));
+            Assert.True(glob.IsMatch("MyClass"));
+            Assert.True(glob.IsMatch("MyClassAndMore2"));
+            Assert.False(glob.IsMatch("ReallyMyClass"));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithLeadingWildcard()
         {
             Glob glob = new Glob("*Class");
-            Assert.IsTrue(glob.IsMatch("MyClass"));
-            Assert.IsTrue(glob.IsMatch("My.other.Class"));
-            Assert.IsFalse(glob.IsMatch("MyClassAndMore2"));
+            Assert.True(glob.IsMatch("MyClass"));
+            Assert.True(glob.IsMatch("My.other.Class"));
+            Assert.False(glob.IsMatch("MyClassAndMore2"));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeCaseSensitiveByDefault()
         {
             Glob glob = new Glob("MyClass");
-            Assert.IsFalse(glob.IsMatch("myclass"));
+            Assert.False(glob.IsMatch("myclass"));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithCaseInsensitiveFlag()
         {
             Glob glob = new Glob("MyClass", false);
 
-            Assert.IsTrue(glob.IsMatch("myclass"));
+            Assert.True(glob.IsMatch("myclass"));
         }
 
-        [TestMethod]
+        [Fact]
         public void DotsShouldBeLiterals()
         {
             Glob glob = new Glob("*.cs");
 
-            Assert.IsTrue(glob.IsMatch("someFile.cs"));
-            Assert.IsFalse(glob.IsMatch("notmatchedcs"));
+            Assert.True(glob.IsMatch("someFile.cs"));
+            Assert.False(glob.IsMatch("notmatchedcs"));
         }
 
-        [TestMethod]
+        [Fact]
         public void BracketsShouldMatchSingleCharacters()
         {
             Glob glob = new Glob("Test[0-9][0-9]");
-            Assert.IsTrue(glob.IsMatch("Test01"));
-            Assert.IsTrue(glob.IsMatch("Test54"));
-            Assert.IsFalse(glob.IsMatch("Test200"));
+            Assert.True(glob.IsMatch("Test01"));
+            Assert.True(glob.IsMatch("Test54"));
+            Assert.False(glob.IsMatch("Test200"));
         }
 
-        [TestMethod]
+        [Fact]
         public void QuestionMarksShouldMatchSingleCharacters()
         {
             Glob glob = new Glob("one??two");
 
-            Assert.IsTrue(glob.IsMatch("one00two"));
-            Assert.IsTrue(glob.IsMatch("oneWEtwo"));
-            Assert.IsFalse(glob.IsMatch("oneTooManytwo"));
-            Assert.IsTrue(glob.IsMatch("one??two"));
+            Assert.True(glob.IsMatch("one00two"));
+            Assert.True(glob.IsMatch("oneWEtwo"));
+            Assert.False(glob.IsMatch("oneTooManytwo"));
+            Assert.True(glob.IsMatch("one??two"));
         }
 
-        [TestMethod]
+        [Fact]
         public void DollarSignsAndCaretsAreLiterals()
         {
             Glob glob = new Glob("abc$def^*");
-            Assert.IsTrue(glob.IsMatch("abc$def^"));
-            Assert.IsTrue(glob.IsMatch("abc$def^Stuff"));
-            Assert.IsFalse(glob.IsMatch("abc$"));
+            Assert.True(glob.IsMatch("abc$def^"));
+            Assert.True(glob.IsMatch("abc$def^Stuff"));
+            Assert.False(glob.IsMatch("abc$"));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchNothingWithEmptyPattern()
         {
             Glob glob = new Glob(string.Empty);
-            Assert.IsFalse(glob.IsMatch("a"));
+            Assert.False(glob.IsMatch("a"));
         }
     }
 }

@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxyInterception
 {
-    [TestClass]
+     
     public class TransparentProxyInterceptorFixture
     {
-        [TestMethod]
+        [Fact]
         public void InterceptorReturnsSingleMethod()
         {
             List<MethodImplementationInfo> methods = GetMethods<SingleInterceptableMethod>();
@@ -21,7 +21,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
                 methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void InterceptorReturnsAllMethodsIncludingInheritedOnes()
         {
             List<MethodImplementationInfo> methods = GetMethods<InheritsSingleMethodAndAdds>();
@@ -31,19 +31,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
                 methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void NonMBROReturnsInterfaceMethods()
         {
             List<MethodImplementationInfo> methods = GetMethods<Operations>();
 
-            Assert.AreEqual(2, methods.Count);
+            Assert.Equal(2, methods.Count);
 
             List<MethodImplementationInfo> expected = GetExpectedMethodImplementations(typeof(IMyOperations), typeof(Operations));
 
             CollectionAssertExtensions.AreEquivalent(expected, methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void ReturnsAllInterfaceMethods()
         {
             List<MethodImplementationInfo> methods = GetMethods<Incoherent>();
@@ -54,7 +54,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
                 methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void EmptyInterfacesContributeNoMethods()
         {
             List<MethodImplementationInfo> methods = GetMethods<Marked>();
@@ -64,7 +64,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
                 methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void PropertiesAreReturnedAsGetAndSetMethods()
         {
             List<MethodImplementationInfo> methods = GetMethods<HasProperties>();
@@ -74,7 +74,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
                 methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void InterfacePropertiesAreReturned()
         {
             List<MethodImplementationInfo> methods = GetMethods<PropThroughInterface>();
@@ -84,7 +84,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
                 methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void MBROReturnBothInterfaceAndClassProperties()
         {
             List<MethodImplementationInfo> methods = GetMethods<MBROWithPropThroughInterface>();
@@ -95,7 +95,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
             CollectionAssertExtensions.AreEquivalent(expected.ToList(), methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void ExplicitImplementationsAreFound()
         {
             List<MethodImplementationInfo> methods = GetMethods<ExplicitImplementation>();
@@ -105,7 +105,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
             CollectionAssertExtensions.AreEquivalent(expected.ToList(), methods);
         }
 
-        [TestMethod]
+        [Fact]
         public void AssortedParameterKindsAreProperlyHandled()
         {
             var interceptor = new TransparentProxyInterceptor();
@@ -143,7 +143,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
                     methodName => new MethodImplementationInfo(null, implementationType.GetMethod(methodName))).ToList();
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateProxyWithAdditionalInterfaces()
         {
             IInstanceInterceptor interceptor = new TransparentProxyInterceptor();
@@ -151,7 +151,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.TransparentProxy
 
             object proxy = interceptor.CreateProxy(typeof(SingleInterceptableMethod), target, typeof(IMyOperations));
 
-            Assert.IsTrue(proxy is IMyOperations);
+            Assert.True(proxy is IMyOperations);
         }
     }
 

@@ -11,7 +11,7 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.Unity.Tests
@@ -20,10 +20,10 @@ namespace Microsoft.Practices.Unity.Tests
     /// Tests that use the GenericParameter class to ensure that
     /// generic object injection works.
     /// </summary>
-    [TestClass]
+     
     public class GenericParameterFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanCallNonGenericConstructorOnOpenGenericType()
         {
             IUnityContainer container = new UnityContainer()
@@ -32,10 +32,10 @@ namespace Microsoft.Practices.Unity.Tests
 
             ClassWithOneGenericParameter<User> result = container.Resolve<ClassWithOneGenericParameter<User>>();
 
-            Assert.IsNull(result.InjectedValue);
+            Assert.Null(result.InjectedValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCallConstructorTakingGenericParameter()
         {
             IUnityContainer container = new UnityContainer()
@@ -46,10 +46,10 @@ namespace Microsoft.Practices.Unity.Tests
             container.RegisterInstance<Account>(a);
 
             ClassWithOneGenericParameter<Account> result = container.Resolve<ClassWithOneGenericParameter<Account>>();
-            Assert.AreSame(a, result.InjectedValue);
+            Assert.Same(a, result.InjectedValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanConfiguredNamedResolutionOfGenericParameter()
         {
             IUnityContainer container = new UnityContainer()
@@ -62,10 +62,10 @@ namespace Microsoft.Practices.Unity.Tests
             container.RegisterInstance<Account>("named", named);
 
             ClassWithOneGenericParameter<Account> result = container.Resolve<ClassWithOneGenericParameter<Account>>();
-            Assert.AreSame(named, result.InjectedValue);
+            Assert.Same(named, result.InjectedValue);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvingOpenGenericWithConstructorParameterAmbiguityThrows()
         {
             var container = new UnityContainer();
@@ -79,7 +79,7 @@ namespace Microsoft.Practices.Unity.Tests
                 e => { });
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvingOpenGenericWithMethodAmbiguityThrows()
         {
             var container = new UnityContainer();

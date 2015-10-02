@@ -2,14 +2,14 @@
 
 using System;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
-    [TestClass]
+     
     public class InterceptionConfigurationFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanSetUpInterceptorThroughInjectionMember()
         {
             CallCountHandler handler = new CallCountHandler();
@@ -30,10 +30,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             instance.DoSomething("1");
 
-            Assert.AreEqual(1, handler.CallCount);
+            Assert.Equal(1, handler.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpInterceptorThroughInjectionMemberForExistingInterceptor()
         {
             CallCountInterceptionBehavior interceptionBehavior = new CallCountInterceptionBehavior();
@@ -50,10 +50,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             instance.DoSomething("1");
 
-            Assert.AreEqual(1, interceptionBehavior.CallCount);
+            Assert.Equal(1, interceptionBehavior.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAdditionalInterfaceThroughInjectionMemberForInstanceInterception()
         {
             IUnityContainer container = new UnityContainer();
@@ -73,10 +73,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             ((IOtherInterface)instance).DoSomethingElse("1");
 
-            Assert.AreEqual(1, invokeCount);
+            Assert.Equal(1, invokeCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAdditionalInterfaceThroughInjectionMemberForTypeInterception()
         {
             IUnityContainer container = new UnityContainer();
@@ -96,10 +96,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             ((IOtherInterface)instance).DoSomethingElse("1");
 
-            Assert.AreEqual(1, invokeCount);
+            Assert.Equal(1, invokeCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanSetUpAdditionalInterfaceThroughGenericInjectionMemberForTypeInterception()
         {
             IUnityContainer container = new UnityContainer();
@@ -119,21 +119,19 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             ((IOtherInterface)instance).DoSomethingElse("1");
 
-            Assert.AreEqual(1, invokeCount);
+            Assert.Equal(1, invokeCount);
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentException))]
+        [Fact]
         public void ConfiguringAnAdditionalInterfaceWithANonInterfaceTypeThrows()
         {
-            new AdditionalInterface(typeof(int));
+            Assert.Throws<ArgumentException>(() => new AdditionalInterface(typeof(int)));
         }
 
-        [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
+        [Fact]
         public void ConfiguringAnAdditionalInterfaceWithANullTypeThrows()
         {
-            new AdditionalInterface(null);
+            Assert.Throws<ArgumentNullException>(() => new AdditionalInterface(null));
         }
 
         public class BaseClass : IInterface

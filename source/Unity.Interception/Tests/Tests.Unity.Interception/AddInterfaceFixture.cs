@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     /// <summary>
     /// Summary description for AddInterfaceFixture
     /// </summary>
-    [TestClass]
+     
     public class AddInterfaceFixture
     {
-        [TestMethod]
+        [Fact]
         public void CanProxyWithBehaviorThatAddsInterface()
         {
             var target = new MockDal();
@@ -24,10 +24,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 new InterfaceInterceptor(),
                 new[] { new AdditionalInterfaceBehavior() });
 
-            Assert.IsNotNull(proxied);
+            Assert.NotNull(proxied);
         }
 
-        [TestMethod]
+        [Fact]
         public void BehaviorAddsInterface()
         {
             var target = new MockDal();
@@ -35,20 +35,20 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 new InterfaceInterceptor(),
                 new[] { new AdditionalInterfaceBehavior() });
 
-            Assert.IsNotNull(proxied as IAdditionalInterface);
+            Assert.NotNull(proxied as IAdditionalInterface);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInvokeMethodAddedByBehavior()
         {
             var proxied = Intercept.NewInstance<MockDal>(
                 new VirtualMethodInterceptor(),
                 new[] { new AdditionalInterfaceBehavior() });
 
-            Assert.AreEqual(10, ((IAdditionalInterface)proxied).DoNothing());
+            Assert.Equal(10, ((IAdditionalInterface)proxied).DoNothing());
         }
 
-        [TestMethod]
+        [Fact]
         public void CanManuallyAddAdditionalInterface()
         {
             var target = new MockDal();
@@ -57,10 +57,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 new[] { new AdditionalInterfaceBehavior(false) },
                 new[] { typeof(IAdditionalInterface) });
 
-            Assert.IsNotNull(proxied as IAdditionalInterface);
+            Assert.NotNull(proxied as IAdditionalInterface);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInvokeMethodOnManuallyAddedInterface()
         {
             var target = new MockDal();
@@ -69,7 +69,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
                 new[] { new AdditionalInterfaceBehavior(false) },
                 new[] { typeof(IAdditionalInterface) });
 
-            Assert.AreEqual(10, ((IAdditionalInterface)proxied).DoNothing());
+            Assert.Equal(10, ((IAdditionalInterface)proxied).DoNothing());
         }
     }
 }

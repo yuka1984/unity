@@ -10,17 +10,17 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.ObjectBuilder2.Tests
 {
     // Testing that the IRequiresRecovery interface is
     // properly handled in the buildup process.
-    [TestClass]
+     
     public class RecoveryFixture
     {
-        [TestMethod]
+        [Fact]
         public void RecoveryIsExecutedOnException()
         {
             var recovery = new RecoveryObject();
@@ -36,7 +36,7 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
                 // This is supposed to happen.
             }
 
-            Assert.IsTrue(recovery.WasRecovered);
+            Assert.True(recovery.WasRecovered);
         }
 
         private static MockBuilderContext GetContext()

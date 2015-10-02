@@ -14,7 +14,7 @@ using TestClassAttribute = NUnit.Framework.TestFixtureAttribute;
 using TestInitializeAttribute = NUnit.Framework.SetUpAttribute;
 using TestMethodAttribute = NUnit.Framework.TestAttribute;
 #else
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 #endif
 
 namespace Microsoft.Practices.ObjectBuilder2.Tests
@@ -22,10 +22,10 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
     /// <summary>
     /// Tests for the default ConstructorSelectorPolicy
     /// </summary>
-    [TestClass]
+     
     public class ConstructorSelectorFixture
     {
-        [TestMethod]
+        [Fact]
         public void SelectorPicksDefaultConstructor()
         {
             IConstructorSelectorPolicy policy = CreateSelector();
@@ -33,10 +33,10 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
             MockBuilderContext context = GetContext<object>();
             SelectedConstructor result = policy.SelectConstructor(context, new PolicyList());
 
-            Assert.AreEqual(expectedCtor, result.Constructor);
+            Assert.Equal(expectedCtor, result.Constructor);
         }
 
-        [TestMethod]
+        [Fact]
         public void SelectorPicksConstructorWithAttribute()
         {
             IConstructorSelectorPolicy policy = CreateSelector();
@@ -44,10 +44,10 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
 
             SelectedConstructor result = policy.SelectConstructor(GetContext<ObjectWithMarkedConstructor>(), new PolicyList());
 
-            Assert.AreEqual(expected, result.Constructor);
+            Assert.Equal(expected, result.Constructor);
         }
 
-        [TestMethod]
+        [Fact]
         public void SelectorPicksLongestConstructor()
         {
             IConstructorSelectorPolicy policy = CreateSelector();
@@ -57,10 +57,10 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
             SelectedConstructor result =
                 policy.SelectConstructor(GetContext<ObjectWithMultipleConstructors>(), new PolicyList());
 
-            Assert.AreEqual(expected, result.Constructor);
+            Assert.Equal(expected, result.Constructor);
         }
 
-        [TestMethod]
+        [Fact]
         public void SelectorThrowsIfConstructorsAreAmbiguous()
         {
             IConstructorSelectorPolicy policy = CreateSelector();
@@ -74,10 +74,10 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
                 // If we got here we're ok
                 return;
             }
-            Assert.Fail("Expected exception did not occur");
+            Assert.True(false, string.Format("Expected exception did not occur"));
         }
 
-        [TestMethod]
+        [Fact]
         public void SelectorPicksMarkedConstructorEvenIfOtherwiseAmbiguous()
         {
             IConstructorSelectorPolicy policy = CreateSelector();
@@ -87,7 +87,7 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
             SelectedConstructor result =
                 policy.SelectConstructor(GetContext<ObjectWithAmbiguousMarkedConstructor>(), new PolicyList());
 
-            Assert.AreEqual(expected, result.Constructor);
+            Assert.Equal(expected, result.Constructor);
         }
 
         private static ConstructorSelectorPolicy<InjectionConstructorAttribute> CreateSelector()

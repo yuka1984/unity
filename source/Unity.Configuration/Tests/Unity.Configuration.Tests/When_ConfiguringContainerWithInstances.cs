@@ -6,19 +6,20 @@ using System.Linq;
 using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerWithInstances
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerWithInstances : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerWithInstances()
             : base("RegisteringInstances")
         {
+            MainSetup();
         }
 
         private IUnityContainer container;
@@ -35,28 +36,28 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             this.section.Configure(this.container);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_DefaultStringInstanceIsRegistered()
         {
-            Assert.AreEqual("AdventureWorks", this.container.Resolve<string>());
+            Assert.Equal("AdventureWorks", this.container.Resolve<string>());
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_DefaultIntInstanceIsRegistered()
         {
-            Assert.AreEqual(42, this.container.Resolve<int>());
+            Assert.Equal(42, this.container.Resolve<int>());
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_NamedIntIsRegistered()
         {
-            Assert.AreEqual(23, this.container.Resolve<int>("forward"));
+            Assert.Equal(23, this.container.Resolve<int>("forward"));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_InstanceUsingTypeConverterIsCreatedProperly()
         {
-            Assert.AreEqual(-23, this.container.Resolve<int>("negated"));
+            Assert.Equal(-23, this.container.Resolve<int>("negated"));
         }
     }
 }

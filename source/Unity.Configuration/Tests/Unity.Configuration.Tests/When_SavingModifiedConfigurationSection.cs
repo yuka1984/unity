@@ -6,11 +6,11 @@ using System.Xml;
 using Microsoft.Practices.Unity.Configuration.Tests.TestObjects;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
-    [TestClass]
+     
     public class When_SavingModifiedConfigurationSection
     {
         private static UnityConfigurationSection SerializeAndLoadSection(string filename, Action<UnityConfigurationSection> sectionInitializer)
@@ -24,25 +24,25 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             return (UnityConfigurationSection)loadedConfiguration.GetSection("unity");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_EmptySectionCanBeSavedAndReloaded()
         {
             var section = SerializeAndLoadSection("EmptySection.config",
                 s => { });
-            Assert.IsNotNull(section);
+            Assert.NotNull(section);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_OneAddedAliasIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeAliases.config",
                 s => s.TypeAliases.Add(new AliasElement("mockdb", typeof(MockDatabase))));
 
-            Assert.AreEqual(1, loadedSection.TypeAliases.Count);
-            Assert.AreEqual(typeof(MockDatabase).AssemblyQualifiedName, loadedSection.TypeAliases["mockdb"]);
+            Assert.Equal(1, loadedSection.TypeAliases.Count);
+            Assert.Equal(typeof(MockDatabase).AssemblyQualifiedName, loadedSection.TypeAliases["mockdb"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TwoAddedAliasesAreSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeAliases.config", s =>
@@ -51,12 +51,12 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 s.TypeAliases.Add(new AliasElement("ilog", typeof(ILogger)));
             });
 
-            Assert.AreEqual(2, loadedSection.TypeAliases.Count);
-            Assert.AreEqual(typeof(MockDatabase).AssemblyQualifiedName, loadedSection.TypeAliases["mockdb"]);
-            Assert.AreEqual(typeof(ILogger).AssemblyQualifiedName, loadedSection.TypeAliases["ilog"]);
+            Assert.Equal(2, loadedSection.TypeAliases.Count);
+            Assert.Equal(typeof(MockDatabase).AssemblyQualifiedName, loadedSection.TypeAliases["mockdb"]);
+            Assert.Equal(typeof(ILogger).AssemblyQualifiedName, loadedSection.TypeAliases["ilog"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TwoNamespacesAreSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeNamespaces.config", s =>
@@ -71,7 +71,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly("System", "System.Collections");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_AssembliesAreSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeAssemblies.config", s =>
@@ -89,7 +89,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                     typeof(XmlWriter).Assembly.FullName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionExtensionsAreSerialized()
         {
             string extensionTypeName = typeof(TestSectionExtension).AssemblyQualifiedName;
@@ -107,7 +107,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly(String.Empty, "p1");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_OneContainerIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeContainers.config", s =>
@@ -116,10 +116,10 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 s.Containers.Add(container);
             });
 
-            Assert.AreEqual(1, loadedSection.Containers.Count);
+            Assert.Equal(1, loadedSection.Containers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TwoNamedContainersAreSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeContainers.config", s =>
@@ -132,7 +132,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly("containerOne", "containerTwo");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ContainerWithExtensionsIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeContainers.config", s =>
@@ -147,7 +147,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly("extensionOne", "extensionTwo");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ContainerWithTypeMappingsIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeContainers.config", s =>
@@ -176,7 +176,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly("NameOne", "NameTwo", String.Empty);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RegistrationWithLifetimeIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeContainers.config", s =>
@@ -218,20 +218,20 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             var loadedReg1 = loadedSection.Containers.Default.Registrations[1];
             var loadedReg2 = loadedSection.Containers.Default.Registrations[2];
 
-            Assert.IsNotNull(loadedReg0.Lifetime);
-            Assert.AreEqual(String.Empty, loadedReg0.Lifetime.TypeName);
+            Assert.NotNull(loadedReg0.Lifetime);
+            Assert.Equal(String.Empty, loadedReg0.Lifetime.TypeName);
 
-            Assert.IsNotNull(loadedReg1.Lifetime);
-            Assert.AreEqual("SomeCustomLifetime", loadedReg1.Lifetime.TypeName);
-            Assert.AreEqual("input value", loadedReg1.Lifetime.Value);
-            Assert.AreEqual("CustomLifetimeConverter", loadedReg1.Lifetime.TypeConverterTypeName);
+            Assert.NotNull(loadedReg1.Lifetime);
+            Assert.Equal("SomeCustomLifetime", loadedReg1.Lifetime.TypeName);
+            Assert.Equal("input value", loadedReg1.Lifetime.Value);
+            Assert.Equal("CustomLifetimeConverter", loadedReg1.Lifetime.TypeConverterTypeName);
 
-            Assert.IsNotNull(loadedReg2.Lifetime);
-            Assert.AreEqual("singleton", loadedReg2.Lifetime.TypeName);
-            Assert.AreEqual(String.Empty, loadedReg2.Lifetime.TypeConverterTypeName);
+            Assert.NotNull(loadedReg2.Lifetime);
+            Assert.Equal("singleton", loadedReg2.Lifetime.TypeName);
+            Assert.Equal(String.Empty, loadedReg2.Lifetime.TypeConverterTypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RegistrationWithInstancesIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeInstances.config", s =>
@@ -276,22 +276,22 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly(String.Empty, String.Empty, "AString");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RegistrationsWithConstructorsIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeCtors.config", FillSectionWithConstructors);
 
             var zeroArg = loadedSection.Containers.Default.Registrations.Where(r => r.Name == "zeroArg").First();
 
-            Assert.AreEqual(1, zeroArg.InjectionMembers.Count);
-            Assert.IsInstanceOfType(zeroArg.InjectionMembers[0], typeof(ConstructorElement));
+            Assert.Equal(1, zeroArg.InjectionMembers.Count);
+            Assert.IsType<ConstructorElement>(zeroArg.InjectionMembers[0]);
 
             var oneArg = loadedSection.Containers.Default.Registrations.Where(r => r.Name == "oneArg").First();
-            Assert.AreEqual(1, oneArg.InjectionMembers.Count);
-            Assert.IsInstanceOfType(oneArg.InjectionMembers[0], typeof(ConstructorElement));
+            Assert.Equal(1, oneArg.InjectionMembers.Count);
+            Assert.IsType<ConstructorElement>(oneArg.InjectionMembers[0]);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ConstructorParametersAreSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeCtors.config", FillSectionWithConstructors);
@@ -299,16 +299,16 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             var zeroArg = loadedSection.Containers.Default.Registrations.Where(r => r.Name == "zeroArg").First();
             var zeroArgCtor = (ConstructorElement)zeroArg.InjectionMembers[0];
 
-            Assert.AreEqual(0, zeroArgCtor.Parameters.Count);
+            Assert.Equal(0, zeroArgCtor.Parameters.Count);
 
             var oneArg = loadedSection.Containers.Default.Registrations.Where(r => r.Name == "oneArg").First();
             var oneArgCtor = (ConstructorElement)oneArg.InjectionMembers[0];
 
-            Assert.AreEqual(1, oneArgCtor.Parameters.Count);
-            Assert.AreEqual("intParam", oneArgCtor.Parameters[0].Name);
+            Assert.Equal(1, oneArgCtor.Parameters.Count);
+            Assert.Equal("intParam", oneArgCtor.Parameters[0].Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ConstructorParametrValuesAreSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializeCtors.config", FillSectionWithConstructors);
@@ -318,75 +318,75 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             var intParamArg = oneArgCtor.Parameters[0];
             var intParamValue = intParamArg.Value as ValueElement;
 
-            Assert.IsNotNull(intParamValue);
-            Assert.AreEqual(intParamValue.Value, "23");
+            Assert.NotNull(intParamValue);
+            Assert.Equal(intParamValue.Value, "23");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_NamedDependencyValueIsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<DependencyElement>("namedDependency");
 
-            Assert.AreEqual("someName", parameterValue.Name);
+            Assert.Equal("someName", parameterValue.Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TypedDependencyIsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<DependencyElement>("typedDependency");
 
-            Assert.AreEqual("SomeOtherType", parameterValue.TypeName);
+            Assert.Equal("SomeOtherType", parameterValue.TypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ValueIsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<ValueElement>("valueDependency");
 
-            Assert.AreEqual("someValue", parameterValue.Value);
+            Assert.Equal("someValue", parameterValue.Value);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ValueWithTypeConverterIsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<ValueElement>("valueWithTypeConverter");
 
-            Assert.AreEqual("someValue", parameterValue.Value);
-            Assert.AreEqual("MyConverter", parameterValue.TypeConverterTypeName);
+            Assert.Equal("someValue", parameterValue.Value);
+            Assert.Equal("MyConverter", parameterValue.TypeConverterTypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_OptionalValueIsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<OptionalElement>("optionalValue");
 
-            Assert.AreEqual("dependencyKey", parameterValue.Name);
-            Assert.AreEqual("DependencyType", parameterValue.TypeName);
+            Assert.Equal("dependencyKey", parameterValue.Name);
+            Assert.Equal("DependencyType", parameterValue.TypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_EmptyArrayValueIsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<ArrayElement>("emptyArrayValue");
 
-            Assert.AreEqual(0, parameterValue.Values.Count);
+            Assert.Equal(0, parameterValue.Values.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TypedArrayValueIsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<ArrayElement>("typedEmptyArrayValue");
 
-            Assert.AreEqual(0, parameterValue.Values.Count);
-            Assert.AreEqual("MyElementType", parameterValue.TypeName);
+            Assert.Equal(0, parameterValue.Values.Count);
+            Assert.Equal("MyElementType", parameterValue.TypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ArrayValueWithElementsGetsSerialized()
         {
             var parameterValue = GetRoundTrippedParameter<ArrayElement>("arrayWithValues");
 
-            Assert.AreEqual(3, parameterValue.Values.Count);
+            Assert.Equal(3, parameterValue.Values.Count);
             parameterValue.Values.Select(p => p.GetType())
                 .AssertContainsExactly(typeof(DependencyElement), typeof(ValueElement), typeof(DependencyElement));
 
@@ -399,7 +399,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly("something");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SimplePropertyWithDependencyIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializingProperties.config", s =>
@@ -427,7 +427,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly(typeof(DependencyElement));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MultiplePropertiesWithVaryingValuesAreSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializingProperties.config", s =>
@@ -472,11 +472,11 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
             propertyElements.Select(p => p.Value.GetType())
                 .AssertContainsExactly(typeof(DependencyElement), typeof(DependencyElement), typeof(OptionalElement));
 
-            Assert.AreEqual("MyDep",
+            Assert.Equal("MyDep",
                 ((DependencyElement)propertyElements.Where(p => p.Name == "NamedDependencyProp").First().Value).Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MethodsGetSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializingMethods.config", s =>
@@ -521,10 +521,10 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly("NoArgsMethod", "OneArgMethod");
 
             var oneArgMethod = methods.Where(m => m.Name == "OneArgMethod").First();
-            Assert.AreEqual(2, oneArgMethod.Parameters.Count);
+            Assert.Equal(2, oneArgMethod.Parameters.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionWithExtendedContainerConfiguringElementsIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializingExtensionElements.config", s =>
@@ -545,7 +545,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly(typeof(ContainerConfigElementTwo));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionWithExtendedInjectionmemberElementsIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializingExtensionElements.config", s =>
@@ -571,7 +571,7 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .AssertContainsExactly(typeof(TestInjectionMemberElement));
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionWithExtendedValueElementsIsSerialized()
         {
             var loadedSection = SerializeAndLoadSection("SerializingExtensionElements.config", s =>

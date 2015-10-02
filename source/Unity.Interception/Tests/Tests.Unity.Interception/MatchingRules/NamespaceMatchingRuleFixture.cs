@@ -8,7 +8,7 @@ using Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules.TopLev
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules.TopLevel.SecondLevel;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules.TopLevel.SecondLevel.ThirdLevel;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules.TopLevelTwo;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 [module: SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1403:FileMayOnlyContainASingleNamespace", Justification = "Test needs multiple namespaces so keep the namespaces and test together")]
 
@@ -17,7 +17,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
     /// <summary>
     /// Unit tests for NamespaceMatchingRule
     /// </summary>
-    [TestClass]
+     
     public class NamespaceMatchingRuleFixture
     {
         private const string TopLevelNamespace =
@@ -35,67 +35,67 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
         private const string TopLevelTwoNamespace =
             "Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules.TopLevelTwo";
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWhenInExactNamespace()
         {
             TestMatch(TopLevelNamespace, typeof(TopLevelTarget), true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchWhenInChildNamespace()
         {
             TestMatch(TopLevelNamespace, typeof(SecondLevelTarget), false);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithIgnoreCaseTurnedOn()
         {
             TestMatch(TopLevelNamespace, true, typeof(TopLevelTarget), true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchWhenInChildNamespaceWithIgnoreCase()
         {
             TestMatch(TopLevelNamespace, true, typeof(SecondLevelTarget), false);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchInExactNamespaceWithWildcard()
         {
             TestMatch(TopLevelNamespaceWildcard, typeof(TopLevelTarget), true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchInChildNamespaceWithWildcard()
         {
             TestMatch(TopLevelNamespaceWildcard, typeof(SecondLevelTarget), true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchIfNotInSameOrChildNamespace()
         {
             TestMatch(TopLevelNamespaceWildcard, typeof(SeparateTarget), false);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchIfNamespaceOfTargetStartsWithSameStringAsMatchingNamespace()
         {
             TestMatch(TopLevelNamespaceWildcard, typeof(TopLevelTwoTarget), false);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchIfTargetIsInParentNamespace()
         {
             TestMatch(SecondLevelNamespace, typeof(TopLevelTarget), false);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithWildcardMultipleLevelsDeep()
         {
             TestMatch(TopLevelNamespaceWildcard, typeof(ThirdLevelTarget), true);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchWithMultipleMatchOptions()
         {
             IMatchingRule rule =
@@ -106,11 +106,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
                                                   new MatchingInfo(TopLevelTwoNamespace.ToUpperInvariant(), true)
                                               });
 
-            Assert.IsTrue(rule.Matches(GetTargetMethod(typeof(TopLevelTarget))));
-            Assert.IsFalse(rule.Matches(GetTargetMethod(typeof(SecondLevelTarget))));
-            Assert.IsTrue(rule.Matches(GetTargetMethod(typeof(ThirdLevelTarget))));
-            Assert.IsFalse(rule.Matches(GetTargetMethod(typeof(SeparateTarget))));
-            Assert.IsTrue(rule.Matches(GetTargetMethod(typeof(TopLevelTwoTarget))));
+            Assert.True(rule.Matches(GetTargetMethod(typeof(TopLevelTarget))));
+            Assert.False(rule.Matches(GetTargetMethod(typeof(SecondLevelTarget))));
+            Assert.True(rule.Matches(GetTargetMethod(typeof(ThirdLevelTarget))));
+            Assert.False(rule.Matches(GetTargetMethod(typeof(SeparateTarget))));
+            Assert.True(rule.Matches(GetTargetMethod(typeof(TopLevelTwoTarget))));
         }
 
         private void TestMatch(string namespaceName,
@@ -120,7 +120,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
         {
             NamespaceMatchingRule rule = new NamespaceMatchingRule(namespaceName, ignoreCase);
             MethodInfo methodToMatch = targetType.GetMethod("TargetMethod");
-            Assert.AreEqual(shouldMatch, rule.Matches(methodToMatch));
+            Assert.Equal(shouldMatch, rule.Matches(methodToMatch));
         }
 
         private void TestMatch(string namespaceName,

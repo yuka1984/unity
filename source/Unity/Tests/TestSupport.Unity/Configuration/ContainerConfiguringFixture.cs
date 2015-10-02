@@ -10,12 +10,14 @@ namespace Microsoft.Practices.Unity.TestSupport.Configuration
             : base(configFileName)
         {
             this.containerName = containerName;
+            MainSetup();
         }
 
         protected ContainerConfiguringFixture(string configFileName, string sectionName, string containerName)
             : base(configFileName, sectionName)
         {
             this.containerName = containerName;
+            MainSetup();
         }
 
         protected IUnityContainer Container { get; private set; }

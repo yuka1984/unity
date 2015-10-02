@@ -6,31 +6,32 @@ using System.Linq;
 using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingConfigWithLifetimes
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingConfigWithLifetimes : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingConfigWithLifetimes()
             : base("Lifetimes")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ILoggerHasSingletonLifetime()
         {
             var registration = section.Containers.Default.Registrations.Where(
                 r => r.TypeName == "ILogger" && r.Name == string.Empty).First();
 
-            Assert.AreEqual("singleton", registration.Lifetime.TypeName);
+            Assert.Equal("singleton", registration.Lifetime.TypeName);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_TypeConverterInformationIsProperlyDeserialized()
         {
             var lifetime = section.Containers.Default.Registrations
@@ -38,9 +39,9 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
                 .First()
                 .Lifetime;
 
-            Assert.AreEqual("session", lifetime.TypeName);
-            Assert.AreEqual("backwards", lifetime.Value);
-            Assert.AreEqual("reversed", lifetime.TypeConverterTypeName);
+            Assert.Equal("session", lifetime.TypeName);
+            Assert.Equal("backwards", lifetime.Value);
+            Assert.Equal("reversed", lifetime.TypeConverterTypeName);
         }
     }
 }

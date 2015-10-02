@@ -3,7 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 {
@@ -11,7 +11,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
     /// Tests to verify behavior of call handlers in the presence of
     /// overridden virtual methods.
     /// </summary>
-    [TestClass]
+     
     public partial class VirtualMethodOverrideFixture
     {
         private static string GetHandlerId(IDictionary<string, List<string>> log)
@@ -21,11 +21,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 
         private static void AssertOneHandlerCreated(IDictionary<string, List<string>> log)
         {
-            Assert.IsTrue(log.ContainsKey("created"));
-            Assert.AreEqual(1, log["created"].Count);
+            Assert.True(log.ContainsKey("created"));
+            Assert.Equal(1, log["created"].Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void CallHandlerRunsWhenCallingThroughBaseClassReference()
         {
             var container = CreateContainer();
@@ -41,9 +41,9 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.PolicyInjection
 
             baseRef.DoSomething();
 
-            Assert.IsTrue(log.ContainsKey("created"), "No handlers were created");
+            Assert.True(log.ContainsKey("created"), "No handlers were created");
 
-            Assert.IsTrue(log.Keys.Any(k => log["created"].Any(entry => entry == k)),
+            Assert.True(log.Keys.Any(k => log["created"].Any(entry => entry == k)),
                 "Log doesn't contain any calls to handlers");
         }
 

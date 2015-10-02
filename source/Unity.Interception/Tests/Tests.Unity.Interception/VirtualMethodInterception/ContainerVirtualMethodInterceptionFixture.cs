@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInterception
 {
@@ -11,10 +11,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
     /// Tests for the virtual method interception mechanism as invoked
     /// through the container.
     /// </summary>
-    [TestClass]
+     
     public class ContainerVirtualMethodInterceptionFixture
     {
-        [TestMethod]
+        [Fact]
         public void InterceptedClassGetsReturned()
         {
             CallCountHandler h1 = new CallCountHandler();
@@ -26,10 +26,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             Interceptee target = container.Resolve<Interceptee>();
 
-            Assert.AreNotSame(typeof(Interceptee), target.GetType());
+            Assert.NotSame(typeof(Interceptee), target.GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void AttachedHandlersAreCalled()
         {
             CallCountHandler h1 = new CallCountHandler();
@@ -67,11 +67,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
                 target.MethodTwo("hi", twoCount);
             }
 
-            Assert.AreEqual(oneCount, h1.CallCount);
-            Assert.AreEqual(twoCount, h2.CallCount);
+            Assert.Equal(oneCount, h1.CallCount);
+            Assert.Equal(twoCount, h2.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void RegisteringInterceptionOnOpenGenericsLetsYouResolveMultipleClosedClasses()
         {
             IUnityContainer container = new UnityContainer()
@@ -85,28 +85,28 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             GenericFactory<SubjectOne> resultOne = container.Resolve<GenericFactory<SubjectOne>>();
             GenericFactory<SubjectTwo> resultTwo = container.Resolve<GenericFactory<SubjectTwo>>();
 
-            Assert.IsTrue(resultOne is IInterceptingProxy);
-            Assert.IsTrue(resultTwo is IInterceptingProxy);
+            Assert.True(resultOne is IInterceptingProxy);
+            Assert.True(resultTwo is IInterceptingProxy);
 
-            Assert.AreEqual("**Hi**", resultTwo.MakeAT().GetAValue("Hi"));
+            Assert.Equal("**Hi**", resultTwo.MakeAT().GetAValue("Hi"));
         }
 
-        [TestMethod]
+        [Fact]
         public virtual void TestNewVirtualOverride()
         {
             IUnityContainer container = GetContainer();
 
             NewVirtualOverrideTestClass testClass = container.Resolve<NewVirtualOverrideTestClass>();
 
-            Assert.IsTrue(testClass.TestMethod1(), "override");
-            Assert.IsTrue(testClass.TestMethod2(), "new virtual");
-            Assert.IsTrue(testClass.TestMethod3(), "always true");
-            Assert.IsTrue(testClass.TestMethod4(), "abstract");
+            Assert.True(testClass.TestMethod1(), "override");
+            Assert.True(testClass.TestMethod2(), "new virtual");
+            Assert.True(testClass.TestMethod3(), "always true");
+            Assert.True(testClass.TestMethod4(), "abstract");
 
-            Assert.AreEqual(4, container.Resolve<CallCountHandler>("TestCallHandler").CallCount);
+            Assert.Equal(4, container.Resolve<CallCountHandler>("TestCallHandler").CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptWithInterceptorSetAsDefaultForBaseClassWithMultipleImplementations()
         {
             IUnityContainer container =
@@ -121,11 +121,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             BaseClass instanceOne = container.Resolve<BaseClass>("one");
             BaseClass instanceTwo = container.Resolve<BaseClass>("two");
 
-            Assert.AreEqual("ImplementationOne", instanceOne.Method());
-            Assert.AreEqual("ImplementationTwo", instanceTwo.Method());
+            Assert.Equal("ImplementationOne", instanceOne.Method());
+            Assert.Equal("ImplementationTwo", instanceTwo.Method());
         }
 
-        [TestMethod]
+        [Fact]
         public void CanAddInterceptionBehaviorsWithRequiredInterfaces()
         {
             IUnityContainer container =
@@ -142,10 +142,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             instance.Property = 10;
 
-            Assert.AreEqual("Property", changedProperty);
+            Assert.Equal("Property", changedProperty);
         }
 
-        [TestMethod]
+        [Fact]
         public void ResolvingKeyForTheSecondTimeAfterAddingBehaviorWithRequiredInterfaceReflectsLastConfiguration()
         {
             IUnityContainer container =
@@ -153,16 +153,16 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
                     .AddNewExtension<Interception>()
                     .RegisterType<ClassWithVirtualProperty>(new Interceptor<VirtualMethodInterceptor>());
 
-            Assert.IsFalse(container.Resolve<ClassWithVirtualProperty>() is INotifyPropertyChanged);
+            Assert.False(container.Resolve<ClassWithVirtualProperty>() is INotifyPropertyChanged);
 
             container
                 .RegisterType<ClassWithVirtualProperty>(
                     new InterceptionBehavior(new NaiveINotifyPropertyChangedInterceptionBehavior()));
 
-            Assert.IsTrue(container.Resolve<ClassWithVirtualProperty>() is INotifyPropertyChanged);
+            Assert.True(container.Resolve<ClassWithVirtualProperty>() is INotifyPropertyChanged);
         }
 
-        [TestMethod]
+        [Fact]
         public void GeneratedDerivedTypeIsCached()
         {
             IUnityContainer container =
@@ -173,11 +173,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
             ClassWithVirtualProperty instanceOne = container.Resolve<ClassWithVirtualProperty>();
             ClassWithVirtualProperty instanceTwo = container.Resolve<ClassWithVirtualProperty>();
 
-            Assert.AreSame(typeof(ClassWithVirtualProperty), instanceOne.GetType().BaseType);
-            Assert.AreSame(instanceOne.GetType(), instanceTwo.GetType());
+            Assert.Same(typeof(ClassWithVirtualProperty), instanceOne.GetType().BaseType);
+            Assert.Same(instanceOne.GetType(), instanceTwo.GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptClassWithSingleNonDefaultConstructor()
         {
             CallCountInterceptionBehavior callCountBehavior = new CallCountInterceptionBehavior();
@@ -194,11 +194,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             string value = instance.GetValue();
 
-            Assert.AreEqual("some value", value);
-            Assert.AreEqual(1, callCountBehavior.CallCount);
+            Assert.Equal("some value", value);
+            Assert.Equal(1, callCountBehavior.CallCount);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptGenericTypeWithGenericMethodsWithConstraints()
         {
             var container = new UnityContainer()
@@ -210,9 +210,9 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInt
 
             Type interceptedType = result.GetType();
             Type genericInterceptedType = interceptedType.GetGenericTypeDefinition();
-            Assert.IsFalse(interceptedType.ContainsGenericParameters);
-            Assert.IsTrue(interceptedType.IsGenericType);
-            Assert.IsFalse(interceptedType.IsGenericTypeDefinition);
+            Assert.False(interceptedType.ContainsGenericParameters);
+            Assert.True(interceptedType.IsGenericType);
+            Assert.False(interceptedType.IsGenericTypeDefinition);
         }
 
         protected virtual IUnityContainer GetContainer()

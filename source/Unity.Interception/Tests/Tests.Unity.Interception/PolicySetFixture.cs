@@ -4,36 +4,35 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
     /// <summary>
     /// Tests for the PolicySet class.
     /// </summary>
-    [TestClass]
+     
     public class PolicySetFixture
     {
         private IUnityContainer container;
 
-        [TestInitialize]
-        public void SetUp()
+        public PolicySetFixture()
         {
             container = new UnityContainer();
         }
 
-        //[TestMethod]
+        //[Fact]
         //public void ShouldInitializeToEmpty()
         //{
         //    PolicySet policies = new PolicySet();
 
-        //    Assert.IsFalse(policies.AppliesTo(GetType()));
+        //    Assert.False(policies.AppliesTo(GetType()));
         //    MethodInfo thisMember = GetType().GetMethod("ShouldInitializeToEmpty");
         //    List<ICallHandler> handlers = new List<ICallHandler>(policies.GetHandlersFor(thisMember));
-        //    Assert.AreEqual(0, handlers.Count);
+        //    Assert.Equal(0, handlers.Count);
         //}
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeAbleToAddOnePolicy()
         {
             container
@@ -54,12 +53,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<ICallHandler> handlers =
                 new List<ICallHandler>(policies.GetHandlersFor(thisMember, container));
 
-            Assert.AreEqual(2, handlers.Count);
-            Assert.IsTrue(typeof(Handler1) == handlers[0].GetType());
-            Assert.IsTrue(typeof(Handler2) == handlers[1].GetType());
+            Assert.Equal(2, handlers.Count);
+            Assert.True(typeof(Handler1) == handlers[0].GetType());
+            Assert.True(typeof(Handler2) == handlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchPolicyByTypeName()
         {
             PolicySet policies = GetMultiplePolicySet();
@@ -72,15 +71,15 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<ICallHandler> nameMatchHandlers =
                 new List<ICallHandler>(policies.GetHandlersFor(nameMatchMember, container));
 
-            Assert.AreEqual(1, nameDoesntMatchHandlers.Count);
-            Assert.IsTrue(typeof(Handler1) == nameDoesntMatchHandlers[0].GetType());
+            Assert.Equal(1, nameDoesntMatchHandlers.Count);
+            Assert.True(typeof(Handler1) == nameDoesntMatchHandlers[0].GetType());
 
-            Assert.AreEqual(2, nameMatchHandlers.Count);
-            Assert.IsTrue(typeof(Handler1) == nameMatchHandlers[0].GetType());
-            Assert.IsTrue(typeof(Handler2) == nameMatchHandlers[1].GetType());
+            Assert.Equal(2, nameMatchHandlers.Count);
+            Assert.True(typeof(Handler1) == nameMatchHandlers[0].GetType());
+            Assert.True(typeof(Handler2) == nameMatchHandlers[1].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchPolicyByMethodName()
         {
             PolicySet policies = GetMultiplePolicySet();
@@ -92,12 +91,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<ICallHandler> nameMatchHandlers =
                 new List<ICallHandler>(policies.GetHandlersFor(nameMatchMember, container));
 
-            Assert.AreEqual(0, noMatchHandlers.Count);
-            Assert.AreEqual(1, nameMatchHandlers.Count);
-            Assert.IsTrue(typeof(Handler2) == nameMatchHandlers[0].GetType());
+            Assert.Equal(0, noMatchHandlers.Count);
+            Assert.Equal(1, nameMatchHandlers.Count);
+            Assert.True(typeof(Handler2) == nameMatchHandlers[0].GetType());
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotMatchPolicyWhenNoRulesMatch()
         {
             PolicySet policies = GetMultiplePolicySet();
@@ -105,10 +104,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             MethodImplementationInfo noMatchMember = GetMethodImplInfo<NoMatchAnywhere>("NoMatchHere");
             List<ICallHandler> noMatchHandlers =
                 new List<ICallHandler>(policies.GetHandlersFor(noMatchMember, container));
-            Assert.AreEqual(0, noMatchHandlers.Count);
+            Assert.Equal(0, noMatchHandlers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldGetCorrectHandlersGivenAttributesOnInterfaceMethodsAfterAddingAttributeDrivenPolicy()
         {
             PolicySet policies = new PolicySet();
@@ -116,7 +115,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<ICallHandler> oneHandlers
                 = new List<ICallHandler>(policies.GetHandlersFor(GetMethodImplInfo<TwoType>("One"), container));
 
-            Assert.AreEqual(0, oneHandlers.Count);
+            Assert.Equal(0, oneHandlers.Count);
 
             policies.Add(new AttributeDrivenPolicy());
 
@@ -127,15 +126,15 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             oneHandlers
                 = new List<ICallHandler>(policies.GetHandlersFor(oneInfo, container));
 
-            Assert.AreEqual(2, oneHandlers.Count);
-            Assert.IsTrue(oneHandlers[0] is MarkerCallHandler);
-            Assert.IsTrue(oneHandlers[1] is MarkerCallHandler);
+            Assert.Equal(2, oneHandlers.Count);
+            Assert.True(oneHandlers[0] is MarkerCallHandler);
+            Assert.True(oneHandlers[1] is MarkerCallHandler);
 
-            Assert.AreEqual("IOneOne", ((MarkerCallHandler)oneHandlers[0]).HandlerName);
-            Assert.AreEqual("MethodOneOverride", ((MarkerCallHandler)oneHandlers[1]).HandlerName);
+            Assert.Equal("IOneOne", ((MarkerCallHandler)oneHandlers[0]).HandlerName);
+            Assert.Equal("MethodOneOverride", ((MarkerCallHandler)oneHandlers[1]).HandlerName);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldNotDuplicateHandlersWhenCreatingViaInterface()
         {
             container
@@ -153,10 +152,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             List<ICallHandler> handlers
                 = new List<ICallHandler>(policies.GetHandlersFor(twoInfo, container));
-            Assert.AreEqual(2, handlers.Count);
+            Assert.Equal(2, handlers.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void HandlersOrderedProperly()
         {
             RuleDrivenPolicy policy
@@ -189,13 +188,13 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<ICallHandler> handlers
                 = new List<ICallHandler>(policies.GetHandlersFor(twoInfo, container));
 
-            Assert.AreSame(handler4, handlers[0]);
-            Assert.AreSame(handler3, handlers[1]);
-            Assert.AreSame(handler1, handlers[2]);
-            Assert.AreSame(handler2, handlers[3]);
+            Assert.Same(handler4, handlers[0]);
+            Assert.Same(handler3, handlers[1]);
+            Assert.Same(handler1, handlers[2]);
+            Assert.Same(handler2, handlers[3]);
         }
 
-        [TestMethod]
+        [Fact]
         public void HandlersOrderedProperlyUsingRelativeAndAbsoluteOrder()
         {
             RuleDrivenPolicy policy
@@ -237,12 +236,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             List<ICallHandler> handlers
                 = new List<ICallHandler>(policies.GetHandlersFor(twoInfo, container));
 
-            Assert.AreEqual(handler6, handlers[0]);
-            Assert.AreEqual(handler4, handlers[1]);
-            Assert.AreEqual(handler2, handlers[2]);
-            Assert.AreEqual(handler3, handlers[3]);
-            Assert.AreEqual(handler5, handlers[4]);
-            Assert.AreEqual(handler1, handlers[5]);
+            Assert.Equal(handler6, handlers[0]);
+            Assert.Equal(handler4, handlers[1]);
+            Assert.Equal(handler2, handlers[2]);
+            Assert.Equal(handler3, handlers[3]);
+            Assert.Equal(handler5, handlers[4]);
+            Assert.Equal(handler1, handlers[5]);
         }
 
         private PolicySet GetMultiplePolicySet()

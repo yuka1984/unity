@@ -3,88 +3,88 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
-    [TestClass]
+     
     public class TagAttributeMatchingRuleFixture
     {
-        [TestMethod]
+        [Fact]
         public void RuleMatchesWhenTagMatches()
         {
             MethodInfo method = typeof(AnnotatedWithTags).GetMethod("Tagged");
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("Tagged");
 
-            Assert.IsTrue(rule.Matches(method));
+            Assert.True(rule.Matches(method));
         }
 
-        [TestMethod]
+        [Fact]
         public void RuleCanMatchCaseInsensitive()
         {
             MethodInfo method = typeof(AnnotatedWithTags).GetMethod("Tagged");
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("taGGed", true);
 
-            Assert.IsTrue(rule.Matches(method));
+            Assert.True(rule.Matches(method));
         }
 
-        [TestMethod]
+        [Fact]
         public void RuleCanMatchesCaseSensitiveByDefault()
         {
             MethodInfo method = typeof(AnnotatedWithTags).GetMethod("Tagged");
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("taGGed");
 
-            Assert.IsFalse(rule.Matches(method));
+            Assert.False(rule.Matches(method));
         }
 
-        [TestMethod]
+        [Fact]
         public void RuleDeniesMatchWhenTagTextDoesNotCorrespond()
         {
             MethodInfo method = typeof(AnnotatedWithTags).GetMethod("Tagged");
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("WhichTag?");
 
-            Assert.IsFalse(rule.Matches(method));
+            Assert.False(rule.Matches(method));
         }
 
-        [TestMethod]
+        [Fact]
         public void RuleDeniesMatchWhenTagAttributeIsNotDeclared()
         {
             MethodInfo method = typeof(AnnotatedWithTags).GetMethod("NotTagged");
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("Tagged");
 
-            Assert.IsFalse(rule.Matches(method));
+            Assert.False(rule.Matches(method));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchRuleForTaggedProperty()
         {
             MethodInfo method = typeof(AnnotatedWithTags).GetProperty("Name").GetGetMethod();
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("Tagged");
-            Assert.IsTrue(rule.Matches(method));
+            Assert.True(rule.Matches(method));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchRuleForTaggedClass()
         {
             MethodInfo method1 = typeof(AnnotatedWithTagsOnClass).GetMethod("Method1");
             MethodInfo method2 = typeof(AnnotatedWithTagsOnClass).GetMethod("Method2");
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("Tagged");
 
-            Assert.IsTrue(rule.Matches(method1));
-            Assert.IsTrue(rule.Matches(method2));
+            Assert.True(rule.Matches(method1));
+            Assert.True(rule.Matches(method2));
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMatchForMethodWhenTagIsOnInterface()
         {
             MethodInfo createMethod = typeof(DaoImpl).GetMethod("Create");
             MethodInfo interfaceMethod = typeof(IDao).GetMethod("Create");
             TagAttributeMatchingRule rule = new TagAttributeMatchingRule("Tag on interface", true);
-            Assert.IsFalse(rule.Matches(createMethod));
-            Assert.IsTrue(rule.Matches(interfaceMethod));
+            Assert.False(rule.Matches(createMethod));
+            Assert.True(rule.Matches(interfaceMethod));
         }
 
-        //[TestMethod]
+        //[Fact]
         //public void ShouldMatchForMethodWhenTagIsOnInterfaceViaPolicy()
         //{
         //    RuleDrivenPolicy policy = new RuleDrivenPolicy("Count tagged calls");
@@ -93,8 +93,8 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 
         //    MethodInfo createMethod = typeof(DaoImpl).GetMethod("Create");
         //    List<ICallHandler> handlers = new List<ICallHandler>(policy.GetHandlersFor(createMethod));
-        //    Assert.AreEqual(1, handlers.Count);
-        //    Assert.IsTrue(handlers[0] is CallCountHandler);
+        //    Assert.Equal(1, handlers.Count);
+        //    Assert.True(handlers[0] is CallCountHandler);
         //}
 
         private class AnnotatedWithTags

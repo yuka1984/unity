@@ -3,13 +3,13 @@
 using System;
 using System.Security;
 using System.Security.Permissions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.VirtualMethodInterceptorTests
 {
     public partial class VirtualMethodInterceptorFixture
     {
-        [TestMethod]
+        [Fact]
         public void GeneratedTypeForAbstractIsVerifiable()
         {
             PermissionSet permissionSet = new PermissionSet(PermissionState.None);

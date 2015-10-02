@@ -4,14 +4,14 @@ using System;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_ConfiguringContainerWithOptionalDependencies
     /// </summary>
-    [TestClass]
+     
     public class When_ConfiguringContainerWithOptionalDependencies : ContainerConfiguringFixture<ConfigFileLocator>
     {
         public When_ConfiguringContainerWithOptionalDependencies()
@@ -19,18 +19,18 @@ namespace Microsoft.Practices.Unity.Configuration.Tests
         {
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_RegisteredOptionalDependencyIsInjected()
         {
             var result = Container.Resolve<ObjectUsingLogger>("dependencyRegistered");
-            Assert.IsNotNull(result.Logger);
+            Assert.NotNull(result.Logger);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_UnregisteredOptionalDependencyIsNotInjected()
         {
             var result = Container.Resolve<ObjectUsingLogger>("dependencyNotRegistered");
-            Assert.IsNull(result.Logger);
+            Assert.Null(result.Logger);
         }
     }
 }

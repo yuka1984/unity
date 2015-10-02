@@ -3,44 +3,43 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
 {
-    [TestClass]
+     
     public class MethodSignatureMatchingRuleFixture
     {
         private MethodBase objectToStringMethod;
         private MethodBase objectCtor;
         private MethodBase stringCopyToMethod;
 
-        [TestInitialize]
-        public void TestInitialize()
+        public MethodSignatureMatchingRuleFixture()
         {
             objectToStringMethod = typeof(object).GetMethod("ToString");
             objectCtor = typeof(object).GetConstructor(new Type[0]);
             stringCopyToMethod = typeof(string).GetMethod("CopyTo");
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchIsDeniedWhenParamterValuesCountDiffers()
         {
             List<string> oneParam = new List<string>();
             oneParam.Add("one");
 
             MethodSignatureMatchingRule matchingRule = new MethodSignatureMatchingRule(oneParam);
-            Assert.IsFalse(matchingRule.Matches(objectToStringMethod));
+            Assert.False(matchingRule.Matches(objectToStringMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanMatchOnParameterlessMethods()
         {
             List<string> parameterLess = new List<string>();
             MethodSignatureMatchingRule matchingRule = new MethodSignatureMatchingRule(parameterLess);
-            Assert.IsTrue(matchingRule.Matches(objectToStringMethod));
+            Assert.True(matchingRule.Matches(objectToStringMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void CanMatchOnMultipleParameterTypes()
         {
             List<string> parametersForCopyToMethod = new List<string>();
@@ -50,10 +49,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
             parametersForCopyToMethod.Add("System.Int32");
 
             MethodSignatureMatchingRule matchingRule = new MethodSignatureMatchingRule(parametersForCopyToMethod);
-            Assert.IsTrue(matchingRule.Matches(stringCopyToMethod));
+            Assert.True(matchingRule.Matches(stringCopyToMethod));
         }
 
-        [TestMethod]
+        [Fact]
         public void MatchIsDeniedWhenASingleParameterIsWrong()
         {
             List<string> parametersForCopyToMethod = new List<string>();
@@ -63,7 +62,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests.MatchingRules
             parametersForCopyToMethod.Add("System.Int32");
 
             MethodSignatureMatchingRule matchingRule = new MethodSignatureMatchingRule(parametersForCopyToMethod);
-            Assert.IsFalse(matchingRule.Matches(stringCopyToMethod));
+            Assert.False(matchingRule.Matches(stringCopyToMethod));
         }
     }
 }

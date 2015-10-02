@@ -3,7 +3,7 @@
 using System;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
@@ -11,12 +11,12 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
     /// Tests for the TransparentProxyMethodInvocation class, which wraps
     /// a IMethodCallMessage in an IMethodInvocation implementation.
     /// </summary>
-    [TestClass]
+     
     public class TransparentProxyMethodInvocationFixture
     {
         #region Test Methods
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeCreatable()
         {
             MethodBase methodInfo = GetTargetMethodInfo("FirstTarget");
@@ -24,23 +24,23 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             IMethodInvocation invocation = GetInvocation(methodInfo, target);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldMapInputsCorrectly()
         {
             MethodBase methodInfo = GetTargetMethodInfo("FirstTarget");
             InvocationTarget target = new InvocationTarget();
             IMethodInvocation invocation = GetInvocation(methodInfo, target);
 
-            Assert.AreEqual(2, invocation.Inputs.Count);
-            Assert.AreEqual(1, invocation.Inputs[0]);
-            Assert.AreEqual("two", invocation.Inputs[1]);
-            Assert.AreEqual("two", invocation.Inputs["two"]);
-            Assert.AreEqual(1, invocation.Inputs["one"]);
-            Assert.AreEqual(methodInfo, invocation.MethodBase);
-            Assert.AreSame(target, invocation.Target);
+            Assert.Equal(2, invocation.Inputs.Count);
+            Assert.Equal(1, invocation.Inputs[0]);
+            Assert.Equal("two", invocation.Inputs[1]);
+            Assert.Equal("two", invocation.Inputs["two"]);
+            Assert.Equal(1, invocation.Inputs["one"]);
+            Assert.Equal(methodInfo, invocation.MethodBase);
+            Assert.Same(target, invocation.Target);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeAbleToAddToContext()
         {
             MethodBase methodInfo = GetTargetMethodInfo("FirstTarget");
@@ -50,21 +50,21 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             invocation.InvocationContext["firstItem"] = 1;
             invocation.InvocationContext["secondItem"] = "hooray!";
 
-            Assert.AreEqual(2, invocation.InvocationContext.Count);
-            Assert.AreEqual(1, invocation.InvocationContext["firstItem"]);
-            Assert.AreEqual("hooray!", invocation.InvocationContext["secondItem"]);
+            Assert.Equal(2, invocation.InvocationContext.Count);
+            Assert.Equal(1, invocation.InvocationContext["firstItem"]);
+            Assert.Equal("hooray!", invocation.InvocationContext["secondItem"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void ShouldBeAbleToChangeInputs()
         {
             MethodBase methodInfo = GetTargetMethodInfo("FirstTarget");
             InvocationTarget target = new InvocationTarget();
             IMethodInvocation invocation = GetInvocation(methodInfo, target);
 
-            Assert.AreEqual(1, invocation.Inputs["one"]);
+            Assert.Equal(1, invocation.Inputs["one"]);
             invocation.Inputs["one"] = 42;
-            Assert.AreEqual(42, invocation.Inputs["one"]);
+            Assert.Equal(42, invocation.Inputs["one"]);
         }
 
         #endregion

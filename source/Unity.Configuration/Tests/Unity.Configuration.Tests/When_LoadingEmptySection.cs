@@ -6,25 +6,26 @@ using System.Linq;
 using System.Text;
 using Microsoft.Practices.Unity.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.Configuration.Tests
 {
     /// <summary>
     /// Summary description for When_LoadingEmptySection
     /// </summary>
-    [TestClass]
+     
     public class When_LoadingEmptySection : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingEmptySection()
             : base("EmptySection")
         {
+            MainSetup();
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SectionIsPresent()
         {
-            Assert.IsNotNull(this.section);
+            Assert.NotNull(this.section);
         }
     }
 }

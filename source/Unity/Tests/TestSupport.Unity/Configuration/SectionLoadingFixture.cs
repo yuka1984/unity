@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using Microsoft.Practices.Unity.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.TestSupport.Configuration
 {
-    public abstract class SectionLoadingFixture<TResourceLocator>
+    public abstract class SectionLoadingFixture<TResourceLocator>: IDisposable
     {
         protected UnityConfigurationSection section;
         private readonly string configFileName;
@@ -36,17 +37,20 @@ namespace Microsoft.Practices.Unity.TestSupport.Configuration
         {
         }
 
-        [TestInitialize]
         public void MainSetup()
         {
             Arrange();
             Act();
         }
 
-        [TestCleanup]
         public void MainTeardown()
         {
             Teardown();
+        }
+
+        public void Dispose()
+        {
+            MainTeardown();
         }
     }
 }

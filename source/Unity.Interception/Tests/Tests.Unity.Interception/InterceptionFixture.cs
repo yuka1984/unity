@@ -2,14 +2,14 @@
 
 using Microsoft.Practices.Unity.InterceptionExtension.Tests.ObjectsUnderTest;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 {
-    [TestClass]
+     
     public partial class InterceptionFixture
     {
-        [TestMethod]
+        [Fact]
         public void AttributeDrivenPolicyIsAddedByDefault()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -23,10 +23,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappedOverInterface = container.Resolve<Interface>();
             wrappedOverInterface.Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["WrappableThroughInterfaceWithAttributes-Method"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["WrappableThroughInterfaceWithAttributes-Method"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptWrappedObject()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -39,10 +39,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable = container.Resolve<Wrappable>();
             wrappable.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptWrappedObjectWithRef()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -56,11 +56,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             object someObj = null;
             wrappable.MethodRef(ref someObj);
 
-            Assert.AreEqual("parameter", someObj);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptWrappedObjectWithRef"]);
+            Assert.Equal("parameter", someObj);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptWrappedObjectWithRef"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptWrappedObjectWithValueTypeRef()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -74,11 +74,11 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             int someObj = 0;
             wrappable.MethodRefValue(ref someObj);
 
-            Assert.AreEqual(42, someObj);
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptWrappedObjectWithValueTypeRef"]);
+            Assert.Equal(42, someObj);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptWrappedObjectWithValueTypeRef"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptLifetimeManagedWrappedObject()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -92,10 +92,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Wrappable wrappable = container.Resolve<Wrappable>();
             wrappable.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptNamedWrappedObject()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -110,10 +110,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             wrappable1.Method2();
             wrappable2.Method2();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanCreateWrappedObject"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void InterfaceImplementationsOnDerivedClassesAreWrappedMultipleTimes()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -127,10 +127,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             DerivedWrappable wrappable = container.Resolve<DerivedWrappable>();
             wrappable.Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["InterfaceImplementationsOnDerivedClassesAreWrappedMultipleTimes"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["InterfaceImplementationsOnDerivedClassesAreWrappedMultipleTimes"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreateWrappedObjectOverInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -145,10 +145,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappedOverInterface = container.Resolve<Interface>();
             wrappedOverInterface.Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanCreateWrappedObjectOverInterface"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanCreateWrappedObjectOverInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanCreatLifetimeManagedeWrappedObjectOverInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -165,10 +165,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             WrappableThroughInterface wrapped = container.Resolve<WrappableThroughInterface>();
             wrapped.Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanCreateWrappedObjectOverInterface"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanCreateWrappedObjectOverInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptExistingWrappedObjectOverInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -181,10 +181,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappedOverInterface = container.BuildUp<Interface>(new WrappableThroughInterface());
             wrappedOverInterface.Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanCreateWrappedObjectOverInterface"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanCreateWrappedObjectOverInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void InstanceInterceptionDoesNotReturnProxyWhenNoHandlerAreConfigured()
         {
             IUnityContainer container = new UnityContainer()
@@ -195,7 +195,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             IDal dal = container.Resolve<IDal>();
 
-            Assert.IsFalse(dal is IInterceptingProxy);
+            Assert.False(dal is IInterceptingProxy);
         }
 
         private IUnityContainer CreateContainer(string globalCallHandlerName)
@@ -219,7 +219,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             return container;
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptCallFromBaseOfWrappedInterface()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -233,10 +233,10 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
             Interface wrappedOverInterface = container.Resolve<Interface>();
             wrappedOverInterface.Method3();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptCallFromBaseOfWrappedInterface"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptCallFromBaseOfWrappedInterface"]);
         }
 
-        [TestMethod]
+        [Fact]
         public void CanInterceptMethodOnDerivedType()
         {
             GlobalCountCallHandler.Calls.Clear();
@@ -250,7 +250,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Tests
 
             instance.Method();
 
-            Assert.AreEqual(1, GlobalCountCallHandler.Calls["CanInterceptMethodOnDerivedType"]);
+            Assert.Equal(1, GlobalCountCallHandler.Calls["CanInterceptMethodOnDerivedType"]);
         }
 
         public partial class BaseInterceptable

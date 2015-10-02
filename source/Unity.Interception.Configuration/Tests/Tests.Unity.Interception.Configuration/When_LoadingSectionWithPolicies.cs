@@ -5,16 +5,17 @@ using System.Linq;
 using Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests.ConfigFiles;
 using Microsoft.Practices.Unity.TestSupport;
 using Microsoft.Practices.Unity.TestSupport.Configuration;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
-    [TestClass]
+     
     public class When_LoadingSectionWithPolicies : SectionLoadingFixture<ConfigFileLocator>
     {
         public When_LoadingSectionWithPolicies()
             : base("Policies")
         {
+            MainSetup();
         }
 
         private InterceptionElement GetInterceptionElement(string containerName)
@@ -22,27 +23,27 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             return (InterceptionElement)section.Containers[containerName].ConfiguringElements[0];
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_ElementWithEmptyPoliciesLoads()
         {
-            Assert.AreEqual(0, this.GetInterceptionElement("emptyPolicies").Policies.Count);
+            Assert.Equal(0, this.GetInterceptionElement("emptyPolicies").Policies.Count);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_PoliciesAreLoadedFromExplicitCollection()
         {
             this.GetInterceptionElement("explicitPolicyCollection").Policies.Select(p => p.Name)
                 .AssertContainsExactly("policyOne", "policyTwo");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_PoliciesAreLoadedFromImplicitCollection()
         {
             this.GetInterceptionElement("implicitPolicyCollection").Policies.Select(p => p.Name)
                 .AssertContainsExactly("policyA", "policyB");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_PoliciesLoadNameOnlyMatchingRules()
         {
             var interceptionElement = this.GetInterceptionElement("policyWithNamedMatchingRules");
@@ -51,7 +52,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             policyOne.MatchingRules.Select(mr => mr.Name).AssertContainsExactly("ruleOne", "ruleTwo");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanDefinePolicyWithMatchingRuleAndCallHandler()
         {
             var interceptionElement = this.GetInterceptionElement("policyWithGivenRulesAndHandlersTypes");
@@ -64,7 +65,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             policyOne.CallHandlers.Select(ch => ch.TypeName).AssertContainsExactly("GlobalCountCallHandler");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_CanLoadPolicyWithMultipleHandlers()
         {
             var interceptionElement = this.GetInterceptionElement("policyWithExternallyConfiguredRulesAndHandlers");

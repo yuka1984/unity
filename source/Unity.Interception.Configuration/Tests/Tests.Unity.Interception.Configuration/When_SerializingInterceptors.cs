@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
 {
-    [TestClass]
+     
     public class When_SerializingInterceptors : SerializationFixture
     {
         private InterceptorsElement DoSerialization(Action<InterceptorsElement> interceptorInitializer)
@@ -24,7 +24,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
             return (InterceptorsElement)section.Containers.Default.ConfiguringElements[0];
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_SingleInterceptorWithKeyIsSerialized()
         {
             var result = this.DoSerialization(itc =>
@@ -37,18 +37,18 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 itc.Interceptors.Add(interceptorElement);
             });
 
-            Assert.AreEqual(1, result.Interceptors.Count);
+            Assert.Equal(1, result.Interceptors.Count);
             var resultElement = result.Interceptors[0];
-            Assert.AreEqual("InterfaceInterceptor", resultElement.TypeName);
+            Assert.Equal("InterfaceInterceptor", resultElement.TypeName);
 
-            Assert.AreEqual(1, result.Interceptors[0].Registrations.Count);
+            Assert.Equal(1, result.Interceptors[0].Registrations.Count);
 
             var key = (KeyElement)resultElement.Registrations[0];
-            Assert.AreEqual("MyType", key.TypeName);
-            Assert.AreEqual(String.Empty, key.Name);
+            Assert.Equal("MyType", key.TypeName);
+            Assert.Equal(String.Empty, key.Name);
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_MultipleInterceptorsWithKeysAreSerialized()
         {
             var result = this.DoSerialization(itc =>
@@ -68,7 +68,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 itc.Interceptors.Add(interceptorElement2);
             });
 
-            Assert.AreEqual(2, result.Interceptors.Count);
+            Assert.Equal(2, result.Interceptors.Count);
 
             result.Interceptors.Select(i => i.Registrations.Count)
                 .AssertContainsExactly(1, 1);
@@ -77,7 +77,7 @@ namespace Microsoft.Practices.Unity.InterceptionExtension.Configuration.Tests
                 .AssertContainsExactly("MyType", "MyOtherType");
         }
 
-        [TestMethod]
+        [Fact]
         public void Then_InterceptorWithMultipleRegistrationsIsSerialized()
         {
             var result = this.DoSerialization(itc =>
