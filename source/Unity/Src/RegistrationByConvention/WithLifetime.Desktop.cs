@@ -11,7 +11,6 @@ namespace Microsoft.Practices.Unity
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>A per thread lifetime manager.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager PerThread(Type type)
         {
             return new PerThreadLifetimeManager();

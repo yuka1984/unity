@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-using System.Diagnostics.CodeAnalysis;
+
 
 namespace Microsoft.Practices.ObjectBuilder2
 {
@@ -16,8 +16,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// in the existing type if passed in.
         /// </summary>
         /// <param name="context">Context used to build up the object.</param>
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "BuildUp",
-            Justification = "Kept for backward compatibility with ObjectBuilder")]
-        void BuildUp(IBuilderContext context);
+          void BuildUp(IBuilderContext context);
     }
 }

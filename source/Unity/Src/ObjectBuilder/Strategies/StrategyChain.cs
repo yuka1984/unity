@@ -3,7 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.Practices.Unity.Utility;
 
 namespace Microsoft.Practices.ObjectBuilder2
@@ -11,7 +11,6 @@ namespace Microsoft.Practices.ObjectBuilder2
     /// <summary>
     /// Represents a chain of responsibility for builder strategies.
     /// </summary>
-    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "See IStrategyChain")]
     public class StrategyChain : IStrategyChain
     {
         private readonly List<IBuilderStrategy> strategies = new List<IBuilderStrategy>();

@@ -37,7 +37,7 @@ namespace Microsoft.Practices.Unity.Properties
         public static string MustHaveOpenGenericType { get { return "The supplied type {0} must be an open generic type."; }}
         public static string MustHaveSameNumberOfGenericArguments { get { return "The supplied type {0} does not have the same number of generic arguments as the target type {1}."; }}
         public static string NoConstructorFound { get { return "The type {0} does not have an accessible constructor."; }}
-        public static string NoMatchingGenericArgument { get { return "The type {0} does not have a generic argument named "{1}""; }}
+        public static string NoMatchingGenericArgument { get { return "The type {0} does not have a generic argument named '{1}'"; }}
         public static string NoOperationExceptionReason { get { return "while resolving"; }}
         public static string NoSuchConstructor { get { return "The type {0} does not have a constructor that takes the parameters ({1})."; }}
         public static string NoSuchMethod { get { return "The type {0} does not have a public method named {1} that takes the parameters ({2})."; }}

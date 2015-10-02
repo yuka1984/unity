@@ -14,7 +14,6 @@ namespace Microsoft.Practices.Unity
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>A lifetime manager</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager None(Type type)
         {
             return null;
@@ -25,8 +24,6 @@ namespace Microsoft.Practices.Unity
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>A container controlled lifetime manager.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The purpose of the method is to return a new instance")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager ContainerControlled(Type type)
         {
             return new ContainerControlledLifetimeManager();
@@ -37,7 +34,6 @@ namespace Microsoft.Practices.Unity
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>An externally controlled lifetime manager.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager ExternallyControlled(Type type)
         {
             return new ExternallyControlledLifetimeManager();
@@ -48,8 +44,6 @@ namespace Microsoft.Practices.Unity
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>A hierarchical lifetime manager.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope", Justification = "The purpose of the method is to return a new instance")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager Hierarchical(Type type)
         {
             return new HierarchicalLifetimeManager();
@@ -60,7 +54,6 @@ namespace Microsoft.Practices.Unity
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>A per resolve lifetime manager.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager PerResolve(Type type)
         {
             return new PerResolveLifetimeManager();
@@ -71,7 +64,6 @@ namespace Microsoft.Practices.Unity
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>A transient lifetime manager.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager Transient(Type type)
         {
             return new TransientLifetimeManager();
@@ -85,8 +77,6 @@ namespace Microsoft.Practices.Unity
         /// <returns>
         /// A lifetime manager.
         /// </returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1004:GenericMethodsShouldProvideTypeParameter", Justification = "As designed")]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "type", Justification = "Need to match signature Func<Type, string>")]
         public static LifetimeManager Custom<T>(Type type)
             where T : LifetimeManager, new()
         {

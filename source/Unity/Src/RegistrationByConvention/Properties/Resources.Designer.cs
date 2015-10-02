@@ -10,8 +10,8 @@
 
 namespace Microsoft.Practices.Unity.Properties {
     using System;
-    
-    
+
+
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.
     /// </summary>
@@ -23,15 +23,14 @@ namespace Microsoft.Practices.Unity.Properties {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
-        
+
         private static global::System.Resources.ResourceManager resourceMan;
-        
+
         private static global::System.Globalization.CultureInfo resourceCulture;
-        
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+
         internal Resources() {
         }
-        
+
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
@@ -45,7 +44,7 @@ namespace Microsoft.Practices.Unity.Properties {
                 return resourceMan;
             }
         }
-        
+
         /// <summary>
         ///   Overrides the current thread's CurrentUICulture property for all
         ///   resource lookups using this strongly typed resource class.
@@ -59,7 +58,7 @@ namespace Microsoft.Practices.Unity.Properties {
                 resourceCulture = value;
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to An attempt to override an existing mapping was detected for type {1} with name &quot;{0}&quot;, currently mapped to type {2}, to type {3}..
         /// </summary>
@@ -68,7 +67,7 @@ namespace Microsoft.Practices.Unity.Properties {
                 return ResourceManager.GetString("DuplicateTypeMappingException", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to The set of assemblies contains a null element..
         /// </summary>

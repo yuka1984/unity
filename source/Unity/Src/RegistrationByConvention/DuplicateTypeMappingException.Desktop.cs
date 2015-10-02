@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+
 using System.Runtime.Serialization;
 
 namespace Microsoft.Practices.Unity
 {
-    [SuppressMessage("Microsoft.Usage", "CA2240:ImplementISerializableCorrectly", Justification = "Implementing serialization with the new transparent approach")]
     [Serializable]
     public partial class DuplicateTypeMappingException
     {

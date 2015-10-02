@@ -21,7 +21,6 @@ namespace Microsoft.Practices.Unity
 
         private static global::Windows.ApplicationModel.Resources.ResourceLoader resourceMan;
 
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Using resx generated code as template")]
         internal Resources()
         {
         }
@@ -42,7 +41,7 @@ namespace Microsoft.Practices.Unity
                 return resourceMan;
             }
         }
-		
+
 		/// <summary>
 		/// An attempt to override an existing mapping was detected for type {1} wit...
 		/// </summary>
@@ -53,7 +52,7 @@ namespace Microsoft.Practices.Unity
                 return ResourceManager.GetString("DuplicateTypeMappingException");
             }
         }
-	
+
 		/// <summary>
 		/// The set of assemblies contains a null element.
 		/// </summary>
@@ -66,4 +65,3 @@ namespace Microsoft.Practices.Unity
         }
 	}
 }
-

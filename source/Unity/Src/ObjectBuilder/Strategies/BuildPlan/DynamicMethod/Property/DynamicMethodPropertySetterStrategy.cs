@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -74,7 +73,7 @@ namespace Microsoft.Practices.ObjectBuilder2
 
         private static MethodInfo GetValidatedPropertySetter(PropertyInfo property)
         {
-            //todo: Added a check for private to meet original expectations; we could consider opening this up for 
+            //todo: Added a check for private to meet original expectations; we could consider opening this up for
             //      private property injection.
             var setter = property.SetMethod;
             if (setter == null || setter.IsPrivate)
@@ -90,7 +89,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// <summary>
         /// A helper method used by the generated IL to store the current operation in the build context.
         /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Validation done by Guard class.")]
         public static void SetCurrentOperationToResolvingPropertyValue(string propertyName, IBuilderContext context)
         {
             Guard.ArgumentNotNull(context, "context");
@@ -101,7 +99,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// <summary>
         /// A helper method used by the generated IL to store the current operation in the build context.
         /// </summary>
-        [SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Validation done by Guard class.")]
         public static void SetCurrentOperationToSettingProperty(string propertyName, IBuilderContext context)
         {
             Guard.ArgumentNotNull(context, "context");

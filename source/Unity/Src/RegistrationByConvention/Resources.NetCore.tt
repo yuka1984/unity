@@ -37,7 +37,6 @@ namespace <#= suggestedNamespace #>
 
         private static global::Windows.ApplicationModel.Resources.ResourceLoader resourceMan;
 
-        [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Using resx generated code as template")]
         internal Resources()
         {
         }
@@ -60,7 +59,7 @@ namespace <#= suggestedNamespace #>
         }
 		<#
 			var resourceNames = document.Descendants("data")
-					.Select(d => new {	Name = d.Attribute("name").Value, 
+					.Select(d => new {	Name = d.Attribute("name").Value,
 										Message= d.Value} );
 			foreach(var entry in resourceNames)
 			{
@@ -86,11 +85,11 @@ namespace <#= suggestedNamespace #>
   {
 	var scrubbed = Regex.Replace(message, "[\r,\n]","");
 	var xmlConverted = System.Security.SecurityElement.Escape(scrubbed);  // quick and non-obvious way to xml escape a string for most characters.
-	
+
 	if (xmlConverted.Length > MAX_COMMENT_LENGTH) {
 		xmlConverted = xmlConverted.Substring(0,MAX_COMMENT_LENGTH-4) + "...";
 	}
-	
+
 	return xmlConverted.Trim();
   }
 #>

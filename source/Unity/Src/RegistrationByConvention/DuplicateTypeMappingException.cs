@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+
 using System.Globalization;
 using Microsoft.Practices.Unity.Properties;
 using Microsoft.Practices.Unity.Utility;
@@ -14,8 +14,6 @@ namespace Microsoft.Practices.Unity
     // FxCop suppression: The standard constructors don't make sense for this exception,
     // as calling them will leave out the information that makes the exception useful
     // in the first place.
-    [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
-        Justification = "The standard constructors don't make sense for this exception, as calling them will leave out the information that makes the exception useful in the first place.")]
     public partial class DuplicateTypeMappingException : Exception
     {
         private string name;
@@ -30,8 +28,6 @@ namespace Microsoft.Practices.Unity
         /// <param name="mappedFromType">The source type for the mapping.</param>
         /// <param name="currentMappedToType">The type currently mapped.</param>
         /// <param name="newMappedToType">The new type to map.</param>
-        [SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods",
-            Justification = "Validation done by Guard class")]
         public DuplicateTypeMappingException(string name, Type mappedFromType, Type currentMappedToType, Type newMappedToType)
             : base(CreateMessage(name, mappedFromType, currentMappedToType, newMappedToType))
         {

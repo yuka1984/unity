@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+
 using Microsoft.Practices.ObjectBuilder2;
 using Microsoft.Practices.Unity.ObjectBuilder;
 
@@ -55,7 +55,6 @@ namespace Microsoft.Practices.Unity
         /// </para></remarks>
         /// <param name="t"><see cref="Type"/> to register.</param>
         /// <param name="name">Name associated with that type.</param>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "t", Justification = "Parameter name is meaningful enough in context")]
         public abstract void RegisterNamedType(Type t, string name);
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace Microsoft.Practices.Unity
         public abstract event EventHandler<RegisterInstanceEventArgs> RegisteringInstance;
 
         /// <summary>
-        /// This event is raised when the <see cref="IUnityContainer.CreateChildContainer"/> method is called, providing 
+        /// This event is raised when the <see cref="IUnityContainer.CreateChildContainer"/> method is called, providing
         /// the newly created child container to extensions to act on as they see fit.
         /// </summary>
         public abstract event EventHandler<ChildContainerCreatedEventArgs> ChildContainerCreated;

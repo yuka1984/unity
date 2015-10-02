@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Practices.ObjectBuilder2;
 
 namespace Microsoft.Practices.Unity
@@ -29,8 +28,6 @@ namespace Microsoft.Practices.Unity
         /// <param name="t">Type to check.</param>
         /// <returns>True if this parameter value is compatible with type <paramref name="t"/>,
         /// false if not.</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "t",
-            Justification = "Parameter is meaningful enough in context")]
         public abstract bool MatchesType(Type t);
 
         /// <summary>
@@ -59,7 +56,7 @@ namespace Microsoft.Practices.Unity
         }
 
         /// <summary>
-        /// Convert an arbitrary value to an InjectionParameterValue object. The rules are: 
+        /// Convert an arbitrary value to an InjectionParameterValue object. The rules are:
         /// If it's already an InjectionParameterValue, return it. If it's a Type, return a
         /// ResolvedParameter object for that type. Otherwise return an InjectionParameter
         /// object for that value.
