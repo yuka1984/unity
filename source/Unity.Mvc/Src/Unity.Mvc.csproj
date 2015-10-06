@@ -100,12 +100,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Unity\Src\Unity.csproj">
-      <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

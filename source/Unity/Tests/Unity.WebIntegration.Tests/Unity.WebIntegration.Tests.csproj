@@ -109,10 +109,6 @@
       <Project>{e6a503f3-1b1d-4008-98ee-7eaca66dfb05}</Project>
       <Name>Unity.WebApi</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Src\Unity.csproj">
-      <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\Unity.licenseheader">

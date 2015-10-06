@@ -2,8 +2,19 @@
   "locked": false,
   "version": -9996,
   "targets": {
-    "DNX,Version=v4.5.1": {},
+    "DNX,Version=v4.5.1": {
+      "CommonServiceLocation/1.0.0": {
+        "compile": {
+          "lib/Microsoft.Practices.ServiceLocation.dll": {}
+        },
+        "runtime": {
+          "lib/Microsoft.Practices.ServiceLocation.dll": {}
+        }
+      },
+      "System.Diagnostics.Tools/4.0.0-beta-23019": {}
+    },
     "DNXCore,Version=v5.0": {
+      "CommonServiceLocation/1.0.0": {},
       "Microsoft.CSharp/4.0.0-beta-23019": {
         "dependencies": {
           "System.Runtime": "4.0.20-beta-23019",
@@ -69,6 +80,17 @@
         },
         "runtime": {
           "lib/DNXCore50/System.Diagnostics.Debug.dll": {}
+        }
+      },
+      "System.Diagnostics.Tools/4.0.0-beta-23019": {
+        "dependencies": {
+          "System.Runtime": "4.0.0-beta-23019"
+        },
+        "compile": {
+          "ref/dotnet/System.Diagnostics.Tools.dll": {}
+        },
+        "runtime": {
+          "lib/DNXCore50/System.Diagnostics.Tools.dll": {}
         }
       },
       "System.Dynamic.Runtime/4.0.0-beta-23019": {
@@ -318,6 +340,15 @@
     }
   },
   "libraries": {
+    "CommonServiceLocation/1.0.0": {
+      "sha512": "3Qe2TFqa9L2rqlaaWiDvaNRlbpyOCczwZLnS4cOXYtBlDX/b7w8ef0UUg11BrN632XFHMYbGZTP5OHJKkv9flQ==",
+      "files": [
+        "CommonServiceLocation.1.0.0.nupkg",
+        "CommonServiceLocation.1.0.0.nupkg.sha512",
+        "CommonServiceLocation.nuspec",
+        "lib/Microsoft.Practices.ServiceLocation.dll"
+      ]
+    },
     "Microsoft.CSharp/4.0.0-beta-23019": {
       "sha512": "TsYR8ylpBw89cxCTzA9eD8wqLR5u4TnNvUCLU7Qt9TlbxmNM0jPaz80L4N+W81kEoOpchlckGGCTA4JVemmEVA==",
       "files": [
@@ -372,6 +403,23 @@
         "ref/dotnet/System.Diagnostics.Debug.dll",
         "ref/net46/_._",
         "runtimes/win8-aot/lib/netcore50/System.Diagnostics.Debug.dll"
+      ]
+    },
+    "System.Diagnostics.Tools/4.0.0-beta-23019": {
+      "sha512": "7BeDbzBLMdxlkG0/BxzrHVT8GYomeha4n5eZfkdwozkGz94jpg9qLrkW7YGTxvGyh1ttyFFAY0Y9PxSohsvC5A==",
+      "files": [
+        "System.Diagnostics.Tools.4.0.0-beta-23019.nupkg",
+        "System.Diagnostics.Tools.4.0.0-beta-23019.nupkg.sha512",
+        "System.Diagnostics.Tools.nuspec",
+        "lib/DNXCore50/System.Diagnostics.Tools.dll",
+        "lib/net45/_._",
+        "lib/netcore50/System.Diagnostics.Tools.dll",
+        "lib/win8/_._",
+        "ref/dotnet/System.Diagnostics.Tools.dll",
+        "ref/net45/_._",
+        "ref/netcore50/System.Diagnostics.Tools.dll",
+        "ref/win8/_._",
+        "runtimes/win8-aot/lib/netcore50/System.Diagnostics.Tools.dll"
       ]
     },
     "System.Dynamic.Runtime/4.0.0-beta-23019": {
@@ -678,7 +726,10 @@
     }
   },
   "projectFileDependencyGroups": {
-    "": [],
+    "": [
+      "System.Diagnostics.Tools >= 4.0.0-beta-23019",
+      "CommonServiceLocation >= 1.0.0"
+    ],
     "DNX,Version=v4.5.1": [],
     "DNXCore,Version=v5.0": [
       "System.Collections >= 4.0.10-beta-23019",

@@ -120,10 +120,6 @@
       <Project>{f8186b23-b0e1-4646-b5f3-14357841e2ba}</Project>
       <Name>Unity.Interception</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Src\Unity.csproj">
-      <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">

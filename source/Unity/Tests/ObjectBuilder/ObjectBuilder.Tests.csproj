@@ -151,10 +151,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Unity\Src\Unity.csproj">
-      <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TestSupport.Unity\Unity.TestSupport.csproj">
       <Project>{E979857E-CDE5-4D36-9AE8-8FFF4F75AE89}</Project>
       <Name>Unity.TestSupport</Name>

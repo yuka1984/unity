@@ -132,10 +132,6 @@
       <Project>{10cff71b-a9d4-44d2-b5cb-b363e5e15976}</Project>
       <Name>Unity.RegistrationByConvention</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Src\Unity.csproj">
-      <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TestAssemblies\MissingAssembly\MissingAssembly.csproj">
       <Project>{d5986f12-55bb-47fc-8a96-e8e8bbf1278f}</Project>
       <Name>MissingAssembly</Name>
