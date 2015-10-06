@@ -130,3 +130,4 @@ $RECYCLE.BIN/
 .DS_Store
 
 _NCrunch*
+project.lock.json
