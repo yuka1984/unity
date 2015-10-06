@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Practices.Unity.Properties
 {
-    public static class Resources
+    public static partial class Resources
     {
         public static string AmbiguousInjectionConstructor { get { return "The type {0} has multiple constructors of length {1}. Unable to disambiguate."; }}
         public static string ArgumentMustNotBeEmpty { get { return "The provided string argument must not be empty."; }}
