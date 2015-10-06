@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System;
-using System.Diagnostics.CodeAnalysis;
+
 using System.Globalization;
 using System.Reflection;
 using System.Text;
@@ -18,8 +18,6 @@ namespace Microsoft.Practices.Unity
     // FxCop suppression: The standard constructors don't make sense for this exception,
     // as calling them will leave out the information that makes the exception useful
     // in the first place.
-    [SuppressMessage("Microsoft.Design", "CA1032:ImplementStandardExceptionConstructors",
-        Justification = "The standard constructors don't make sense for this exception, as calling them will leave out the information that makes the exception useful in the first place.")]
     public partial class ResolutionFailedException : Exception
     {
         private string typeRequested;

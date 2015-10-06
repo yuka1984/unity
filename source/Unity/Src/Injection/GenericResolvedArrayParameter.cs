@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using Microsoft.Practices.ObjectBuilder2;
@@ -13,7 +12,7 @@ namespace Microsoft.Practices.Unity
 {
     /// <summary>
     /// A <see cref="InjectionParameterValue"/> that lets you specify that
-    /// an array containing the registered instances of a generic type parameter 
+    /// an array containing the registered instances of a generic type parameter
     /// should be resolved.
     /// </summary>
     public class GenericResolvedArrayParameter : InjectionParameterValue
@@ -54,8 +53,6 @@ namespace Microsoft.Practices.Unity
         /// <remarks>A type is considered compatible if it is an array type of rank one
         /// and its element type is a generic type parameter with a name matching this generic
         /// parameter name configured for the receiver.</remarks>
-        [SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods",
-            Justification = "Validation done by Guard class")]
         public override bool MatchesType(Type t)
         {
             Guard.ArgumentNotNull(t, "t");

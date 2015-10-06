@@ -3,7 +3,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Microsoft.Practices.ObjectBuilder2
 {
@@ -15,7 +14,6 @@ namespace Microsoft.Practices.ObjectBuilder2
     /// IDisposable. When the container is disposed, any objects in the
     /// container which implement IDisposable are also disposed.
     /// </remarks>
-    [SuppressMessage("Microsoft.Naming", "CA1710:IdentifiersShouldHaveCorrectSuffix", Justification = "See ILifetimeContainer")]
     public class LifetimeContainer : ILifetimeContainer
     {
         private readonly List<object> items = new List<object>();
@@ -68,7 +66,7 @@ namespace Microsoft.Practices.ObjectBuilder2
         }
 
         /// <summary>
-        /// Releases the resources used by the <see cref="LifetimeContainer"/>. 
+        /// Releases the resources used by the <see cref="LifetimeContainer"/>.
         /// </summary>
         public void Dispose()
         {
@@ -77,7 +75,7 @@ namespace Microsoft.Practices.ObjectBuilder2
         }
 
         /// <summary>
-        /// Releases the resources used by the <see cref="LifetimeContainer"/>. 
+        /// Releases the resources used by the <see cref="LifetimeContainer"/>.
         /// </summary>
         /// <param name="disposing">
         /// true to release managed and unmanaged resources; false to release only unmanaged resources.
@@ -110,7 +108,7 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// Returns an enumerator that iterates through the lifetime container.
         /// </summary>
         /// <returns>
-        /// An <see cref="IEnumerator"/> object that can be used to iterate through the life time container. 
+        /// An <see cref="IEnumerator"/> object that can be used to iterate through the life time container.
         /// </returns>
         public IEnumerator<object> GetEnumerator()
         {
@@ -121,7 +119,7 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// Returns an enumerator that iterates through the lifetime container.
         /// </summary>
         /// <returns>
-        /// An <see cref="IEnumerator"/> object that can be used to iterate through the life time container. 
+        /// An <see cref="IEnumerator"/> object that can be used to iterate through the life time container.
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {

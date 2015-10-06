@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Utility;
 
@@ -28,9 +27,9 @@ namespace Microsoft.Practices.ObjectBuilder2
         protected BuilderContext() { }
 
         /// <summary>
-        /// Initialize a new instance of the <see cref="BuilderContext"/> class with a <see cref="IStrategyChain"/>, 
-        /// <see cref="ILifetimeContainer"/>, <see cref="IPolicyList"/> and the 
-        /// build key used to start this build operation. 
+        /// Initialize a new instance of the <see cref="BuilderContext"/> class with a <see cref="IStrategyChain"/>,
+        /// <see cref="ILifetimeContainer"/>, <see cref="IPolicyList"/> and the
+        /// build key used to start this build operation.
         /// </summary>
         /// <param name="chain">The <see cref="IStrategyChain"/> to use for this context.</param>
         /// <param name="lifetime">The <see cref="ILifetimeContainer"/> to use for this context.</param>
@@ -163,10 +162,10 @@ namespace Microsoft.Practices.ObjectBuilder2
         }
 
         /// <summary>
-        /// Gets the policies for the current context. 
+        /// Gets the policies for the current context.
         /// </summary>
         /// <remarks>
-        /// Any modifications will be transient (meaning, they will be forgotten when 
+        /// Any modifications will be transient (meaning, they will be forgotten when
         /// the outer BuildUp for this context is finished executing).
         /// </remarks>
         /// <value>
@@ -259,7 +258,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// is invoked with the new child context before the build up process starts. This gives callers
         /// the opportunity to customize the context for the build process.</param>
         /// <returns>Created object.</returns>
-        [SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Checked with Guard class")]
         public object NewBuildUp(NamedTypeBuildKey newBuildKey, Action<IBuilderContext> childCustomizationBlock)
         {
             Guard.ArgumentNotNull(childCustomizationBlock, "childCustomizationBlock");

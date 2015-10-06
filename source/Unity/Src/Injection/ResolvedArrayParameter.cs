@@ -11,7 +11,7 @@ using Microsoft.Practices.Unity.Utility;
 namespace Microsoft.Practices.Unity
 {
     /// <summary>
-    /// A class that stores a type, and generates a 
+    /// A class that stores a type, and generates a
     /// resolver object that resolves all the named instances or the
     /// type registered in a container.
     /// </summary>
@@ -69,8 +69,6 @@ namespace Microsoft.Practices.Unity
         /// <param name="typeToBuild">Type that contains the member that needs this parameter. Used
         /// to resolve open generic parameters.</param>
         /// <returns>The <see cref="IDependencyResolverPolicy"/>.</returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods",
-            Justification = "Validation done via Guard class")]
         public override IDependencyResolverPolicy GetResolverPolicy(Type typeToBuild)
         {
             Guard.ArgumentNotNull(typeToBuild, "typeToBuild");

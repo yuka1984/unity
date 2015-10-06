@@ -41,7 +41,7 @@ namespace Microsoft.Practices.Unity
         /// <exception cref="ArgumentNullException"><paramref name="assemblies"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="assemblies"/> contains <see langword="null"/> elements.</exception>
         /// <remarks>
-        /// If <paramref name="skipOnError"/> is <see langword="true"/>, all exceptions thrown while getting types from the assemblies are ignored, and the types 
+        /// If <paramref name="skipOnError"/> is <see langword="true"/>, all exceptions thrown while getting types from the assemblies are ignored, and the types
         /// that can be retrieved are returned; otherwise, the original exception is thrown.
         /// </remarks>
         public static IEnumerable<Type> FromAssemblies(bool skipOnError, params Assembly[] assemblies)
@@ -60,10 +60,9 @@ namespace Microsoft.Practices.Unity
         /// <exception cref="ArgumentNullException"><paramref name="assemblies"/> is <see langword="null"/>.</exception>
         /// <exception cref="ArgumentException"><paramref name="assemblies"/> contains <see langword="null"/> elements.</exception>
         /// <remarks>
-        /// If <paramref name="skipOnError"/> is <see langword="true"/>, all exceptions thrown while getting types from the assemblies are ignored, and the types 
+        /// If <paramref name="skipOnError"/> is <see langword="true"/>, all exceptions thrown while getting types from the assemblies are ignored, and the types
         /// that can be retrieved are returned; otherwise, the original exception is thrown.
         /// </remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Justification = "Simplify API")]
         public static IEnumerable<Type> FromAssemblies(IEnumerable<Assembly> assemblies, bool skipOnError = true)
         {
             Guard.ArgumentNotNull(assemblies, "assemblies");

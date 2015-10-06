@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Utility;
 
@@ -52,7 +51,7 @@ namespace Microsoft.Practices.ObjectBuilder2
         IPolicyList PersistentPolicies { get; }
 
         /// <summary>
-        /// Gets the policies for the current context. 
+        /// Gets the policies for the current context.
         /// </summary>
         /// <remarks>Any policies added to this object are transient
         /// and will be erased at the end of the buildup.</remarks>
@@ -112,7 +111,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// </summary>
         /// <param name="newBuildKey">Key to use to build up.</param>
         /// <returns>Created object.</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "BuildUp", Justification = "BuildUp is correct.")]
         object NewBuildUp(NamedTypeBuildKey newBuildKey);
 
         /// <summary>
@@ -125,7 +123,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// is invoked with the new child context before the build up process starts. This gives callers
         /// the opportunity to customize the context for the build process.</param>
         /// <returns>Created object.</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "BuildUp", Justification = "BuildUp is correct.")]
         object NewBuildUp(NamedTypeBuildKey newBuildKey, Action<IBuilderContext> childCustomizationBlock);
     }
 
@@ -142,7 +139,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// <typeparam name="TResult">Type of object to build.</typeparam>
         /// <param name="context">Parent context.</param>
         /// <returns>Resulting object.</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "BuildUp", Justification = "BuildUp is correct.")]
         public static TResult NewBuildUp<TResult>(this IBuilderContext context)
         {
             return context.NewBuildUp<TResult>(null);
@@ -156,8 +152,6 @@ namespace Microsoft.Practices.ObjectBuilder2
         /// <param name="context">Parent context.</param>
         /// <param name="name">Name to resolve with.</param>
         /// <returns>The resulting object.</returns>
-        [SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "BuildUp", Justification = "BuildUp is correct.")]
-        [SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Checked with Guard class")]
         public static TResult NewBuildUp<TResult>(this IBuilderContext context, string name)
         {
             Guard.ArgumentNotNull(context, "context");
@@ -165,12 +159,11 @@ namespace Microsoft.Practices.ObjectBuilder2
         }
 
         /// <summary>
-        /// Add a set of <see cref="ResolverOverride"/>s to the context, specified as a 
+        /// Add a set of <see cref="ResolverOverride"/>s to the context, specified as a
         /// variable argument list.
         /// </summary>
         /// <param name="context">Context to add overrides to.</param>
         /// <param name="overrides">The overrides.</param>
-        [SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Checked with Guard class")]
         public static void AddResolverOverrides(this IBuilderContext context, params ResolverOverride[] overrides)
         {
             Guard.ArgumentNotNull(context, "context");
