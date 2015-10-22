@@ -91,10 +91,6 @@
       <Project>{E979857E-CDE5-4D36-9AE8-8FFF4F75AE89}</Project>
       <Name>Unity.TestSupport</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Unity\Unity.csproj">
-      <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Src\Unity.Interception.Configuration.csproj">
       <Project>{80F7399F-B221-465F-97C9-4B9FC0E2F67F}</Project>
       <Name>Unity.Interception.Configuration</Name>

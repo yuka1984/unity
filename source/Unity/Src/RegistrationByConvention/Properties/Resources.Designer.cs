@@ -8,20 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.Practices.Unity.Properties
-{
+namespace Microsoft.Practices.Unity.Properties {
 
-    public partial class Resources
-    {
+    public partial class Resources {
 
 
         /// <summary>
         ///   Looks up a localized string similar to An attempt to override an existing mapping was detected for type {1} with name &quot;{0}&quot;, currently mapped to type {2}, to type {3}..
         /// </summary>
-        public static string DuplicateTypeMappingException
-        {
-            get
-            {
+        public static string DuplicateTypeMappingException {
+            get {
                 return "An attempt to override an existing mapping was detected for type {1} with name \"{0}\", currently mapped to type {2}, to type {3}.";
             }
         }
@@ -29,10 +25,8 @@ namespace Microsoft.Practices.Unity.Properties
         /// <summary>
         ///   Looks up a localized string similar to The set of assemblies contains a null element..
         /// </summary>
-        internal static string ExceptionNullAssembly
-        {
-            get
-            {
+        internal static string ExceptionNullAssembly {
+            get {
                 return "The set of assemblies contains a null element.";
             }
         }

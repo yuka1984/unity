@@ -132,10 +132,6 @@
       <Project>{e979857e-cde5-4d36-9ae8-8fff4f75ae89}</Project>
       <Name>Unity.TestSupport</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Unity\Unity.csproj">
-      <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Src\Unity.Configuration.csproj">
       <Project>{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}</Project>
       <Name>Unity.Configuration</Name>

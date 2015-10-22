@@ -6,9 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.Practices.Unity
 {
-#if !(SILVERLIGHT || WINDOWS_PHONE || NETFX_CORE || PORTABLE)
     [Serializable]
-#endif
     public partial class DuplicateTypeMappingException
     {
         #region Serialization Support
@@ -21,9 +19,7 @@ namespace Microsoft.Practices.Unity
             };
         }
 
-#if !(SILVERLIGHT || WINDOWS_PHONE || NETFX_CORE || PORTABLE)
         [Serializable]
-#endif
         private struct DuplicateTypeMappingExceptionSerializationData : ISafeSerializationData
         {
             private string name;
