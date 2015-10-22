@@ -1,0 +1,22 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "ObjectBuilder.Tests Class Library",
+  "authors": [ "Ariel" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "exclude": ["TestObjects\\DynamicBuilderMethodCreatorFactory.Silverlight.cs"],
+  "dependencies": {
+    "Unity": "1.0.0-*",
+    "TestSupport.Unity": "1.0.0-*",
+    "xunit": "2.1.0-*",
+    "xunit.runner.dnx": "2.1.0-beta6-build191"
+  },
+  "commands": {
+    "test": "xunit.runner.dnx -xml testresults.xml"
+  },
+  "frameworks": {
+    "dnxcore50": {
+    }
+  }
+}

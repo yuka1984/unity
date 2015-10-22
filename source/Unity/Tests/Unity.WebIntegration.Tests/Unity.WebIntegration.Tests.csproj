@@ -101,16 +101,6 @@
     <Compile Include="MvcUnityDependencyResolverFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Unity.Mvc\Src\Unity.Mvc.csproj">
-      <Project>{1fb1a6fe-1898-4e72-906e-1c160ab50f2f}</Project>
-      <Name>Unity.Mvc</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Unity.WebApi\Src\Unity.WebApi.csproj">
-      <Project>{e6a503f3-1b1d-4008-98ee-7eaca66dfb05}</Project>
-      <Name>Unity.WebApi</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\..\Unity.licenseheader">
       <Link>Unity.licenseheader</Link>
     </None>

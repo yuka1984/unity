@@ -1,0 +1,32 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Unity.Tests Class Library",
+  "authors": [ "Ariel" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "exclude": [
+    "RegistrationByConventionHelpersFixture.cs",
+    "RegistrationByConventionFixture.cs",
+    "AssemblyScanningFixture.cs",
+    "AssemblyScanningFixture.Desktop.cs",
+
+    "PerThreadLifetimeManagerFixture.cs",
+    "ContainerControlledLifetimeThreadingFixture.cs"
+  ],
+
+  "dependencies": {
+    "System.Threading": "4.0.11-beta-23409",
+    "Unity": "1.0.0-*",
+    "TestSupport.Unity": "1.0.0-*",
+    "xunit.core": "2.1.0",
+    "xunit.runner.dnx": "2.1.0-beta6-build191"
+  },
+  "commands": {
+    "test": "xunit.runner.dnx -xml testresults.xml"
+  },
+  "frameworks": {
+    "dnxcore50": {
+    }
+  }
+}

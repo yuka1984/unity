@@ -79,21 +79,9 @@
     <Compile Include="When_SerializingPolicies.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Unity.Configuration\Src\Unity.Configuration.csproj">
-      <Project>{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}</Project>
-      <Name>Unity.Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Unity.Interception\Src\Unity.Interception.csproj">
-      <Project>{F8186B23-B0E1-4646-B5F3-14357841E2BA}</Project>
-      <Name>Unity.Interception</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Unity\Tests\TestSupport.Unity\Unity.TestSupport.csproj">
       <Project>{E979857E-CDE5-4D36-9AE8-8FFF4F75AE89}</Project>
       <Name>Unity.TestSupport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Src\Unity.Interception.Configuration.csproj">
-      <Project>{80F7399F-B221-465F-97C9-4B9FC0E2F67F}</Project>
-      <Name>Unity.Interception.Configuration</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -115,16 +115,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Unity.Configuration\Src\Unity.Configuration.csproj">
-      <Project>{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}</Project>
-      <Name>Unity.Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Unity.Interception\Src\Unity.Interception.csproj">
-      <Project>{F8186B23-B0E1-4646-B5F3-14357841E2BA}</Project>
-      <Name>Unity.Interception</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <SubType>Designer</SubType>
       <Generator>ResXFileCodeGenerator</Generator>

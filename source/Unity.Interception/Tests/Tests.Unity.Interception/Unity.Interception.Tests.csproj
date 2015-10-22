@@ -144,10 +144,6 @@
     <Compile Include="VirtualMethodInterception\VirtualMethodInterceptorFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\Unity.Interception.csproj">
-      <Project>{F8186B23-B0E1-4646-B5F3-14357841E2BA}</Project>
-      <Name>Unity.Interception</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Unity\Tests\TestSupport.Unity\Unity.TestSupport.csproj">
       <Project>{E979857E-CDE5-4D36-9AE8-8FFF4F75AE89}</Project>
       <Name>Unity.TestSupport</Name>
