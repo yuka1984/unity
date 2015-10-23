@@ -97,25 +97,9 @@
     <Compile Include="When_SerializingPolicies.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Unity.Configuration\Src\Unity.Configuration.csproj">
-      <Project>{AEF45ED2-3E7F-4AA5-9001-A4D1BAC12EBE}</Project>
-      <Name>Unity.Configuration</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Unity.Interception\Src\Unity.Interception.csproj">
-      <Project>{F8186B23-B0E1-4646-B5F3-14357841E2BA}</Project>
-      <Name>Unity.Interception</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Unity\Src\Unity.csproj">
-      <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\Unity\Tests\TestSupport.Unity\Unity.TestSupport.csproj">
       <Project>{E979857E-CDE5-4D36-9AE8-8FFF4F75AE89}</Project>
       <Name>Unity.TestSupport</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Src\Unity.Interception.Configuration.csproj">
-      <Project>{80F7399F-B221-465F-97C9-4B9FC0E2F67F}</Project>
-      <Name>Unity.Interception.Configuration</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -164,5 +148,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.runner.visualstudio.2.1.0\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets'))" />
   </Target>
+  <Import Project="..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets" Condition="Exists('..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets')" />
 </Project>

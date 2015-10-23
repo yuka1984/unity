@@ -21,7 +21,7 @@ namespace Microsoft.Practices.Unity.Utility
         /// <param name="type">The type to inspect</param>
         /// <param name="constructorParameters">The constructor parameter types.</param>
         /// <returns>The constructor that matches the specified parameter types.</returns>
-        public static ConstructorInfo GetConstructor(this Type type, params Type[] constructorParameters)
+        public static ConstructorInfo GetConstructorInfo(this Type type, params Type[] constructorParameters)
         {
             return type.GetTypeInfo().DeclaredConstructors
                 .Single(c => !c.IsStatic && ParametersMatch(c.GetParameters(), constructorParameters));

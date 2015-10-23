@@ -61,7 +61,7 @@ namespace Microsoft.Practices.Unity.ObjectBuilder
             {
                 Type[] closedCtorParameterTypes =
                     ctorReflector.GetClosedParameterTypes(typeToBuild.GenericTypeArguments);
-                result = new SelectedConstructor(typeToBuild.GetConstructor(closedCtorParameterTypes));
+                result = new SelectedConstructor(typeToBuild.GetConstructorInfo(closedCtorParameterTypes));
             }
 
             SpecifiedMemberSelectorHelper.AddParameterResolvers(typeToBuild, resolverPolicyDestination, parameterValues, result);

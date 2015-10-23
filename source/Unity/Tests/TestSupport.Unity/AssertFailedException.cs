@@ -3,7 +3,7 @@ using System.Runtime.Serialization;
 
 namespace Microsoft.Practices.Unity.TestSupport
 {
-    [Serializable]
+    [DataContract]
     public class AssertFailedException : Exception
     {
         public AssertFailedException()
@@ -17,9 +17,10 @@ namespace Microsoft.Practices.Unity.TestSupport
         public AssertFailedException(string message, Exception innerException) : base(message, innerException)
         {
         }
-
+#if !DOTNET
         protected AssertFailedException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
+#endif
     }
 }

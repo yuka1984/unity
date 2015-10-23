@@ -1,0 +1,28 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Unity.TestSupport Class Library",
+  "authors": [ "Ariel" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "exclude": [
+    "Configuration",
+    "AdditionalInterfaceBehavior.cs",
+    "AlwaysMatchingRule.cs",
+    "CallCountHandler.cs",
+    "CallCountInterceptionBehavior.cs",
+    "DelegateInterceptionBehavior.cs",
+    "GlobalCountCallHandler.cs",
+    "GlobalCountInterceptionBehavior.cs",
+    "NaiveINotifyPropertyChangedInterceptionBehavior.cs"
+
+  ],
+  "dependencies": {
+    "xunit.assert": "2.1.0",
+    "Src": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "dotnet": { }
+  }
+}

@@ -243,7 +243,7 @@ namespace Microsoft.Practices.ObjectBuilder2.Tests
 
             public SelectedConstructor SelectConstructor(IBuilderContext context, IPolicyList resolverPoliciesDestination)
             {
-                var selectedConstructor = new SelectedConstructor(typeof(T).GetConstructor(new[] { typeof(object) }));
+                var selectedConstructor = new SelectedConstructor(typeof(T).GetConstructorInfo(new[] { typeof(object) }));
                 selectedConstructor.AddParameterResolver(this.parameterResolverPolicy);
 
                 return selectedConstructor;
