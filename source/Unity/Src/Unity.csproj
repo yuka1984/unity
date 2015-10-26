@@ -231,6 +231,7 @@
       <Link>Unity.licenseheader</Link>
     </None>
     <None Include="packages.config" />
+	<None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

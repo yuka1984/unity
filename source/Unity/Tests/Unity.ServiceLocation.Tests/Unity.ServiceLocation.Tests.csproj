@@ -99,6 +99,10 @@
     <Compile Include="UnityServiceLocatorAdapterFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Src\Unity.csproj">
+      <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
+      <Name>Unity</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TestSupport.Unity\Unity.TestSupport.csproj">
       <Project>{e979857e-cde5-4d36-9ae8-8fff4f75ae89}</Project>
       <Name>Unity.TestSupport</Name>
