@@ -2,7 +2,7 @@
 using Microsoft.Practices.Unity;
 
 
-namespace WebApplication6.Unity
+namespace Unity.Mvc
 {
     internal class UnityServiceProvider : IServiceProvider
     {

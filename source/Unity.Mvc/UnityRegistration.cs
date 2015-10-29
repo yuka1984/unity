@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Practices.Unity;
 
-namespace WebApplication6.Unity
+namespace Unity.Mvc
 {
     public static class UnityRegistration
     {

@@ -1,4 +1,4 @@
-﻿namespace WebApplication6.Unity
+﻿namespace Unity.Mvc
 {
     using Microsoft.Practices.Unity;
     using Microsoft.Practices.Unity.ObjectBuilder;
