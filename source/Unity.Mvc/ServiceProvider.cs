@@ -4,11 +4,11 @@ using Microsoft.Practices.Unity;
 
 namespace Unity.Mvc
 {
-    internal class UnityServiceProvider : IServiceProvider
+    public class ServiceProvider : IServiceProvider
     {
         private readonly IUnityContainer container;
 
-        public UnityServiceProvider(IUnityContainer container)
+        public ServiceProvider(IUnityContainer container)
         {
             this.container = container;
         }
