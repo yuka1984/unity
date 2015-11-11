@@ -1,0 +1,23 @@
+﻿{
+  "version": "1.0.0-*",
+  "description": "Unity Class Library",
+  "authors": [ "Ariel" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "exclude": [ "RegistrationByConvention", "Properties/ResourcesSL.Designer.cs" ],
+  "namedResource": {
+    "Unity.Properties.Resources": "Properties/Resources.resx"
+  },
+  "dependencies": {
+    "Microsoft.CSharp": "4.0.0-beta-23109",
+    "System.IO.FileSystem": "4.0.0",
+    "System.Diagnostics.Tools": "4.0.0-beta-23019",
+    "System.Runtime.Serialization.Primitives": "4.0.11-beta-23225",
+    "ServiceLocation": "1.3.1"
+  },
+
+  "frameworks": {
+    "dotnet": { }
+  }
+}

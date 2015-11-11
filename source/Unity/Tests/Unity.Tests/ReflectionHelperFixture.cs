@@ -3,9 +3,9 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity.TestSupport;
-using Microsoft.Practices.Unity.Utility;
+using ObjectBuilder2;
+using Unity.TestSupport;
+using Unity.Utility;
 #if NETFX_CORE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #elif __IOS__
@@ -17,7 +17,7 @@ using TestMethodAttribute = NUnit.Framework.TestAttribute;
 using Xunit;
 #endif
 
-namespace Microsoft.Practices.Unity.Tests
+namespace Unity.Tests
 {
      
     public class ReflectionHelperFixture

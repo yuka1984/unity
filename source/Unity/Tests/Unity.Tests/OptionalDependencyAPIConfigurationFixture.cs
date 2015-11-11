@@ -15,7 +15,7 @@ using TestMethodAttribute = NUnit.Framework.TestAttribute;
 using Xunit;
 #endif
 
-namespace Microsoft.Practices.Unity.Tests
+namespace Unity.Tests
 {
     /// <summary>
     /// Summary description for OptionalDependencyAPIConfigurationFixture

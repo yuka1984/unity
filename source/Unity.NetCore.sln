@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MissingAssembly.NetCore", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNetAssembly.NetCore", "Unity\Tests\TestAssemblies\TestNetAssembly.NetCore\TestNetAssembly.NetCore.csproj", "{A2CF2916-F998-4C62-9743-11A7466FE57C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "Unity\Src\Unity.csproj", "{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "Unity\Src\Unity\Unity.csproj", "{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RegistrationByConvention.NetCore", "Unity\Src\RegistrationByConvention\Unity.RegistrationByConvention.NetCore.csproj", "{858426D0-79AB-4928-95B9-A1E1725D31D3}"
 EndProject

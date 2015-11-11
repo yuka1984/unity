@@ -15,7 +15,7 @@ using AssertFailedException = NUnit.Framework.AssertionException;
 using Xunit;
 #endif
 
-namespace Microsoft.Practices.Unity.TestSupport
+namespace Unity.TestSupport
 {
     public static class CollectionAssertExtensions
     {

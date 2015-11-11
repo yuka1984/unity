@@ -2,7 +2,7 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Practices.Unity;
+using Unity;
 #if NETFX_CORE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #elif __IOS__
@@ -14,7 +14,7 @@ using TestMethodAttribute = NUnit.Framework.TestAttribute;
 using Xunit;
 #endif
 
-namespace Microsoft.Practices.ObjectBuilder2.Tests
+namespace ObjectBuilder2.Tests
 {
      
     public class SingletonThreadingFixture

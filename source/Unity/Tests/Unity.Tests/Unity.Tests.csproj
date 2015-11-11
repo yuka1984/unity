@@ -36,6 +36,8 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -145,10 +147,10 @@
     <Compile Include="UnityExtensionFixture.cs" />
     <Compile Include="UnityHierarchyFixture.cs" />
     <None Include="packages.config" />
-	<None Include="project.json" />
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\RegistrationByConvention\Unity.RegistrationByConvention.csproj">
+    <ProjectReference Include="..\..\Src\Unity\RegistrationByConvention\Unity.RegistrationByConvention.csproj">
       <Project>{10cff71b-a9d4-44d2-b5cb-b363e5e15976}</Project>
       <Name>Unity.RegistrationByConvention</Name>
     </ProjectReference>
@@ -226,4 +228,5 @@
     <Error Condition="!Exists('..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets'))" />
   </Target>
   <Import Project="..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets" Condition="Exists('..\..\..\packages\xunit.MSBuild.2.0.0.0\build\xunit.MSBuild.targets')" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
 </Project>

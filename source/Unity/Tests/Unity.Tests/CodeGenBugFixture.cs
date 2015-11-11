@@ -12,7 +12,7 @@ using TestMethodAttribute = NUnit.Framework.TestAttribute;
 using Xunit;
 #endif
 
-namespace Microsoft.Practices.Unity.Tests
+namespace Unity.Tests
 {
     /// <summary>
     /// Test for dynamic method creation and the CLR bug. This test will only

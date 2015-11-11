@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 #if !DOTNET
-namespace Microsoft.Practices.Unity.TestSupport
+namespace Unity.TestSupport
 {
     public partial class Wrappable : MarshalByRefObject
     {

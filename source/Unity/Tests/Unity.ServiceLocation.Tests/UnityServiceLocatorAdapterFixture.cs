@@ -1,11 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System;
+using ServiceLocation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ServiceLocation.Tests.Components;
+using Unity;
+using Unity.ServiceLocation.Tests.Components;
 #if NETFX_CORE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 #elif __IOS__
@@ -30,7 +31,7 @@ namespace Unity.ServiceLocation.Tests
             this.locator = this.CreateServiceLocator();
         }
 
-        protected override Microsoft.Practices.ServiceLocation.IServiceLocator CreateServiceLocator()
+        protected override IServiceLocator CreateServiceLocator()
         {
             IUnityContainer container = new UnityContainer()
                 .RegisterType<ILogger, AdvancedLogger>()
