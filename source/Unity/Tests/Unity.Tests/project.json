@@ -17,7 +17,7 @@
 
   "dependencies": {
     "System.Threading": "4.0.11-beta-23409",
-    "TestSupport.Unity": "1.0.0-*",
+    "TestSupport.Unity": "4.1.0",
     "xunit.core": "2.1.0",
     "xunit.runner.dnx": "2.1.0-beta6-build191"
   },
