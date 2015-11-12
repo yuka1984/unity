@@ -10,14 +10,21 @@
     "Unity.Properties.Resources": "Properties/Resources.resx"
   },
   "dependencies": {
-    "Microsoft.CSharp": "4.0.0-beta-23109",
-    "System.IO.FileSystem": "4.0.0",
-    "System.Diagnostics.Tools": "4.0.0-beta-23019",
-    "System.Runtime.Serialization.Primitives": "4.0.11-beta-23225",
     "ServiceLocation": "1.3.1"
   },
 
   "frameworks": {
-    "dotnet": { }
+    "net45": { },
+    "dnx451": { },
+    "dotnet": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.0-beta-23109",
+        "System.IO.FileSystem": "4.0.0",
+        "System.Runtime.Serialization.Primitives": "4.0.11-beta-23225",
+        "System.Diagnostics.Tools": "4.0.0-beta-23019"
+      }
+      ,
+      "dnxcore50": { }
+    }
   }
 }
