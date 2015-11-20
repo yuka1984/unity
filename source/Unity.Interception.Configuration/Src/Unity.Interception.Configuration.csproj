@@ -125,7 +125,7 @@
       <Project>{F8186B23-B0E1-4646-B5F3-14357841E2BA}</Project>
       <Name>Unity.Interception</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Unity\Src\Unity.csproj">
+    <ProjectReference Include="..\..\Unity\Src\Unity\Unity.csproj">
       <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
       <Name>Unity</Name>
     </ProjectReference>

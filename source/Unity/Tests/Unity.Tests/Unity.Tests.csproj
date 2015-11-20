@@ -154,7 +154,7 @@
       <Project>{10cff71b-a9d4-44d2-b5cb-b363e5e15976}</Project>
       <Name>Unity.RegistrationByConvention</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Src\Unity.csproj">
+    <ProjectReference Include="..\..\Src\Unity\Unity.csproj">
       <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
       <Name>Unity</Name>
     </ProjectReference>

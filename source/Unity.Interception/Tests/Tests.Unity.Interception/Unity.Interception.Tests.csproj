@@ -169,7 +169,7 @@
       <Project>{80f7399f-b221-465f-97c9-4b9fc0e2f67f}</Project>
       <Name>Unity.Interception.Configuration</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\Unity\Src\Unity.csproj">
+    <ProjectReference Include="..\..\..\Unity\Src\Unity\Unity.csproj">
       <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
       <Name>Unity</Name>
     </ProjectReference>

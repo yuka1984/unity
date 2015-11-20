@@ -80,7 +80,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Unity\Src\Unity.csproj">
+    <ProjectReference Include="..\..\Unity\Src\Unity\Unity.csproj">
       <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
       <Name>Unity</Name>
     </ProjectReference>

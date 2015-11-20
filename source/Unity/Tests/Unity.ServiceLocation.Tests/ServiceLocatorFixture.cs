@@ -3,7 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ServiceLocation;
+using Unity.ServiceLocator;
 using Unity.ServiceLocation.Tests.Components;
 #if NETFX_CORE
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
