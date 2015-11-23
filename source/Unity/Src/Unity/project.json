@@ -1,6 +1,6 @@
 ﻿{
   "version": "4.0.2",
-  "description": "Unity Clas4.0.2s Library",
+  "description": "Unity Class Library",
   "authors": [ "AgileSight" ],
   "tags": [ "" ],
   "projectUrl": "",
@@ -20,10 +20,9 @@
       "dependencies": {
         "Microsoft.CSharp": "4.0.0-beta-23109",
         "System.IO.FileSystem": "4.0.0",
-        "System.Runtime.Serialization.Primitives": "4.0.21-beta-23225",
+        "System.Runtime.Serialization.Primitives": "4.0.11-beta-23225",
         "System.Diagnostics.Tools": "4.0.0-beta-23019"
-      }
-      ,
+      },
       "dnxcore50": { }
     }
   }
