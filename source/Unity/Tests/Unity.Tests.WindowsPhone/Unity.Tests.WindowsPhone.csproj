@@ -26,6 +26,8 @@
     <ValidateXaml>false</ValidateXaml>
     <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
     <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -158,11 +160,11 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Src\RegistrationByConvention\Unity.RegistrationByConvention.WindowsPhone.csproj">
+    <ProjectReference Include="..\..\Src\Unity\RegistrationByConvention\Unity.RegistrationByConvention.WindowsPhone.csproj">
       <Project>{119A2045-4C28-48FF-A828-D7F711B844F2}</Project>
       <Name>Unity.RegistrationByConvention.WindowsPhone</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Src\Unity.csproj">
+    <ProjectReference Include="..\..\Src\Unity\Unity.csproj">
       <Project>{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}</Project>
       <Name>Unity</Name>
     </ProjectReference>
@@ -588,5 +590,12 @@
       <XapFilesInputCollection Remove="@(XapFilesInputCollection)" />
       <XapFilesInputCollection Include="@(_XapFilesInputCollectionBackup)" />
     </ItemGroup>
+  </Target>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
 </Project>

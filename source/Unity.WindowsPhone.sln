@@ -9,9 +9,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNetAssembly.WindowsPhon
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MissingAssembly.WindowsPhone", "Unity\Tests\TestAssemblies\MissingAssembly.WindowsPhone\MissingAssembly.WindowsPhone.csproj", "{1036D963-0360-41A8-8B34-7FC71193DDA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "Unity\Src\Unity.csproj", "{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity", "Unity\Src\Unity\Unity.csproj", "{EE1F752C-1FAB-41AD-AD63-857D0E62AB6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RegistrationByConvention.WindowsPhone", "Unity\Src\RegistrationByConvention\Unity.RegistrationByConvention.WindowsPhone.csproj", "{119A2045-4C28-48FF-A828-D7F711B844F2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity.RegistrationByConvention.WindowsPhone", "Unity\Src\Unity\RegistrationByConvention\Unity.RegistrationByConvention.WindowsPhone.csproj", "{119A2045-4C28-48FF-A828-D7F711B844F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

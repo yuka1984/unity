@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "1.0.0.0-beta",
   "description": "Unity.ServiceLocation.Tests Class Library",
   "authors": [ "AgileSight" ],
   "tags": [ "" ],
@@ -7,9 +7,9 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "Unity": "4.0.2",
+    "Unity": "1.0.0.0-beta",
     "Unity.ServiceLocator": "2.0.0",
-    "TestSupport.Unity": "4.0.2",
+    "TestSupport.Unity": "1.0.0.0-beta",
     "xunit": "2.1.0-*",
     "xunit.runner.dnx": "2.1.0-beta6-build191"
   },

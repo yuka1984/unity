@@ -1,5 +1,5 @@
 ﻿{
-  "version": "1.0.0-*",
+  "version": "1.0.0.0-beta",
   "description": "Unity.TestSupport Class Library",
   "authors": [ "AgileSight" ],
   "tags": [ "" ],
@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "xunit.assert": "2.1.0",
-    "Unity": "4.0.2"
+    "Unity": "1.0.0.0-beta"
   },
 
   "frameworks": {
