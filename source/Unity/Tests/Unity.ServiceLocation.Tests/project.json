@@ -7,7 +7,7 @@
   "licenseUrl": "",
 
   "dependencies": {
-    "Unity": "1.0.0.0-beta",
+    "Unity-CoreClr": "1.0.0.0-beta",
     "Unity.ServiceLocator": "2.0.0",
     "TestSupport.Unity": "1.0.0.0-beta",
     "xunit": "2.1.0-*",

@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "xunit.assert": "2.1.0",
-    "Unity": "1.0.0.0-beta"
+    "Unity-CoreClr": "1.0.0.0-beta"
   },
 
   "frameworks": {
