@@ -32,6 +32,7 @@ namespace Unity.ServiceLocation.Tests
             Assert.NotNull(instance);
         }
 
+
         public void AskingForInvalidComponentShouldRaiseActivationException()
         {
             AssertThrows<ActivationException>(() => locator.GetInstance<IDictionary>());
@@ -48,6 +49,7 @@ namespace Unity.ServiceLocation.Tests
             ILogger instance = locator.GetInstance<ILogger>(typeof(SimpleLogger).FullName);
             Unity.TestSupport.AssertExtensions.IsInstanceOfType(instance, typeof(SimpleLogger));
         }
+
 
         public void GetUnknownInstance2()
         {
