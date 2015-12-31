@@ -34,6 +34,8 @@ namespace Unity
         private event EventHandler<RegisterInstanceEventArgs> RegisteringInstance;
         private event EventHandler<ChildContainerCreatedEventArgs> ChildContainerCreated;
 
+        private IServiceProvider alternativeServiceProvider;
+
         /// <summary>
         /// Create a default <see cref="UnityContainer"/>.
         /// </summary>
@@ -164,7 +166,31 @@ namespace Unity
         /// <returns>The retrieved object.</returns>
         public object Resolve(Type t, string name, params ResolverOverride[] resolverOverrides)
         {
-            return DoBuildUp(t, name, resolverOverrides);
+            try
+            {
+                return DoBuildUp(t, name, resolverOverrides);
+            }
+            catch(Exception ex)
+            {
+                // Ariel. No usar el catch para esta logica
+
+                //if (t.Name == "IDataProtectionProvider") System.Diagnostics.Debugger.Break();
+                //if (t.Name == "IApplicationDiscriminator") System.Diagnostics.Debugger.Break();
+                //if (t.Name == "IXmlRepository") System.Diagnostics.Debugger.Break();
+
+                //if (t.Name == "IActionInvokerFactory") System.Diagnostics.Debugger.Break();
+
+                //if (t.Name == "ViewResultExecutor") System.Diagnostics.Debugger.Break();
+
+                if (alternativeServiceProvider != null)
+                {
+                    return alternativeServiceProvider.GetService(t);
+                }
+                else
+                {
+                    throw ex;
+                }
+            }
         }
 
         /// <summary>
@@ -404,6 +430,13 @@ namespace Unity
         public IUnityContainer CreateChildContainer()
         {
             var child = new UnityContainer(this);
+
+            // Ariel
+            if (this.AlternativeServiceProvider != null)
+            {
+                child.AlternativeServiceProvider = this.AlternativeServiceProvider;
+            }
+
             var childContext = new ExtensionContextImpl(child);
             ChildContainerCreated(this, new ChildContainerCreatedEventArgs(childContext));
             return child;
@@ -475,6 +508,12 @@ namespace Unity
         private object DoBuildUp(Type t, object existing, string name, IEnumerable<ResolverOverride> resolverOverrides)
         {
             IBuilderContext context = null;
+
+            // Ariel
+            //if (t.Name == "IDataProtectionProvider") System.Diagnostics.Debugger.Break();
+            if (t.Name == "IApplicationDiscriminator") System.Diagnostics.Debugger.Break();
+
+            //if (t.Name == "IActionInvokerFactory") System.Diagnostics.Debugger.Break();
 
             try
             {
@@ -614,6 +653,13 @@ namespace Unity
                 typeRegistrations[t] =
                     (typeRegistrations[t].Concat(registeredNames.GetKeys(t))).Distinct().ToList();
             }
+        }
+
+
+        public IServiceProvider AlternativeServiceProvider
+        {
+            get { return alternativeServiceProvider; }
+            set { alternativeServiceProvider = value; }
         }
     }
 }
