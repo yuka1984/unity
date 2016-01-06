@@ -7,8 +7,8 @@ using System.Linq;
 using System.Reflection;
 using ObjectBuilder2;
 using Unity.ObjectBuilder;
-using Unity.Properties;
 using Unity.Utility;
+using Unity.Properties;
 
 namespace Unity
 {

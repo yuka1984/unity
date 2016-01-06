@@ -51,7 +51,7 @@ namespace Unity
         /// <param name="values">The values to build the sequence from.</param>
         /// <returns>The resulting converted sequence.</returns>
         public static IEnumerable<InjectionParameterValue> ToParameters(params object[] values)
-        {
+        {  
             foreach (object value in values)
             {
                 yield return ToParameter(value);

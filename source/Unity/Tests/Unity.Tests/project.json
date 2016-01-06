@@ -5,16 +5,6 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-  "exclude": [
-    "RegistrationByConventionHelpersFixture.cs",
-    "RegistrationByConventionFixture.cs",
-    "AssemblyScanningFixture.cs",
-    "AssemblyScanningFixture.Desktop.cs",
-
-    "PerThreadLifetimeManagerFixture.cs",
-    "ContainerControlledLifetimeThreadingFixture.cs"
-  ],
-
   "dependencies": {
     "System.Threading": "4.0.11-beta-23409",
     "TestSupport.Unity": "1.0.0.0-beta",

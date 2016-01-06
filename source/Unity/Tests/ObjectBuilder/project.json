@@ -5,7 +5,7 @@
   "tags": [ "" ],
   "projectUrl": "",
   "licenseUrl": "",
-  "exclude": ["TestObjects\\DynamicBuilderMethodCreatorFactory.Silverlight.cs"],
+
   "dependencies": {
     "Unity-CoreClr": "1.0.0.0-beta2",
     "TestSupport.Unity": "1.0.0.0-beta",
