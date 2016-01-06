@@ -9,8 +9,9 @@
     "defaultNamespace": "<%= namespace %>"
   },
   "dependencies": {
+    "System.Runtime": "4.0.21-beta-23516",
     "Unity-CoreClr": "1.0.0.0-beta2",
-    "Unity.Mvc": "1.0.0-beta2.2",
+    "Unity.Mvc6": "1.0.0-beta1",
     "xunit": "2.1.0",
     "xunit.runner.dnx": "2.1.0-rc1-build204"
   },
