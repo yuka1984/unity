@@ -39,7 +39,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unity.ServiceLocation.Tests
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unity.Tests", "Unity\Tests\Unity.Tests\Unity.Tests.xproj", "{86EE0D49-78A0-46A9-AEDC-C22716612E28}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unity.Mvc", "Unity.Mvc\Unity.Mvc.xproj", "{3C882049-413A-47FC-9395-A0D68E58E2B9}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Unity.Mvc6", "Unity.Mvc6\Unity.Mvc6.xproj", "{3C882049-413A-47FC-9395-A0D68E58E2B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
