@@ -1,8 +1,12 @@
 {
-  "version": "1.0.0-beta1",
+  "version": "1.0.0-beta3",
   "description": "Unity.Mvc Class Library for MVC 6",
-  "authors": [ "AgileSight" ],
-  "tags": [ "" ],
+  "authors": [
+    "AgileSight"
+  ],
+  "tags": [
+    ""
+  ],
   "projectUrl": "",
   "licenseUrl": "",
   "frameworks": {
@@ -15,11 +19,11 @@
         "System.Threading": "4.0.11-beta-23516"
       }
     },
-    "dnxcore50": { }
+    "dnxcore50": {}
   },
   "dependencies": {
     "Microsoft.Extensions.DependencyInjection": "1.0.0-rc1-final",
     "runtime.win7.System.Private.Uri": "4.0.1-beta-23516",
-    "Unity-CoreClr": "1.0.0-beta2"
+    "Unity-CoreClr": "1.0.0-beta3"
   }
 }
