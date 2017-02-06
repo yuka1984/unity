@@ -35,190 +35,68 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Unity.Configuration\Src\AliasElement.cs">
-      <Link>AliasElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\AliasElementCollection.cs">
-      <Link>AliasElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ArrayElement.cs">
-      <Link>ArrayElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\AssemblyElement.cs">
-      <Link>AssemblyElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\AssemblyElementCollection.cs">
-      <Link>AssemblyElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\ConfigurationElementExtensions.cs">
-      <Link>ConfigurationHelpers\ConfigurationElementExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\DeserializableConfigurationElement.cs">
-      <Link>ConfigurationHelpers\DeserializableConfigurationElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\DeserializableConfigurationElementCollection.cs">
-      <Link>ConfigurationHelpers\DeserializableConfigurationElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\DeserializableConfigurationElementCollectionBase.cs">
-      <Link>ConfigurationHelpers\DeserializableConfigurationElementCollectionBase.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\DictionaryExtensions.cs">
-      <Link>ConfigurationHelpers\DictionaryExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\InputStream.cs">
-      <Link>ConfigurationHelpers\InputStream.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\IValueProvidingElement.cs">
-      <Link>ConfigurationHelpers\IValueProvidingElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\ParseBuilder.cs">
-      <Link>ConfigurationHelpers\ParseBuilder.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\ParseResult.cs">
-      <Link>ConfigurationHelpers\ParseResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\SequenceResult.cs">
-      <Link>ConfigurationHelpers\SequenceResult.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\TypeNameInfo.cs">
-      <Link>ConfigurationHelpers\TypeNameInfo.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\TypeNameParser.cs">
-      <Link>ConfigurationHelpers\TypeNameParser.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\TypeResolver.cs">
-      <Link>ConfigurationHelpers\TypeResolver.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\TypeResolverImpl.cs">
-      <Link>ConfigurationHelpers\TypeResolverImpl.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\UnknownElementHandlerMap.cs">
-      <Link>ConfigurationHelpers\UnknownElementHandlerMap.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\ValueElementHelper.cs">
-      <Link>ConfigurationHelpers\ValueElementHelper.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConfigurationHelpers\XmlWriterExtensions.cs">
-      <Link>ConfigurationHelpers\XmlWriterExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ConstructorElement.cs">
-      <Link>ConstructorElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ContainerConfiguringElement.cs">
-      <Link>ContainerConfiguringElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ContainerConfiguringElementCollection.cs">
-      <Link>ContainerConfiguringElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ContainerElement.cs">
-      <Link>ContainerElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ContainerElementCollection.cs">
-      <Link>ContainerElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ContainerExtensionElement.cs">
-      <Link>ContainerExtensionElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ContainerExtensionElementCollection.cs">
-      <Link>ContainerExtensionElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\DependencyElement.cs">
-      <Link>DependencyElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ExtensionConfigurationElement.cs">
-      <Link>ExtensionConfigurationElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ExtensionConfigurationElementCollection.cs">
-      <Link>ExtensionConfigurationElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ExtensionElementMap.cs">
-      <Link>ExtensionElementMap.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\IAttributeOnlyElement.cs">
-      <Link>IAttributeOnlyElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\InjectionMemberElement.cs">
-      <Link>InjectionMemberElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\InjectionMemberElementCollection.cs">
-      <Link>InjectionMemberElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\InstanceElement.cs">
-      <Link>InstanceElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\InstanceElementCollection.cs">
-      <Link>InstanceElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\LifetimeElement.cs">
-      <Link>LifetimeElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\MethodElement.cs">
-      <Link>MethodElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\NamedElement.cs">
-      <Link>NamedElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\NamespaceElement.cs">
-      <Link>NamespaceElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\NamespaceElementCollection.cs">
-      <Link>NamespaceElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\OptionalElement.cs">
-      <Link>OptionalElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ParameterElement.cs">
-      <Link>ParameterElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ParameterElementCollection.cs">
-      <Link>ParameterElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ParameterValueElement.cs">
-      <Link>ParameterValueElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ParameterValueElementCollection.cs">
-      <Link>ParameterValueElementCollection.cs</Link>
-    </Compile>
     <Compile Include="..\Unity.Configuration\Src\Properties\Resources.Designer.cs">
       <Link>Properties\Resources.Designer.cs</Link>
     </Compile>
-    <Compile Include="..\Unity.Configuration\Src\PropertyElement.cs">
-      <Link>PropertyElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\RegisterElement.cs">
-      <Link>RegisterElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\RegisterElementCollection.cs">
-      <Link>RegisterElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\SectionExtension.cs">
-      <Link>SectionExtension.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\SectionExtensionContext.cs">
-      <Link>SectionExtensionContext.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\SectionExtensionElement.cs">
-      <Link>SectionExtensionElement.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\SectionExtensionElementCollection.cs">
-      <Link>SectionExtensionElementCollection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\UnityConfigurationSection.cs">
-      <Link>UnityConfigurationSection.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\UnityContainerConfigurationExtensions.cs">
-      <Link>UnityContainerConfigurationExtensions.cs</Link>
-    </Compile>
-    <Compile Include="..\Unity.Configuration\Src\ValueElement.cs">
-      <Link>ValueElement.cs</Link>
-    </Compile>
+    <Compile Include="AliasElement.cs" />
+    <Compile Include="AliasElementCollection.cs" />
+    <Compile Include="ArrayElement.cs" />
+    <Compile Include="AssemblyElement.cs" />
+    <Compile Include="AssemblyElementCollection.cs" />
+    <Compile Include="ConfigurationHelpers\ConfigurationElementExtensions.cs" />
+    <Compile Include="ConfigurationHelpers\DeserializableConfigurationElement.cs" />
+    <Compile Include="ConfigurationHelpers\DeserializableConfigurationElementCollection.cs" />
+    <Compile Include="ConfigurationHelpers\DeserializableConfigurationElementCollectionBase.cs" />
+    <Compile Include="ConfigurationHelpers\DictionaryExtensions.cs" />
+    <Compile Include="ConfigurationHelpers\InputStream.cs" />
+    <Compile Include="ConfigurationHelpers\IValueProvidingElement.cs" />
+    <Compile Include="ConfigurationHelpers\ParseBuilder.cs" />
+    <Compile Include="ConfigurationHelpers\ParseResult.cs" />
+    <Compile Include="ConfigurationHelpers\SequenceResult.cs" />
+    <Compile Include="ConfigurationHelpers\TypeNameInfo.cs" />
+    <Compile Include="ConfigurationHelpers\TypeNameParser.cs" />
+    <Compile Include="ConfigurationHelpers\TypeResolver.cs" />
+    <Compile Include="ConfigurationHelpers\TypeResolverImpl.cs" />
+    <Compile Include="ConfigurationHelpers\UnknownElementHandlerMap.cs" />
+    <Compile Include="ConfigurationHelpers\ValueElementHelper.cs" />
+    <Compile Include="ConfigurationHelpers\XmlWriterExtensions.cs" />
+    <Compile Include="ConstructorElement.cs" />
+    <Compile Include="ContainerConfiguringElement.cs" />
+    <Compile Include="ContainerConfiguringElementCollection.cs" />
+    <Compile Include="ContainerElement.cs" />
+    <Compile Include="ContainerElementCollection.cs" />
+    <Compile Include="ContainerExtensionElement.cs" />
+    <Compile Include="ContainerExtensionElementCollection.cs" />
+    <Compile Include="DependencyElement.cs" />
+    <Compile Include="ExtensionConfigurationElement.cs" />
+    <Compile Include="ExtensionConfigurationElementCollection.cs" />
+    <Compile Include="ExtensionElementMap.cs" />
+    <Compile Include="IAttributeOnlyElement.cs" />
+    <Compile Include="InjectionMemberElement.cs" />
+    <Compile Include="InjectionMemberElementCollection.cs" />
+    <Compile Include="InstanceElement.cs" />
+    <Compile Include="InstanceElementCollection.cs" />
+    <Compile Include="LifetimeElement.cs" />
+    <Compile Include="MethodElement.cs" />
+    <Compile Include="NamedElement.cs" />
+    <Compile Include="NamespaceElement.cs" />
+    <Compile Include="NamespaceElementCollection.cs" />
+    <Compile Include="OptionalElement.cs" />
+    <Compile Include="ParameterElement.cs" />
+    <Compile Include="ParameterElementCollection.cs" />
+    <Compile Include="ParameterValueElement.cs" />
+    <Compile Include="ParameterValueElementCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Unity\Src\Unity.csproj">
-      <Project>{ee1f752c-1fab-41ad-ad63-857d0e62ab6b}</Project>
-      <Name>Unity</Name>
-    </ProjectReference>
+    <Compile Include="PropertyElement.cs" />
+    <Compile Include="RegisterElement.cs" />
+    <Compile Include="RegisterElementCollection.cs" />
+    <Compile Include="SectionExtension.cs" />
+    <Compile Include="SectionExtensionContext.cs" />
+    <Compile Include="SectionExtensionElement.cs" />
+    <Compile Include="SectionExtensionElementCollection.cs" />
+    <Compile Include="UnityConfigurationSection.cs" />
+    <Compile Include="UnityContainerConfigurationExtensions.cs" />
+    <Compile Include="ValueElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
