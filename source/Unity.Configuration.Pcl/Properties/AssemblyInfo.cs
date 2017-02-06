@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Unity.Configuration.Pcl")]
-[assembly: AssemblyCopyright("Copyright (C)  2017")]
+[assembly: AssemblyCopyright("Copyright (C) Yuka.Abuno  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("ja")]

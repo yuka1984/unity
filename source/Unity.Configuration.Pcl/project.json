@@ -1,9 +1,7 @@
 ﻿{
   "supports": {},
   "dependencies": {
-    "CommonServiceLocator": "1.3.0",
     "CoreCompat.System.Configuration": "4.2.3-r4",
-    "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
     "NETStandard.Library": "1.6.0",
     "Unity": "4.0.1"
   },
