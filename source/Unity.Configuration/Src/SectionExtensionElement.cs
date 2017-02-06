@@ -3,6 +3,7 @@
 using System;
 using System.Configuration;
 using System.Globalization;
+using System.Reflection;
 using System.Xml;
 using Unity.Configuration.ConfigurationHelpers;
 using Unity.Configuration.Properties;

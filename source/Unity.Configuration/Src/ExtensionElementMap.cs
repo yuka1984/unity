@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Reflection;
 using Unity.Configuration.ConfigurationHelpers;
 using Unity.Configuration.Properties;
 using Unity.Utility;
@@ -191,11 +192,11 @@ namespace Unity.Configuration
 
             private Dictionary<string, Type> GetDictToSearch(Type elementType)
             {
-                if (typeof(ContainerConfiguringElement).IsAssignableFrom(elementType))
+                if (typeof(ContainerConfiguringElement).GetTypeInfo().IsAssignableFrom(elementType))
                 {
                     return containerConfiguringElements;
                 }
-                if (typeof(InjectionMemberElement).IsAssignableFrom(elementType))
+                if (typeof(InjectionMemberElement).GetTypeInfo().IsAssignableFrom(elementType))
                 {
                     return injectionMemberElements;
                 }

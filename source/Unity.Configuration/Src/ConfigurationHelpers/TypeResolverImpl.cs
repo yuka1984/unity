@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
+using System.Reflection;
 using Unity.Configuration.Properties;
 
 namespace Unity.Configuration.ConfigurationHelpers
@@ -80,8 +81,8 @@ namespace Unity.Configuration.ConfigurationHelpers
 
             this.namespaces = new List<string>(namespaces);
             this.assemblies = new List<string>(assemblies);
-            this.assemblies.Add(typeof(object).Assembly.FullName);
-            this.assemblies.Add(typeof(Uri).Assembly.FullName);
+            this.assemblies.Add(typeof(object).GetTypeInfo().Assembly.FullName);
+            this.assemblies.Add(typeof(Uri).GetTypeInfo().Assembly.FullName);
         }
 
         /// <summary>
