@@ -88,8 +88,8 @@ namespace Unity.Configuration
             get
             {
                 return string.Format(CultureInfo.CurrentCulture,
-                    Resources.DestinationNameFormat,
-                    Resources.Parameter, this.Name);
+                    Res.DestinationNameFormat,
+                    Res.Parameter, this.Name);
             }
         }
 

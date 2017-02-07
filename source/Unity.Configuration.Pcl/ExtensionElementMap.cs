@@ -214,7 +214,7 @@ namespace Unity.Configuration
             {
                 return new ArgumentException(
                     string.Format(CultureInfo.CurrentCulture,
-                        Resources.ElementTypeNotRegistered,
+                        Res.ElementTypeNotRegistered,
                         elementType), "memberElement");
             }
 

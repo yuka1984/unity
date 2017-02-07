@@ -124,7 +124,7 @@ namespace Unity.Configuration
                 string parameterNames = string.Join(", ", this.Parameters.Select(p => p.Name).ToArray());
 
                 throw new InvalidOperationException(
-                    string.Format(CultureInfo.CurrentCulture, Resources.NoMatchingConstructor,
+                    string.Format(CultureInfo.CurrentCulture, Res.NoMatchingConstructor,
                         typeToConstruct.FullName, parameterNames));
             }
         }

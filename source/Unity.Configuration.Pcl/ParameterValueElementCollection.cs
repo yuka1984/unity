@@ -71,7 +71,7 @@ namespace Unity.Configuration
         /// </returns>
         protected override ConfigurationElement CreateNewElement()
         {
-            throw new InvalidOperationException(Resources.CannotCreateParameterValueElement);
+            throw new InvalidOperationException(Res.CannotCreateParameterValueElement);
         }
 
         /// <summary>

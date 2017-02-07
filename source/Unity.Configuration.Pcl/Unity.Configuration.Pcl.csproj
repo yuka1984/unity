@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="..\Unity.Configuration\Src\Properties\Resources.Designer.cs">
-      <Link>Properties\Resources.Designer.cs</Link>
-    </Compile>
     <Compile Include="AliasElement.cs" />
     <Compile Include="AliasElementCollection.cs" />
     <Compile Include="ArrayElement.cs" />
@@ -90,6 +87,7 @@
     <Compile Include="PropertyElement.cs" />
     <Compile Include="RegisterElement.cs" />
     <Compile Include="RegisterElementCollection.cs" />
+    <Compile Include="Properties\Res.cs" />
     <Compile Include="SectionExtension.cs" />
     <Compile Include="SectionExtensionContext.cs" />
     <Compile Include="SectionExtensionElement.cs" />
@@ -100,13 +98,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="project.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="..\Unity.Configuration\Src\Properties\Resources.resx">
-      <Link>Properties\Resources.resx</Link>
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

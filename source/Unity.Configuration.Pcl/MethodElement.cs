@@ -154,7 +154,7 @@ namespace Unity.Configuration
                 string parameterNames = string.Join(", ", this.Parameters.Select(p => p.Name).ToArray());
 
                 throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
-                    Resources.NoMatchingMethod, typeToInitialize, this.Name, parameterNames));
+                    Res.NoMatchingMethod, typeToInitialize, this.Name, parameterNames));
             }
         }
     }

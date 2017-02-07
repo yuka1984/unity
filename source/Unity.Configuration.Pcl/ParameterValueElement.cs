@@ -64,7 +64,7 @@ namespace Unity.Configuration
             {
                 throw new ConfigurationErrorsException(
                     string.Format(CultureInfo.CurrentCulture,
-                        Resources.RequiredPropertyMissing, requiredProperty));
+                        Res.RequiredPropertyMissing, requiredProperty));
             }
         }
     }

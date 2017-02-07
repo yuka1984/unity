@@ -22,7 +22,7 @@ namespace Unity.Configuration
         /// </returns>
         protected override ConfigurationElement CreateNewElement()
         {
-            throw new InvalidOperationException(Resources.CannotCreateContainerConfiguringElement);
+            throw new InvalidOperationException(Res.CannotCreateContainerConfiguringElement);
         }
 
         /// <summary>

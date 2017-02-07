@@ -152,7 +152,7 @@ namespace Unity.Configuration
             {
                 throw new ArgumentException(
                     string.Format(CultureInfo.CurrentCulture,
-                        Resources.NoSuchContainer, configuredContainerName),
+                        Res.NoSuchContainer, configuredContainerName),
                     "configuredContainerName");
             }
             return containerElement;
@@ -326,7 +326,7 @@ namespace Unity.Configuration
                 else
                 {
                     throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
-                        Resources.InvalidExtensionElementType,
+                        Res.InvalidExtensionElementType,
                         elementType.Name));
                 }
             }

@@ -143,7 +143,7 @@ namespace Unity.Configuration.ConfigurationHelpers
                 throw new ConfigurationErrorsException(
                     string.Format(
                         CultureInfo.CurrentCulture,
-                        Resources.DuplicateParameterValueElement,
+                        Res.DuplicateParameterValueElement,
                         parentElement.DestinationName),
                     reader);
             }
@@ -162,7 +162,7 @@ namespace Unity.Configuration.ConfigurationHelpers
                     throw new ConfigurationErrorsException(
                         string.Format(
                             CultureInfo.CurrentCulture,
-                            Resources.ElementWithAttributesAndParameterValueElements,
+                            Res.ElementWithAttributesAndParameterValueElements,
                             parentElement.DestinationName),
                         reader);
                 }
@@ -187,7 +187,7 @@ namespace Unity.Configuration.ConfigurationHelpers
             {
                 throw new ConfigurationErrorsException(
                     string.Format(CultureInfo.CurrentCulture,
-                        Resources.InvalidValueAttributes, parentElement.DestinationName));
+                        Res.InvalidValueAttributes, parentElement.DestinationName));
             }
         }
 

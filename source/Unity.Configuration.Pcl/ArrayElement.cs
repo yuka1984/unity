@@ -91,7 +91,7 @@ namespace Unity.Configuration
                 if (!externalParameterType.IsArray)
                 {
                     throw new InvalidOperationException(string.Format(CultureInfo.CurrentCulture,
-                        Resources.NotAnArray, externalParameterType.Name));
+                        Res.NotAnArray, externalParameterType.Name));
                 }
             }
         }

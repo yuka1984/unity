@@ -24,7 +24,7 @@ namespace Unity.Configuration
         /// </returns>
         protected override ConfigurationElement CreateNewElement()
         {
-            throw new InvalidOperationException(Resources.CannotCreateExtensionConfigurationElement);
+            throw new InvalidOperationException(Res.CannotCreateExtensionConfigurationElement);
         }
 
         /// <summary>

@@ -106,7 +106,7 @@ namespace Unity.Configuration.ConfigurationHelpers
             {
                 throw new InvalidOperationException(
                     string.Format(CultureInfo.CurrentCulture,
-                        Resources.CouldNotResolveType, typeNameOrAlias));
+                        Res.CouldNotResolveType, typeNameOrAlias));
             }
             return resolvedType;
         }

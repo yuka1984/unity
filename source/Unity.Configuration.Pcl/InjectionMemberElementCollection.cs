@@ -59,7 +59,7 @@ namespace Unity.Configuration
         /// </returns>
         protected override ConfigurationElement CreateNewElement()
         {
-            throw new InvalidOperationException(Resources.CannotCreateInjectionMemberElement);
+            throw new InvalidOperationException(Res.CannotCreateInjectionMemberElement);
         }
 
         /// <summary>

@@ -83,7 +83,7 @@ namespace Unity.Configuration
                     throw new InvalidOperationException(
                         string.Format(
                             CultureInfo.CurrentCulture,
-                            Resources.DependencyForOptionalGenericParameterWithTypeSet,
+                            Res.DependencyForOptionalGenericParameterWithTypeSet,
                             parameterType.Name,
                             this.TypeName));
                 }

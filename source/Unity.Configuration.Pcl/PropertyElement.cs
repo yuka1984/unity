@@ -74,8 +74,8 @@ namespace Unity.Configuration
             get
             {
                 return string.Format(CultureInfo.CurrentCulture,
-                    Resources.DestinationNameFormat,
-                    Resources.Property, this.Name);
+                    Res.DestinationNameFormat,
+                    Res.Property, this.Name);
             }
         }
 
@@ -184,7 +184,7 @@ namespace Unity.Configuration
             {
                 throw new InvalidOperationException(
                     string.Format(CultureInfo.CurrentCulture,
-                        Resources.NoSuchProperty,
+                        Res.NoSuchProperty,
                         typeContainingProperty.Name, this.Name));
             }
 

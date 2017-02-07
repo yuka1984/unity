@@ -104,13 +104,13 @@ namespace Unity.Configuration
             if (extensionType == null)
             {
                 throw new ConfigurationErrorsException(string.Format(CultureInfo.CurrentCulture,
-                    Resources.ExtensionTypeNotFound, this.TypeName));
+                    Res.ExtensionTypeNotFound, this.TypeName));
             }
 
             if (!typeof(SectionExtension).IsAssignableFrom(extensionType))
             {
                 throw new ConfigurationErrorsException(string.Format(CultureInfo.CurrentCulture,
-                    Resources.ExtensionTypeNotValid, this.TypeName));
+                    Res.ExtensionTypeNotValid, this.TypeName));
             }
         }
 

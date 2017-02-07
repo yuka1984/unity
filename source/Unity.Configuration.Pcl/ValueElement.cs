@@ -115,7 +115,7 @@ namespace Unity.Configuration
                 throw new InvalidOperationException(
                     string.Format(
                         CultureInfo.CurrentCulture,
-                        Resources.ValueNotAllowedForGenericParameterType,
+                        Res.ValueNotAllowedForGenericParameterType,
                         parameterType.Name,
                         this.Value));
             }
@@ -127,7 +127,7 @@ namespace Unity.Configuration
                 throw new InvalidOperationException(
                     string.Format(
                         CultureInfo.CurrentCulture,
-                        Resources.ValueNotAllowedForOpenGenericType,
+                        Res.ValueNotAllowedForOpenGenericType,
                         parameterType.Name,
                         this.Value));
             }
@@ -137,7 +137,7 @@ namespace Unity.Configuration
                 throw new InvalidOperationException(
                     string.Format(
                         CultureInfo.CurrentCulture,
-                        Resources.ValueNotAllowedForGenericArrayType,
+                        Res.ValueNotAllowedForGenericArrayType,
                         parameterType.Name,
                         this.Value));
             }

@@ -117,7 +117,7 @@ namespace Unity.Configuration
                     throw new InvalidOperationException(
                         string.Format(
                             CultureInfo.CurrentCulture,
-                            Resources.DependencyForGenericParameterWithTypeSet,
+                            Res.DependencyForGenericParameterWithTypeSet,
                             parameterType.Name,
                             this.TypeName));
                 }
